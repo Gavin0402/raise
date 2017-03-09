@@ -88,7 +88,7 @@
             </div>
             <input type="hidden" name="identityType" v-bind:value="build.identity[build.identityIndex.num]">
           </div>
-          <dl class="wrap_per_ins" v-show="(build.identityIndex.num == 0)">
+          <dl id="wrap_per" class="wrap_per_ins" v-show="(build.identityIndex.num == 0)">
             <dd>
               <validity field="username" :validators="['username']">
                 <input type="text" placeholder="输入中文姓名(必填)" name="originator"
@@ -128,7 +128,7 @@
               <p class="errors" v-if="page1.per.loProvince.invalid">*请选择地点</p>
             </dd>
           </dl>
-          <dl class="wrap_per_ins" v-show="(build.identityIndex.num == 1)">
+          <dl id="wrap_ins" class="wrap_per_ins" v-show="(build.identityIndex.num == 1)">
             <dd>
               <validity field="tradeName" :validators="['unempty']">
                 <input type="text" placeholder="输入企业/机构名称" name="tradeName"
@@ -192,7 +192,7 @@
 
           <!--证件上传  S-->
           <p class="title">上传相关资料</p>
-          <div><form></form></div>
+          <div><form></form></div><!--vue编译的时候第一个表单会消失   这个空的表单是用来解决这个问题的-->
           <div class="uppic" v-if="(build.identityIndex.num == 0)">
             <form id="positivePic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
               <span>个人身份证-正面</span>
@@ -203,7 +203,7 @@
                 <validity field="positive" :validators="['unempty']">
                   <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
                          name="mediafile"
-                         v-on:change="fileSubmit('positivePic',app.build.IDcorrectSrc,app.page1.per.positive)">上传
+                         v-on:change="fileSubmit(event,'positivePic',app.build.IDcorrectSrc,app.page1.per.positive)">上传
                 </validity>
               </div>
             </form>
@@ -219,7 +219,7 @@
                 <validity field="inverse" :validators="['unempty']">
                   <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
                          name="mediafile"
-                         v-on:change="fileSubmit('inversePic',app.build.IDoppositeSrc,page1.per.inverse)">上传
+                         v-on:change="fileSubmit(event,'inversePic',app.build.IDoppositeSrc,app.page1.per.inverse)">上传
                 </validity>
               </div>
             </form>
@@ -235,14 +235,13 @@
                 <validity field="licenseImg" :validators="['unempty']">
                   <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
                          name="mediafile"
-                         v-on:change="fileSubmit('licensePic',app.build.businessLicenseSrc,page1.ins.licenseImg)">上传
+                         v-on:change="fileSubmit(event,'licensePic',app.build.businessLicenseSrc,app.page1.ins.licenseImg)">上传
                 </validity>
               </div>
             </form>
             <input type="hidden" name="licensePic" v-bind:value="build.businessLicenseSrc.src">
           </div>
           <p class="errorscenter" v-if="page1.per.positive.invalid || page1.per.inverse.invalid">*请上传图片</p>
-          {{page1.per}}
           <p class="errorscenter" v-if="page1.ins.licenseImg.invalid">*请上传图片</p>
           <!--证件上传  E-->
           <dd class="submit mb30">
@@ -264,7 +263,7 @@
                   <validity field="cover" :validators="['unempty']">
                     <input type="file" class="fil" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
                            name="mediafile"
-                           v-on:change="fileSubmit('coverPic',app.build.coverPicSrc,page2.cover)">
+                           v-on:change="fileSubmit(event,'coverPic',app.build.coverPicSrc,app.page2.cover)">
                   </validity>
                 </form>
                 <input type="hidden" name="coverPic" v-bind:value="build.coverPicSrc.src">

@@ -215,12 +215,13 @@ var app = new Vue({
         this.info = response.data.info;
       })
     },
-    fileSubmit: function (id, obj, valid) {
+    fileSubmit: function (e, id, obj, valid) {
+      var This = this;
       var formData = new FormData(document.getElementById(id));//表单id
       this.$http.post(this.build.mediaDrl, formData).then(function (data) {
         obj.src = data.data.filePath;
-      })
-      valid && this.handleValidation(event, valid);
+        valid && This.handleValidation(e, valid);
+      });
     },
     submitPage1: function (e) {
       var bOff = true;
@@ -301,7 +302,7 @@ var app = new Vue({
           returnInfo[i].retime.invalid = true;
           bOff = false;
         }
-        if(returnInfo[i].type === 1){
+        if (returnInfo[i].type === 1) {
           if (returnInfo[i].freight.invalid === "" || returnInfo[i].freight.invalid === true) {
             returnInfo[i].freight.invalid = true;
             bOff = false;
@@ -310,6 +311,12 @@ var app = new Vue({
       }
       if (bOff) {
         alert("OK");
+        if (this.build.identityIndex.num == 0) {
+          var removeNode = document.getElementById("wrap_ins");
+        } else {
+          var removeNode = document.getElementById("wrap_per");
+        }
+        removeNode.parentNode.removeChild(removeNode);
         document.getElementById("intros").value = document.getElementById("editHtml").innerHTML;
         document.getElementById("allForm").submit();
       }
