@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的众筹</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection"/>
+    <title>众筹详情页</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/raise1.css">
+    <link rel="stylesheet" href="../css/initiatioJKnRaise.css" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/zepto.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="http://203.195.235.76/jssdk/js/zepto.min.js"></script>
+    <script>
+        $(function () {
+            if ("${zc.endProTime}" == "0分钟" || ${zc.isRelease}== 2) {
+                $("#ljzc").attr('onclick', "");
+                $("#ljzc").css({color: "white", background: "gray"});
+            }
+            $(".concern").click(function () {
+                $(this).toggleClass("active");
+            });
+        });
+    </script>
+    <style>
+        input{
+            outline:none;
+        }
+        h1{
+            width:100%;
+            height:40px;
+            color:#333333;
+            padding:0 10px;
+            font-size:20px;
+            line-height:40px;
+            overflow:hidden;
+            font-family:"微软雅黑", "宋体";
+            box-sizing:border-box;
+        }
+        .time_name{
+            width:100%;
+            height:24px;
+            color:#666666;
+            margin:0;
+            padding:0 10px;
+            box-sizing:border-box;
+            font:500 12px/24px "微软雅黑", "宋体";
+        }
+        .time_name span{
+            color:#50729d;
+            margin:0 0 0 15px;
+        }
+        .text{
+            width:100%;
+            color:#333333;
+            text-align:justify;
+            min-height:200px;
+            font-family:"微软雅黑", "宋体";
+            text-indent:2em;
+            box-sizing:border-box;
+            padding:0 10px;
+            font-size:14px;
+            line-height:2em;
+            overflow:hidden;
+        }
+        .box{
+            padding:20px 10px 10px;
+        }
+        .box #zhifuForm{
+            display:none;
+            width:100%;
+            padding:10px 0 0 0;
+            overflow:hidden;
+        }
+        .box .list, .box .m_box, .box .xinxi{
+            width:100%;
+            min-height:28px;
+            overflow:hidden;
+            margin:2px 0;
+            text-align:center;
+            font:500 14px/28px "微软雅黑", "宋体";
+        }
+        .box .xinxi span{
+            width:60px;
+            text-align:right;
+            display:inline-block;
+        }
+        .btn_zc, .btn_gz, .btn_ok{
+            color:#ffffff;
+            width:30%;
+            height:30px;
+            border:none;
+            float:left;
+            margin:0 0 0 13.33%;
+            background:#cc0000;
+        }
+        .btn_ok{
+            width:40%;
+            margin:0 0 0 30%;
+        }
+        .totalM{
+            color:#cc0000;
+        }
+        h3{
+            text-align:center;
+            font-size:16px;
+            line-height:36px;
+        }
+        p{
+            text-indent:2em;
+            line-height:20px;
+            margin-bottom:8px;
+        }
+        .num .up, .num .down{
+            display:inline-block;
+            width:13px;
+            height:14px;
+            background:url(${base}/resources/weixin/num.gif) no-repeat;
+            vertical:middle;
+        }
+        .count{
+            display:inline-block;
+        }
+        .num .down{
+            background-position:0 -26px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            // 点击数量的增减
+            $('.up').click(function () {
+                var num = parseInt($(this).siblings('.count').html());
+                num++;
+                $(".countB").attr("value", num);
+                $(this).siblings('.count').html(num);
+
+                // 单价
+                var money = $(this).parent().siblings(".share").attr("value");
+                // 隐藏值
+                var totalB = parseInt($('.totalH').attr("value"));
+                // 1最终价格
+                var moneyEnd = (parseInt(money));
+
+                $('.totalH').attr("value", moneyEnd + totalB);
+                $('.totalM').html("");//置零
+                $('.totalM').html(moneyEnd + totalB);
+            })
+            $('.down').click(function () {
+                var num = $(this).siblings('.count').html();
+                if (num > 0) {
+                    num--;
+                    $(this).siblings('.count').html(num);
+                    $(".countB").attr("value", num);
+                    // 单价
+                    var money = $(this).parent().siblings(".share").attr("value");
+                    // 隐藏值
+                    var totalB = parseInt($('.totalH').attr("value"));
+                    // 1最终价格
+                    var moneyEnd = (parseInt(money));
+                    $('.totalH').attr("value", totalB - moneyEnd);
+                    $('.totalM').html("");//置零
+                    $('.totalM').html(totalB - moneyEnd);
+                }
+            })
+        })
+
+        function zhichi() {
+            $("#first").hide();
+            $("#item_information").show();
+        }
+        function zhifu() {
+            if ($('.totalH').attr("value") != 0) {
+                $("#zhifuForm").submit();
+            } else {
+                alert("请添加筹资份额");
+            }
+
+        }
+        wx.config({
+            debug: false,
+            appId: '${appId}',
+            timestamp: '${timestamp}',
+            nonceStr: '${nonceStr}',
+            signature: '${signature}',
+            jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone',
+                'hideMenuItems',
+                'showMenuItems',
+                'hideAllNonBaseMenuItem',
+                'showAllNonBaseMenuItem',
+                'translateVoice',
+                'startRecord',
+                'stopRecord',
+                'onVoiceRecordEnd',
+                'playVoice',
+                'onVoicePlayEnd',
+                'pauseVoice',
+                'stopVoice',
+                'uploadVoice',
+                'downloadVoice',
+                'chooseImage',
+                'previewImage',
+                'uploadImage',
+                'downloadImage',
+                'getNetworkType',
+                'openLocation',
+                'getLocation',
+                'hideOptionMenu',
+                'showOptionMenu',
+                'closeWindow',
+                'scanQRCode',
+                'chooseWXPay',
+                'openProductSpecificView',
+                'addCard',
+                'chooseCard',
+                'openCard'
+            ]
+        });
+        wx.ready(function () {
+            // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+            $('#checkJsApi').click(function () {
+
+                wx.checkJsApi({
+                    jsApiList: [
+                        'getNetworkType',
+                        'previewImage',
+                        'chooseWXPay'
+                    ],
+                    success: function (res) {
+                        // alert(JSON.stringify(res));
+                    }
+                });
+            })
+
+
+        });
+
+        function validatemobile() {
+            var mobile = $("#continfo").val();
+            if (mobile.length == 0) {
+                alert('请输入手机号码！');
+                document.form1.mobile.focus();
+                return false;
+            }
+            if (mobile.length != 11) {
+                alert('请输入有效的手机号码！');
+                document.getElementById("continfo").value = "";
+                return false;
+            }
+            var myreg = /^1[3|4|5|7|8][0-9]{9}$/;
+            if (!myreg.test(mobile)) {
+                alert('请输入有效的手机号码！');
+                document.getElementById("continfo").value = "";
+                return false;
+            }
+        }
+        //验证邮政编码
+        function ischeck() {
+            var postcode = document.getElementById("zipcode").value;
+            if (postcode != "") {   //邮政编码判断
+                var pattern = /^[0-9]{6}$/;
+                flag = pattern.test(postcode);
+                if (!flag) {
+                    alert("非法的邮政编码！")
+                    document.getElementById("zipcode").focus();
+                    return false;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="wrap" id="first">
+    <div class="wrap_preview">
+        <div class="per_info clear">
+            <img class="fl" src="${base}/resources/shop/img/header.png" alt="pic">
+            <div class="text_info">
+                <p>${zc.cfName}</p>
+                <div>
+                    <span class="fl">发起人：<strong>${zc.userName}</strong></span>
+                    <span class="fr concern">关注</span>
+                </div>
+            </div>
+        </div>
+        <div class="show_pic">
+            <span class="raising"></span>
+            <img src="${base}${zc.coverPic}" alt="pic">
+        </div>
+        <div class="prograss">
+            <p><span><strong></strong>${zc.zhichi}</span>支持数</p>
+            <p><span>￥<strong>${zc.nowCrowd}</strong></span>已筹款</p>
+            <div class="percent_box clear">
+                <p><span class="fr"><strong>${zc.jindu}</strong></span></p>
+                <div class="percent">
+                    <p style="width:${zc.jindu}"></p>
+                </div>
+                <p>
+                    <span class="fl">剩余<strong>${zc.endProTime}</strong></span>
+                    <span class="fr">目标筹资￥<strong>${zc.totaltarget}</strong></span>
+                </p>
+            </div>
+            <div class="support" input type="button" id="ljzc" onclick="zhichi()">立即支持</div>
+            <ul class="tip clear">
+                <li><span class="tip_ico1 tip_ico"></span><span class="tip_info">${zc.standing}</span></li>
+                <li><span class="tip_ico2 tip_ico"></span><span
+                        class="tip_info">${zc.itemProvince} ${zc.itemCity}</span></li>
+                <li><span class="tip_ico3 tip_ico"></span><span class="tip_info">${zc.selfdom}</span></li>
+            </ul>
+        </div>
+        <ul class="detial_info">
+            <li onclick="window.location.href='${base}/login/projectDetails.jhtml?contentId=${zc.id}&openId=${user.wxopenId}'">
+                <p>项目详情</p></li>
+            <li><a href="comment.html"><p>项目评论</p></a></li>
+            <li onclick="window.location.href='${base}/login/supportRecord.jhtml?contentId=${zc.id}&openId=${user.wxopenId}'">
+                <p>支持记录</p></li>
+            <li onclick="window.location.href='${base}/login/evolve.jhtml?contentId=${zc.id}&openId=${user.wxopenId}'">
+                <p>项目动态</p></li>
+
+
+        </ul>
+    </div>
+</div>
+<div id="item_information" style="display:none;">
+    <form id="zhifuForm" action="zhifu.jhtml" method="get">
+        <p class="title">筹资份额元</p>
+        <input type="hidden" name="contentId" value="${contentId}">
+        <input type="hidden" name="userId" value="${userId}">
+        <input type="hidden" name="openId" value="${openId}">
+        筹资份额<span calss="numMon">${zc.chuziShare}</span>元
+        <input class="share" type="hidden" value="${zc.chuziShare}">
+        <input type="hidden" value="${id}" name="shareId">
+        <span class="dt">购买数量：</span>
+        <span class="num fl">
+						<span class="up"></span>
+						<span class="count">0</span>
+						<input class="countB" type="hidden" value="0" name="anti">
+						<span class="down"></span>
+					</span>
+        <div class="xinxi">
+            <span>收货地址：</span><input type="text" name="address" value="${user.address}"></br>
+            <span>地区：</span><input type="text" name="areaName"></br>
+            <span>收货人：</span><input type="text" name="rename" value="${user.name}"></br>
+            <span>联系电话：</span><input type="text" id="continfo" name="phone" value="${user.phone}"
+                                     onblur="validatemobile()"></br>
+            <span>邮编：</span><input type="text" id="zipcode" name="zipcode" value="${user.zipcode}"
+                                   onblur="ischeck()"></br>
+        </div>
+        <div class="m_box">您共支持<span class="totalM">0</span>元</div>
+        <input type="hidden" value="0" class="totalH" name="totalH">
+        <input type="button" value="付款" class="btn_ok" onclick="zhifu()">
+        <!--<input type="button" value="ceshizhifu" id="ceshizhifu1">-->
+    </form>
+</div>
+</div>
+</body>
+</html>

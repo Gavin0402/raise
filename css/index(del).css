@@ -1,0 +1,78 @@
+.wrap {
+    font-family: "Microsoft YaHei", 微软雅黑, "Microsoft JhengHei", 华文细黑, STHeiti, MingLiu;
+}
+.input_p input {
+    color: #AEAEAE;
+}
+#fileNum {
+    border: none;
+}
+.wrap_look {
+    margin-top: 15px;
+}
+.wrap_look>span,.wrap_input p {
+    font-size: 14px;
+    margin-left: 10px;
+    line-height: 30px;
+}
+.look_a {
+    color: #0099cc;
+    margin: 15px 5px 0;
+}
+.detail {
+    margin-left: 10px;
+    display: none;
+}
+.detail p {
+    font-family: "宋体";
+    font-size: 14px;
+    line-height: 28px;
+    margin-top: 20px;
+    text-indent: 2em;
+}
+.visited {
+    color: #ff0000;
+    display: none;
+}
+.wrap_input {
+    margin-top: 15px;
+}
+.wrap_input li {
+    padding: 0 10px;
+    margin: 5px 0;
+    height: 40px;
+    line-height: 40px;
+}
+.wrap_input li span {
+    display: inline-block;
+    width: 32%;
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    text-align: end;
+}
+.wrap_input input {
+    box-sizing: border-box;
+    width: 60%;
+    margin: 0;
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    outline: none;
+    font-size: 14px;
+    border: 1px solid #666;
+    border-radius: 5px;
+}
+.wrap_input .wrap_input_button {
+    display: block;
+    width: 100px;
+    margin: 10px auto;
+    background-color: #666666;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+}

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>众筹出版</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+  <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+  <meta name="format-detection" content="telephone=no, email=no"/>
+  <!-- 启用360浏览器的极速模式(webkit) -->
+  <meta name="renderer" content="webkit"/>
+  <!-- 避免IE使用兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+  <meta name="HandheldFriendly" content="true">
+  <!-- 微软的老式浏览器 -->
+  <meta name="MobileOptimized" content="320">
+  <!-- windows phone 点击无高光 -->
+  <!--<meta name="msapplication-tap-highlight" content="no">-->
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <script type="text/javascript" src="../js/vue.min.js"></script>
+  <script type="text/javascript" src="../js/vue-resource.min.js"></script>
+  <script type="text/javascript" src="../js/vue-validator.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <!--<pre>{{validation}}</pre>-->
+  <form id="allForm" v-bind:action="build.formDrl" method="post">
+    <!--切换菜单  S-->
+    <ul class="TabMenu clearfix">
+      <li v-for="(val, index) in title" v-on:click="switchIndex(index,app.tabIndex)"
+          v-bind:class="{'active':index == tabIndex}"><span
+        class="bgSpan"></span>{{val}}
+      </li>
+    </ul>
+    <!--切换菜单  E-->
+
+    <!--主体内容  S-->
+    <div class="TabCon">
+
+      <!--热门众筹  S-->
+      <ul class="conList" v-show="(tabIndex.num == 0)">
+        <li class="clearfix" v-for="item in hot" v-on:click="turnPage(item)">
+          <img v-bind:href="item.picsrc" alt="pic"/>
+          <div class="textInfo">
+            <h3 class="c666">{{item.title}}</h3>
+            <p class="c666">{{item.content}}</p>
+            <strong>￥{{item.prise}}起</strong>
+            <p class="progress">完成<span>{{item.progress}}</span></p>
+          </div>
+        </li>
+        <a class="loadMore" href="http://www.zhongchou.com">查看更多>></a>
+      </ul>
+      <!--热门众筹  E-->
+
+      <!--历史众筹  S-->
+      <ul class="conList" v-show="(tabIndex.num == 1)">
+        <li class="clearfix" v-for="item in history" v-on:click="turnPage(item)">
+          <img v-bind:href="item.src" alt="pic"/>
+          <div class="textInfo">
+            <h3 class="c666">{{item.title}}</h3>
+            <p class="c666">{{item.content}}</p>
+            <strong>￥{{item.prise}}起</strong>
+            <p class="progress">完成<span>{{item.progress}}</span></p>
+          </div>
+        </li>
+        <a class="loadMore" href="http://www.zhongchou.com">查看更多>></a>
+      </ul>
+      <!--历史众筹  E-->
+
+      <!--发起众筹  S-->
+      <ul class="buildRaise" v-show="(tabIndex.num == 2)">
+        <!--项目资料  S-->
+        <li v-show="(build.pageIndex.num == 0)">
+          <!--身份类型  S-->
+          <div class="tab_wrap">
+            <p class="title">选择你的身份类型</p>
+            <div class="tab">
+              <a class="per_btn" v-for="(val, index) in build.identity"
+                 v-on:click="switchIndex(index,app.build.identityIndex)"
+                 v-bind:class="{'active':index == build.identityIndex.num,brl:index == 0,brr:index == 1}">{{val}}</a>
+            </div>
+            <input type="hidden" name="identityType" v-bind:value="build.identity[build.identityIndex.num]">
+          </div>
+          <dl class="wrap_per_ins" v-show="(build.identityIndex.num == 0)">
+            <dd>
+              <validity field="username" :validators="['username']">
+                <input type="text" placeholder="输入中文姓名(必填)" name="originator"
+                       @input="handleValidation(event,page1.per.username)"
+                       @blur="handleValidation(event,page1.per.username)">
+              </validity>
+              <p class="errors" v-if="page1.per.username.invalid">*请输入正确的中文名字(2~5个汉字之间)</p>
+            </dd>
+            <dd>
+              <validity field="IDnum" :validators="['IDnum']">
+                <input type="text" placeholder="二代身份证，输入数字或字母 (必填)" name="cardNo"
+                       @input="handleValidation(event,page1.per.IDnum)" @blur="handleValidation(event,page1.per.IDnum)">
+              </validity>
+              <p class="errors" v-if="page1.per.IDnum.invalid">*请填写有效的18位身份证号码</p>
+            </dd>
+            <dd>
+              <validity field="telnum" :validators="['telnum']">
+                <input type="text" placeholder="手机号，输入纯数字(必填)" name="phone"
+                       @input="handleValidation(event,page1.per.telnum)"
+                       @blur="handleValidation(event,page1.per.telnum)">
+              </validity>
+              <p class="errors" v-if="page1.per.telnum.invalid">*请填写正确有效的11位手机号</p>
+            </dd>
+            <dd>
+              <div class="location">
+                <validity field="loProvince" :validators="['unempty']">
+                  <select id="loProvince" class="prov fl" name="loProvince" v-model="city1"
+                          v-on:change="townData(app.town1,app.city1,page1.per.loProvince)"
+                          @blur="handleValidation(event,page1.per.loProvince)">
+                    <option v-for="item in position" v-bind:value="item.p">{{item.p}}</option>
+                  </select>
+                </validity>
+                <select class="city fr" name="loCity" v-bind="{disabled:!city1}" v-bind:class="{ddd:!city1}">
+                  <option v-for="item in town1.town" v-bind:value="item.n">{{item.n}}</option>
+                </select>
+              </div>
+              <p class="errors" v-if="page1.per.loProvince.invalid">*请选择地点</p>
+            </dd>
+          </dl>
+          <dl class="wrap_per_ins" v-show="(build.identityIndex.num == 1)">
+            <dd>
+              <validity field="tradeName" :validators="['unempty']">
+                <input type="text" placeholder="输入企业/机构名称" name="tradeName"
+                       @input="handleValidation(event,page1.ins.tradeName)"
+                       @blur="handleValidation(event,page1.ins.tradeName)">
+              </validity>
+              <p class="errors" v-if="page1.ins.tradeName.invalid">*此项不能为空</p>
+            </dd>
+            <dd>
+              <validity field="license" :validators="['unempty']">
+                <input type="text" placeholder="请填写营业执照号或组织机构代码" name="license"
+                       @input="handleValidation(event,page1.ins.license)"
+                       @blur="handleValidation(event,page1.ins.license)">
+              </validity>
+              <p class="errors" v-if="page1.ins.license.invalid">*此项不能为空</p>
+            </dd>
+            <dd>
+              <validity field="lawPerson" :validators="['unempty']">
+                <input type="text" placeholder="企业/机构法人代表姓名" name="lawPerson"
+                       @input="handleValidation(event,page1.ins.lawPerson)"
+                       @blur="handleValidation(event,page1.ins.lawPerson)">
+              </validity>
+              <p class="errors" v-if="page1.ins.lawPerson.invalid">*此项不能为空</p>
+            </dd>
+            <dd>
+              <validity field="inRegister" :validators="['unempty']">
+                <input type="text" placeholder="企业/机构注册地址" name="inRegister"
+                       @input="handleValidation(event,page1.ins.inRegister)"
+                       @blur="handleValidation(event,page1.ins.inRegister)">
+              </validity>
+              <p class="errors" v-if="page1.ins.inRegister.invalid">*此项不能为空</p>
+            </dd>
+            <dd>
+              <validity field="contact" :validators="['username']">
+                <input type="text" placeholder="发起联系人姓名" name="originator"
+                       @input="handleValidation(event,page1.ins.contact)"
+                       @blur="handleValidation(event,page1.ins.contact)">
+              </validity>
+              <p class="errors" v-if="page1.ins.contact.invalid">*请输入正确的中文名字(2~5个汉字之间)</p>
+            </dd>
+            <dd>
+              <validity field="qyPhone" :validators="['telnum']">
+                <input type="text" placeholder="发起联系人手机号" name="phone"
+                       @input="handleValidation(event,page1.ins.qyPhone)"
+                       @blur="handleValidation(event,page1.ins.qyPhone)">
+              </validity>
+              <p class="errors" v-if="page1.ins.qyPhone.invalid">*请填写正确有效的11位手机号</p>
+            </dd>
+          </dl>
+          <!--身份类型  E-->
+
+          <!--项目类型  S-->
+          <p class="title mt-14">选择你要创建的项目类型</p>
+          <ol class="wrap_type clearfix mt-10">
+            <li v-for="(val, index) in build.type" v-on:click="switchIndex(index,app.build.typeIndex)"
+                v-bind:class="{'active':index == build.typeIndex.num}">{{val}}
+            </li>
+          </ol>
+          <input type="hidden" name="standing" v-bind:value="build.type[build.typeIndex.num]">
+          <!--项目类型  E-->
+
+          <!--证件上传  S-->
+          <p class="title">上传相关资料</p>
+          <div><form></form></div>
+          <div class="uppic" v-if="(build.identityIndex.num == 0)">
+            <form id="positivePic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
+              <span>个人身份证-正面</span>
+              <div class="imgpre">
+                <img v-bind:src="build.IDcorrectSrc.src" v-show="build.IDcorrectSrc.src" alt="pic">
+              </div>
+              <div class="upload">
+                <validity field="positive" :validators="['unempty']">
+                  <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                         name="mediafile"
+                         v-on:change="fileSubmit('positivePic',app.build.IDcorrectSrc,app.page1.per.positive)">上传
+                </validity>
+              </div>
+            </form>
+            <input type="hidden" name="positivePic" v-bind:value="build.IDcorrectSrc.src">
+          </div>
+          <div class="uppic" v-if="(build.identityIndex.num == 0)">
+            <form id="inversePic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
+              <span>个人身份证-反面</span>
+              <div class="imgpre">
+                <img v-bind:src="build.IDoppositeSrc.src" v-show="build.IDoppositeSrc.src" alt="pic">
+              </div>
+              <div class="upload">
+                <validity field="inverse" :validators="['unempty']">
+                  <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                         name="mediafile"
+                         v-on:change="fileSubmit('inversePic',app.build.IDoppositeSrc,page1.per.inverse)">上传
+                </validity>
+              </div>
+            </form>
+            <input type="hidden" name="inversePic" v-bind:value="build.IDoppositeSrc.src">
+          </div>
+          <div class="uppic" v-if="(build.identityIndex.num == 1)">
+            <form id="licensePic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
+              <span>营业执照</span>
+              <div class="imgpre">
+                <img v-bind:src="build.businessLicenseSrc.src" v-show="build.businessLicenseSrc.src" alt="pic">
+              </div>
+              <div class="upload">
+                <validity field="licenseImg" :validators="['unempty']">
+                  <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                         name="mediafile"
+                         v-on:change="fileSubmit('licensePic',app.build.businessLicenseSrc,page1.ins.licenseImg)">上传
+                </validity>
+              </div>
+            </form>
+            <input type="hidden" name="licensePic" v-bind:value="build.businessLicenseSrc.src">
+          </div>
+          <p class="errorscenter" v-if="page1.per.positive.invalid || page1.per.inverse.invalid">*请上传图片</p>
+          {{page1.per}}
+          <p class="errorscenter" v-if="page1.ins.licenseImg.invalid">*请上传图片</p>
+          <!--证件上传  E-->
+          <dd class="submit mb30">
+            <input class="active w_60" type="button" value="下一步" v-on:click="submitPage1"/>
+          </dd>
+        </li>
+        <!--项目资料  E-->
+
+        <!--项目信息  S-->
+        <li v-show="(build.pageIndex.num == 1)">
+          <dl class="wrap_entity">
+            <dt class="title">创建你的项目信息</dt>
+            <dd class="file">
+              <span>设置封面：</span>
+              <div v-bind:class="['filePic',{pl56:!build.coverPicSrc.src,filePicBg:!build.coverPicSrc.src}]">
+                <form id="coverPic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
+                  <span v-show="!build.coverPicSrc.src">建议尺寸640*480，图片大小不要超过5M</span>
+                  <img v-bind:src="build.coverPicSrc.src" v-show="build.coverPicSrc.src" alt="pic">
+                  <validity field="cover" :validators="['unempty']">
+                    <input type="file" class="fil" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                           name="mediafile"
+                           v-on:change="fileSubmit('coverPic',app.build.coverPicSrc,page2.cover)">
+                  </validity>
+                </form>
+                <input type="hidden" name="coverPic" v-bind:value="build.coverPicSrc.src">
+              </div>
+              <p class="errors" v-if="page2.cover.invalid">*请上传图片</p>
+            </dd>
+            <dd><span>项目标题：</span>
+              <validity field="cfName" :validators="['unempty']">
+                <input type="text" placeholder="请输入项目名称（必填）" name="cfName"
+                       @input="handleValidation(event,page2.cfName)" @blur="handleValidation(event,page2.cfName)">
+              </validity>
+              <p class="errors" v-if="page2.cfName.invalid">*此项不能为空</p>
+            </dd>
+            <dd><span>筹款目的：</span>
+              <validity field="purpose" :validators="['unempty']">
+                <textarea type="text" placeholder="请简单介绍一下项目（必填）" name="purpose"
+                          @input="handleValidation(event,page2.purpose)"
+                          @blur="handleValidation(event,page2.purpose)"></textarea>
+              </validity>
+              <p class="errors" v-if="page2.purpose.invalid">*此项不能为空</p>
+            </dd>
+            <dd><span>项目地点：</span>
+              <div class="location">
+                <validity field="itemProvince" :validators="['unempty']">
+                  <select class="prov fl" name="itemProvince" v-model="city2"
+                          v-on:change="townData(app.town2,app.city2,page2.itemProvince)"
+                          @blur="handleValidation(event,page2.itemProvince)">
+                    <option v-for="item in position" v-bind:value="item.p">{{item.p}}</option>
+                  </select>
+                </validity>
+                <select id="itemCity" class="city fr" name="itemCity" v-bind="{disabled:!city2}">
+                  <option v-for="item in town2.town" v-bind:value="item.n">{{item.n}}</option>
+                </select>
+              </div>
+              <p class="errors" v-if="page2.itemProvince.invalid">*请选择地点</p>
+            </dd>
+            <dd><span>筹资金额：</span>
+              <validity field="totaltarget" :validators="['totaltarget']">
+                <input type="text" placeholder="输入你需要筹资的金额" name="totaltarget"
+                       @input="handleValidation(event,page2.totaltarget)"
+                       @blur="handleValidation(event,page2.totaltarget)">
+              </validity>
+              <p class="errors" v-if="page2.totaltarget.invalid">*筹资金额不低于500 , 最高1亿'</p>
+            </dd>
+            <dd><span>筹资天数：</span>
+              <validity field="timelimit" :validators="['timelimit']">
+                <input type="text" placeholder="输入你需要筹资的时间周期" name="timelimit"
+                       @input="handleValidation(event,page2.timelimit)" @blur="handleValidation(event,page2.timelimit)">
+              </validity>
+              <p class="errors" v-if="page2.timelimit.invalid">*筹资时间周期须在1～31天之内</p>
+            </dd>
+            <dd><span>出资份额：</span>
+              <validity field="chuziShare" :validators="['chuziShare']">
+                <input type="text" placeholder="输入你需要出资每份的价格" name="chuziShare"
+                       @input="handleValidation(event,page2.chuziShare)"
+                       @blur="handleValidation(event,page2.chuziShare)">
+              </validity>
+              <p class="errors" v-if="page2.chuziShare.invalid">*出资份额须在1~100之间'</p>
+            </dd>
+            <dd><span>设置标签：</span>
+              <validity field="selfdom" :validators="['selfdomlength','selfdomnum']">
+                <input type="text" placeholder="个性标签，标签之间用空格隔开" name="selfdom"
+                       @input="selfdomValidation">
+              </validity>
+              <p class="errors" v-if=" selfdomValid.selfdomlength.invalid && !selfdomValid.selfdomnum.invalid">
+                *每个标签不超过5个字符</p>
+              <p class="errors" v-if="selfdomValid.selfdomnum.invalid">*最多输入三个自定义标签</p>
+            </dd>
+            <dd class="submit mtb40">
+              <input class="active w_40 mr_10" type="button" value="上一步"
+                     v-on:click="switchIndex(0,app.build.pageIndex)">
+              <input class="active w_40" type="button" value="下一步" v-on:click="submitPage2">
+            </dd>
+          </dl>
+        </li>
+        <!--项目信息  E-->
+
+        <!--详情描述  S-->
+        <li v-show="(build.pageIndex.num == 2)">
+          <!--项目描述  S-->
+          <dl class="wrap_entity">
+            <dt class="title">描述你的项目</dt>
+            <form id="video" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
+              <dd class="media" v-show="build.advertiseVideoSrc.src">
+                <video width="100%" height="180px" controls="controls" v-bind:src="build.advertiseVideoSrc.src"></video>
+              </dd>
+              <dd>
+                <span>宣传视频：</span>
+                <div class="video">请选择本地要上传的路径
+                  <input type="file"
+                         accept="video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv"
+                         name="mediafile" v-on:change="fileSubmit('video',app.build.advertiseVideoSrc)"/>
+                  <span class="video_del" v-show="build.advertiseVideoSrc.src"
+                        v-on:click="deleteSrc(app.build.advertiseVideoSrc)">删除</span></div>
+              </dd>
+            </form>
+            <input type="hidden" name="video" v-bind:value="build.advertiseVideoSrc.src">
+            <dd><span>可能风险：</span><textarea type="text" placeholder="请简单的说明一下可能会出现的风险" name="risk"></textarea></dd>
+          </dl>
+          <!--项目描述  E-->
+
+          <!--项目详情  S-->
+          <dl class="wrap_edit" id="editHtml">
+            <dt class="title deltitle">编辑你的项目详情
+              <span class="fr add_pic"
+                    v-on:click="addDescription(app.build.detailsDescription,app.build.newPic,5)">添加图片</span>
+              <span class="fr mr4 add_text"
+                    v-on:click="addDescription(app.build.detailsDescription,app.build.newText,5)">添加文本</span>
+            </dt>
+            <dd v-for="(item, index) in build.detailsDescription">
+              <!--文本结构  S-->
+              <div v-if="!item.type" v-bind:class="{active:item.edit.num}">
+                <div class="edit_tit clearfix">
+                  <p class="fl tit_show" v-show="!item.edit.num">{{item.title}}</p>
+                  <input class="fl deltitle" type="text" placeholder="为什么我需要你的资金支持" maxlength="12"
+                         v-show="item.edit.num" v-model="item.title">
+                  <div class="fr deltitle">
+                    <span class="fr" v-show="!item.edit.num" v-on:click="delArr(app.build.detailsDescription,index)"
+                          v-if="index>1">删除</span>
+                    <span class="fr" v-show="!item.edit.num" v-on:click="switchIndex(1,item.edit)">编辑</span>
+                    <span class="fr" v-show="item.edit.num" v-on:click="saveEdit(item)">保存</span>
+                  </div>
+                </div>
+                <p class="edit_tit_num deltitle" v-show="item.edit.num"><span>{{item.title.length}}</span>/12</p>
+                <div class="edit_con">
+                  <div class="con_show" v-show="!item.edit.num" v-html="item.content"></div>
+                  <textarea class="deltitle" v-show="item.edit.num" v-model="item.contentEdit"></textarea>
+                </div>
+              </div>
+              <!--文本结构  E-->
+
+              <!--图片结构  S-->
+              <div v-if="item.type">
+                <div class="edit_tit clearfix deltitle pl10">上传照片
+                  <span class="fr" v-show="!item.edit.num"
+                        v-on:click="delArr(app.build.detailsDescription,index)(index)" v-if="index>1">删除</span>
+                </div>
+                <div class="edit_pic">
+                  <form v-bind:id="'loPic'+index" v-bind:action="build.mediaDrl" method="post"
+                        enctype="multipart/form-data">
+                    <div class="bg_add deltitle" v-show="!item.picSrc.src"></div>
+                    <p class="deltitle" v-show="!item.picSrc.src">支持JPG、GIF、PNG格式的图片，不超过1M大小</p>
+                    <img alt="pic" v-show="item.picSrc.src" v-bind:src="item.picSrc.src">
+                    <input class="deltitle" type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                           name="mediafile" v-on:change="fileSubmit('loPic'+index,item.picSrc)"/>
+                  </form>
+                  <!--<input type="hidden" name="loPic" v-bind:value="item.picSrc.src">-->
+                </div>
+              </div>
+              <!--图片结构  E-->
+            </dd>
+            <input id="intros" type="hidden" name="intros">
+          </dl>
+          <!--项目详情  E-->
+          <dd class="submit mb30">
+            <input class="active w_40 mr_10" type="button" value="上一步" v-on:click="switchIndex(1,app.build.pageIndex)">
+            <input class="active w_40" type="button" value="下一步" v-on:click="switchIndex(3,app.build.pageIndex)">
+          </dd>
+        </li>
+        <!--详情描述  E-->
+
+        <!--回报信息  S-->
+        <li v-show="(build.pageIndex.num == 3)">
+          <dl class="wrap_entity" v-for="(item,indexParent) in build.returnInfo">
+            <dt class="title" v-if="!indexParent">设置你的回报信息</dt>
+            <dd class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
+              class="delete" v-on:click="delArr(app.build.returnInfo,indexParent)"></a></p></dd>
+            <dd class="radio ReturnType">
+              <span>回报类型：</span>
+              <div class="clearfix radio_wrap">
+                <label><input type="radio" checked="checked" v-bind:name="'retype'+indexParent" value="1"
+                              v-model="item.type">
+                  <span class="outCircle"><span class="innerCircle"></span></span>实物回报
+                </label>
+                <label><input type="radio" v-bind:name="'retype'+indexParent" value="2" v-model="item.type">
+                  <span class="outCircle"><span class="innerCircle"></span></span>虚拟回报
+                </label>
+              </div>
+            </dd>
+            <dd><span>支持金额：</span>
+              <validity field="faMoney" :validators="['faMoney']">
+                <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
+                       @input="handleValidation(event,item.faMoney)" @blur="handleValidation(event,item.faMoney)">
+              </validity>
+              <p class="errors" v-if="item.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
+            </dd>
+            <dd><span>回报标题：</span>
+              <validity field="reTitlw" :validators="['unempty']">
+                <input type="text" placeholder="给你的项目回报设置一个标题" v-bind:name="'reTitlw'+indexParent"
+                       @input="handleValidation(event,item.reTitlw)" @blur="handleValidation(event,item.reTitlw)">
+              </validity>
+              <p class="errors" v-if="item.reTitlw.invalid">*请添加标题</p>
+            </dd>
+            <dd><span>回报内容：</span>
+              <textarea type="text" placeholder="请简单的说明一下回报的内容" v-bind:name="'reContent'+indexParent"></textarea>
+            </dd>
+            <dd><span>人数上限：</span>
+              <validity field="faPeople" :validators="['faPeople']">
+                <input type="text" placeholder="“0”为不限名额" v-bind:name="'faPeople'+indexParent"
+                       @input="handleValidation(event,item.faPeople)" @blur="handleValidation(event,item.faPeople)">
+              </validity>
+              <p class="errors" v-if="item.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
+            </dd>
+            <dd v-if="item.type == 1">
+              <span>运 &nbsp&nbsp&nbsp&nbsp&nbsp 费：</span>
+              <validity field="freight" :validators="['freight']">
+                <input type="text" placeholder="“0”为包邮，默认单位元" v-bind:name="'freight'+indexParent"
+                       @input="handleValidation(event,item.freight)" @blur="handleValidation(event,item.freight)">
+              </validity>
+              <p class="errors" v-if="item.freight.invalid">*运费只能为整数,最多为99元</p>
+            </dd>
+            <dd class="radio invoice" v-if="item.type == 1">
+              <span>发 &nbsp&nbsp&nbsp&nbsp&nbsp 票：</span>
+              <div class="clearfix radio_wrap">
+                <label><input type="radio" checked="checked" v-bind:name="'invoice'+indexParent" value="不可开发票">
+                  <span class="outCircle"><span class="innerCircle"></span></span>不可开发票</label>
+                <label><input type="radio" v-bind:name="'invoice'+indexParent" value="可开发票">
+                  <span class="outCircle"><span class="innerCircle"></span></span>可开发票</label>
+              </div>
+            </dd>
+            <dd><span>回报时间：</span>
+              <validity field="retime" :validators="['retime']">
+                <input type="text" placeholder="“0”为项目结束后立即发送" v-bind:name="'retime'+indexParent"
+                       @input="handleValidation(event,item.retime)" @blur="handleValidation(event,item.retime)">
+              </validity>
+              <p class="errors" v-if="item.retime.invalid">*回报时间只能为整数,最长为999天</p>
+            </dd>
+            <dd class="img_box">
+              <img v-for="(list,index) in item.picSrc" v-on:click="delArr(item.picSrc,index)" v-bind:src="list.src"
+                   v-if="list.src" alt="pic">
+            </dd>
+            <dd class="file mt-30">
+              <span>上传图片：</span>
+              <div class="filePic filePicBg pl56">
+                <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
+                <form class="absolute" method="post" enctype="multipart/form-data" v-for="(list,index) in item.picSrc"
+                      v-bind:id="indexParent+'favorerPic'+index" v-bind:action="build.mediaDrl"
+                      v-if="index == (item.picSrc.length-1)">
+                  <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                         name="mediafile"
+                         v-on:change="addPic(indexParent+'favorerPic'+index,list,item)">
+                </form>
+              </div>
+              <input v-for="(list,index) in item.picSrc" type="hidden" v-bind:name="indexParent+'favorerPic'+index"
+                     v-bind:value="list.src">
+            </dd>
+          </dl>
+          <div class="contine mt-14 mb30" v-on:click="addDescription(app.build.returnInfo,app.build.newReturn,10)">
+            +继续添加新的回报
+          </div>
+          <div class="submit mb30">
+            <input class="active w_40 mr_10" type="button" value="上一步" v-on:click="switchIndex(2,app.build.pageIndex)">
+            <input class="active w_40" type="button" value="提交审核" v-on:click="submit"/>
+          </div>
+          <input type="hidden" name="count" v-bind:value="build.returnInfo.length">
+        </li>
+        <!--回报信息  E-->
+      </ul>
+      <input type="hidden" v-bind:value="info.userName" name="username">
+      <input type="hidden" v-bind:value="info.id" name="userId">
+      <!--发起众筹  S-->
+    </div>
+    <!--主体内容  E-->
+  </form>
+</div>
+</body>
+<script type="text/javascript" src="../js/index.js"></script>
+</html>

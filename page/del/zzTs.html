@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>纸质图书</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <!-- ios7.0版本以后，safari上已看不到效果 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/><!-- 可选default、black、black-translucent -->
+    <link href="${base}/resources/weixin/css/reset.css" rel="stylesheet">
+    <link href="${base}/resources/weixin/css/index.css" rel="stylesheet">
+    
+     <script src="${base}/resources/weixin/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
+   <script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
+   <script type="text/javascript" src="${base}/resources/weixin/js/laydate.js"></script>
+   
+   
+    <script>
+     $().ready(function() {
+	
+	[@flash_message /]
+
+});	
+        $(function () {
+            $(".look_a").click(function () {
+                $(".detail").toggle();
+                $(this).toggleClass("visited").siblings(".wrap_look a").removeClass("visited");
+            })
+        })
+     function submit(){
+     if($("#author").val()!="" && $("#publname").val!="" && $("#subwords").val!="" && $("#intro").val!="" && $("#continfo").val!="" && $("#compstate").val!="" && $("#plandate").val!=""){
+        $("#zzTsForm").submit();
+        }else{
+        alert("请将所需信息填写完整");
+        }
+     }
+     
+     function validatemobile() 
+      { 
+      var mobile = $("#continfo").val();
+      if(mobile.indexOf("@")>0){
+        var filter  = /^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
+        if (filter.test(mobile)){ 
+        return true;
+      }else {
+      alert('您的电子邮件格式不正确');
+           return false;
+           }
+      }else{
+       if(mobile.length==0) 
+       { 
+          alert('请输入手机号码！'); 
+          document.form1.mobile.focus(); 
+          return false; 
+       }     
+       if(mobile.length!=11) 
+       { 
+           alert('请输入有效的手机号码！');
+           document.getElementById("continfo").value = "";
+          
+           return false; 
+       } 
+        
+       var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+       if(!myreg.test(mobile)) 
+       { 
+           alert('请输入有效的手机号码！'); 
+             document.getElementById("continfo").value = "";
+           return false; 
+       } 
+       }
+   } 
+   function clear(){
+    document.getElementById("continfo").value = "";
+   }
+    </script>
+    
+    <style type="text/css">
+*{margin:0;padding:0;list-style:none;}
+html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
+h2{line-height:30px; font-size:20px;}
+a,a:hover{ text-decoration:none;}
+pre{font-family:'微软雅黑'}
+.box{width:970px; padding:10px 20px; background-color:#fff; margin:10px auto;}
+.box a{padding-right:20px;}
+.demo1,.demo2,.demo3,.demo4,.demo5,.demo6{margin:25px 0;}
+h3{margin:10px 0;}
+.layinput{height: 22px;line-height: 22px;width: 150px;margin: 0;}
+</style>
+</head>
+<body>
+<!-- <div class="file_box">
+    <input type="file" capture="camera" accept="image/*" id="filetest" name="filetest">
+</div> -->
+<div class="wrap">
+    <div class="wrap_look">
+        <span>出版流程及投稿方式</span>
+        <div class="detail">
+            <p>
+                <span>
+                        欢迎广大作者来我社投稿，投稿分类及方式如下：<br>
+                        一、征稿范围法学理论、法学专著、法学译著、检察基础理论、检察实务与理论、检察技术、检察官培训教材及参考书、普法读物、法律工具书、法制文学等。合作书稿与其他社科类优秀书稿，也在欢迎之列。<br>
+                        法律法规释义（解读）、法律实务、普法读物、法学教材、应试参考书（如司法考试、公务员考试、考研等）、法规编纂整理等。<br>
+                        二、投稿须知<br>
+                        稿件已完成者，可提交稿件全文或者仅提交大纲和部分样稿；<br>
+                        若仅有合作意向或选题（想法），也欢迎您和我们沟通，我们一起探讨可行性。<br>
+                        三、稿件处理<br>
+                        我们将以认真的态度，及时审读稿件并与您联系。<br>
+                        四、请作者参见“组织机构”中各部门的介绍，根据书稿类型选择适合的投稿部门。<br>
+                    <br>
+                        第一编辑室<br>
+                        联系电话：010-68650028、010-68683164<br>
+                        E-mail：<a href="mailto:1210975718@qq.com">1210975718@qq.com</a>
+                    mabianji0319@sina.com<br>
+                    <br>
+                        第二编辑室<br>
+                        联系电话：010-88960622、010-68682164、010-88960622<br>
+                        E-mail：<br>
+                    <br>
+                        第三编辑室<br>
+                        联系电话：010-68630385、010-88685314；<br>
+                        E-mail：<a href="mailto:lijianbjbj@hotmail.com">lijianbjbj@hotmail.com</a><br>
+                    <br>
+                        第四编辑室<br>
+                        联系电话：010-68630384、010-68658769<br>
+                        E-mail：<br>
+                    <br>
+                        音像中心<br>
+                        联系电话：010-68687781、010-68650024<br>
+                        E-mail：<br>
+                    <br>
+                        数字出版中心<br>
+                        联系电话：010-68650018、010-68658767<br>
+                        E-mail：<a href="mailto:zgjccbssz@126.com">zgjccbssz@126.com</a>
+                </span>
+            </p>
+        </div>
+        <a class="look_a" href="javascript:;">展开</a>
+        <a class="look_a visited" href="javascript:;">收起</a>
+    </div>
+    <div class="wrap_input">
+        <p>请填写纸质图书的出书信息:</p>
+        <form id="zzTsForm" action="wxSubmit.jhtml" method="get">
+        <table>
+            <ul>
+                <li>
+                    <span>作者:</span>
+                    <input type="hidden" value="1" name="userId">
+                    <input type="text" id="author" name="author">
+                </li>
+                <li>
+                    <span>书名:</span>
+                    <input type="text" id="publname" name="publname">
+                </li>
+                <li>
+                    <span>图书类型:</span>
+                   
+                   
+                   <input type="text" id="publtype" value="${bookclass.clssName}"> 
+                 
+                    
+                    <input type="hidden" name="publtype" value="${bookclass.id}">
+                </li>
+                <li>
+                    <span>关键词:</span>
+                    <input type="text" id="subwords" name="subwords">
+                </li>
+                <li>
+                    <span>简介:</span>
+                    <input type="text" id="intro" name="intro">
+                </li>
+                <li>
+                    <span>联系方式:</span>
+                    <input type="text" id="continfo" placeholder="请填写手机号码或者有效邮箱" name="continfo" onblur="validatemobile()">
+                    
+                </li>
+                <li>
+                    <span>稿件完成情况:</span>
+                    <input type="text" id="comstate" name="compstate">
+                </li>
+                <li>
+                    <span>计划出版时间:</span>
+                    <input id="plandate" name="plandate" placeholder="请输入日期" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                </li>
+                	
+		
+            </ul>
+            </table>
+        <!--<input type="button" class="wrap_input_button" value="提交">-->
+       
+        <a href="javascript:;" onclick="submit()" class="wrap_input_button">提  交</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

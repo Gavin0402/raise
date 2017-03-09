@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>分享有奖</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <!-- ios7.0版本以后，safari上已看不到效果 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/><!-- 可选default、black、black-translucent -->
+    <meta charset="UTF-8">
+    <title>分享</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <style type="text/css">
+        .main{
+            width:100%;
+            overflow:hidden;
+            box-sizing:border-box;
+            padding:10px;
+        }
+        .main h1{
+            width:100%;
+            height:36px;
+            color:#333333;
+            line-height:36px;
+            font-size:18px;
+        }
+        .main .data span{
+            font-size:10px;
+            color:#999999;
+        }
+        .main .data a{
+            font-size:10px;
+            color:#0099cc;
+        }
+        .main .explain{
+            width:100%;
+            line-height:24px;
+            font-size:12px;
+        }
+        .main .img{
+            width:100%;
+            height:200px;
+            text-align:center;
+        }
+        .main .img img{
+            display:inline-block;
+            width:200px;
+        }
+        .explainMore{
+            width:100%;
+            overflow:hidden;
+            border:1px solid #eeeeee;
+            box-sizing:border-box;
+            padding:10px;
+        }
+    </style>
+    <script type="text/javascript" src="${base}/resources/shop/js/jquery.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/jsbn.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/prng4.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/rng.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/rsa.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/base64.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/common.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="http://203.195.235.76/jssdk/js/zepto.min.js"></script>
+</head>
+
+<div class="main">
+    <h1>分享有奖</h1>
+    <div class="data">
+        <span>2016-08-08</span>
+        <span><a href="#">中国检察数字出版平台</a></span>
+    </div>
+    <p class="explain">关注“中国检察数字出版平台”微信，转发分享赢图书换购积分，快喊你的小伙伴们来领福利啦！</p>
+    <div class="img"><img src="http://open.weixin.qq.com/qr/code/?username=jianchachubanshe" alt="扫码关注微信"></div>
+    <div class="explainMore">
+        <div class="rule">活动规则</div>
+        <div class="ruleList">
+           	一、参与流程：<br>
+       		 第一步：关注“中国检察数字出版平台官方微信”；<br>
+       		 第二步：在朋友圈分享官方微信号或转发平台内容。<br><br>
+           	二、积分获取：<br>
+            	1、在朋友圈分享“中国检察数字出版平台”官方微信号，即可获得20个图书换购积分；<br>
+            	2、在朋友圈分享“中国检察数字出版平台”推送的数字读物或活动信息，即可获得10个图书换购积分；<br>
+            	3、每天坚持访问“中国检察数字出版平台”官方微信并签到，连续5天即可获得5个图书换购积分；连续10天可获得15个图书换购积分；连续15天可获得25个图书换购积分；连续一个月即可获得60个图书换购积分。<br>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    wx.config({
+        debug: false,
+        appId: '${appId}',
+        timestamp: '${timestamp}',
+        nonceStr: '${nonceStr}',
+        signature: '${signature}',
+        jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'onMenuShareQZone',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onVoiceRecordEnd',
+            'playVoice',
+            'onVoicePlayEnd',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard'
+        ]
+    });
+    wx.ready(function () {
+        // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+        $('#checkJsApi').click(function () {
+
+            wx.checkJsApi({
+                jsApiList: [
+                    'getNetworkType',
+                    'previewImage'
+                ],
+                success: function (res) {
+                    //  alert(JSON.stringify(res));
+                }
+            });
+        })
+
+
+        var yemianUrl = location.href.split('#')[0];
+        var shareData = {
+            title: '分享有奖',
+            desc: '分享加积分',
+            link: yemianUrl,
+            imgUrl: 'http://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRt8Qia4lv7k3M9J1SKqKCImxJCt7j9rHYicKDI45jRPBxdzdyREWnk0ia0N5TMnMfth7SdxtzMvVgXg/0',
+            trigger: function (res) {
+                //alert('用户点击分享到QZone');
+            },
+
+            success: function (res) {
+                // alert('已分享');
+                $.ajax({
+                    type: "get",
+                    url: "point.jhtml",
+                    data: {
+                        yonghu:"",
+                        point: 1,
+                    },
+                    success: function (data) {
+                        if (data==1){
+                            alert("分享成功");
+                        }else{
+                            alert("分享成功，积分+1")
+                        }
+                    }
+                })
+            },
+            cancel: function (res) {
+                alert('已取消');
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        };
+        wx.onMenuShareAppMessage(shareData);
+        wx.onMenuShareTimeline(shareData);
+        wx.onMenuShareQQ(shareData);
+        wx.onMenuShareQZone(shareData);
+        wx.onMenuShareQZone(shareData);
+    });
+
+</script>
+</body>
+</html>

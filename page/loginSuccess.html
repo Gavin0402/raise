@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>${message("admin.message.view")}</title>
+    <link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
+    <script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
+    <script type="text/javascript" src="${base}/resources/admin/js/list.js"></script>
+    <script type="text/javascript">
+        $().ready(function () {
+            var $inputForm = $("#weixinForm");
+            var $browserButton = $("#browserButton");
+            var $upFileButtons = $("#upFileButtons");
+            $browserButton.browser();
+            $upFileButtons.browser({type: "media"});
+            // 表单验证
+            $inputForm.validate({
+                rules: {
+                    content: {
+                        required: true,
+                        maxlength: 1000
+                    }
+                }
+            });
+            $(".addshare").click(function () {
+                $("#listTable").append("<tr><td>出资份额累积数量:<input type=\"text\" name=\"chuziShare\"></td></tr>\
+			    <tr><td>回报类型:<select id=\"retype\" name=\"retype\">\
+			        <option></option>\
+			    </select>\
+			   </td></tr>\
+			   <tr><td> 回报标题:<input type=\"text\" name=\"reTitlw\"> </td></tr>\
+			   <tr><td> 回报内容:<input type=\"text\" name=\"reContent\"> </td> </tr>\
+               <tr><td> 份额上限:<input type=\"text\" name=\"maxShare\"> </td> </tr>\
+               <tr><td> 当前份额:<input type=\"text\" name=\"nowShare\"> </td></tr>");
+            });
+        });
+    </script>
+</head>
+<body>
+<span style="line-height:25px; font-size:25px;">登录成功</span>
+<span style="line-height:25px;">请返回首页重新进入页面</span>
+</body>
+</html>

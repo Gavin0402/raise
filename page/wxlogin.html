@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <!-- ios7.0版本以后，safari上已看不到效果 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/><!-- 可选default、black、black-translucent -->
+    <title>${message("shop.login.title")}</title>
+    <link href="${base}/resources/shop/css/common.css" rel="stylesheet" type="text/css"/>
+    <link href="${base}/resources/shop/css/login.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body{
+            width:100%;
+            height:100%;
+            background:url(${base}/resources/admin/img/back.jpg) no-repeat;
+            background-size:cover;
+        }
+        div.container{
+            width:100%;
+            margin:50px auto 0;
+        }
+        div.login .wrap{
+            margin-bottom:0px;
+            border:none;
+        }
+        div.login .main{
+            border:none;
+        }
+        #loginForm tr{
+            width:100%;
+            height:32px;
+            display:block;
+            line-height:32px;
+            margin:20px 0px 0px 0px;
+        }
+        #loginForm tr td{
+            width:100%;
+            height:32px;
+            display:block;
+            position:relative;
+        }
+        #loginForm tr #username, #loginForm tr #password, #loginForm tr #captcha{
+            width:90%;
+            margin:0 0 0 5%;
+            height:32px;
+            background:#ffffff;
+            outline:none;
+            display:block;
+            line-height:32px;
+            border:1px solid #e5e5e5;
+            box-sizing:border-box;
+        }
+        #loginForm tr #captcha{
+            width:55%;
+            float:left;
+        }
+        #loginForm tr #captchaImage{
+            float:left;
+            margin:2px 0 0 5%;
+        }
+        #loginForm tr .isRememberUsername{
+            color:#ffffff;
+            margin:0 0 0 5%;
+        }
+        #loginForm tr .findPassword{
+            color:#ffffff;
+            float:right;
+            height:32px;
+            margin:0 6% 0 0;
+            line-height:32px;
+        }
+        div.login .submit{
+            width:90%;
+            height:32px;
+            line-height:32px;
+            margin:0 0 0 5%;
+            border:1px solid #e5e5e5;
+            background:#cccccc;
+            border:1px solid rgba(0, 0, 0, .22);
+            background:rgba(0, 0, 0, .2);
+            border-radius:4px;
+        }
+        label.fieldError{
+            top:5px;
+            right:7%;
+            position:absolute;
+        }
+        #loginForm .register{
+            width:90%;
+            margin:20px 0 0 5%;
+            border-radius:4px;
+            border:1px solid #e5e5e5;
+            border:1px solid rgba(0, 0, 0, .22);
+            background:#cccccc;
+            background:rgba(0, 0, 0, .2);
+            box-sizing:border-box;
+        }
+        div.login .register a{
+            display:block;
+            color:#ffffff;
+            font-size:12px;
+            text-align:center;
+            height:32px;
+        }
+    </style>
+    <script type="text/javascript" src="${base}/resources/shop/js/jquery.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/jsbn.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/prng4.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/rng.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/rsa.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/base64.js"></script>
+    <script type="text/javascript" src="${base}/resources/shop/js/common.js"></script>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101326017"
+            data-redirecturi="http://yanglei.pub/eshop/login/qc_callback.jhtml" charset="utf-8"></script>
+    <script type="text/javascript">
+        $().ready(function () {
+//	 QC.Login({
+//      btnId:"qqLoginBtn"    //插入按钮的节点id
+//	});
+            //调用QC.Login方法，指定btnId参数将按钮绑定在容器节点中
+            QC.Login({
+                //btnId：插入按钮的节点id，必选
+                btnId: "qqLoginBtn",
+                //用户需要确认的scope授权项，可选，默认all
+                scope: "all",
+                //按钮尺寸，可用值[A_XL| A_L| A_M| A_S|  B_M| B_S| C_S]，可选，默认B_S
+                size: "B_M"
+            }, function (reqData, opts) {//登录成功
+                QC.Login.getMe(function (openId, accessToken) {
+                    $("#openId").val(openId);
+                    $("#accessToken").val(accessToken);
+                    $.ajax({
+                        url: "${base}/login/checkQQ.jhtml",
+                        type: "POST",
+                        dataType: "json",
+                        cache: false,
+                        data: {
+                            openId: openId,
+                            access_token: accessToken,
+                            nickname: reqData.nickname
+                        },
+                        success: function (data) {
+                            window.location.href = "http://yanglei.pub/eshop/";
+                            if (data.type == "error") {
+                                //location.reload();
+                            }
+                        },
+                    });
+                });
+
+
+                //根据返回数据，更换按钮显示状态方法
+                var dom = document.getElementById(opts['btnId']),
+                    _logoutTemplate = [
+                        //头像
+                        '<span><img src="{figureurl}" class="{size_key}"/></span>',
+                        //昵称
+                        '<span>{nickname}</span>',
+                        //退出
+                        '<span><a href="javascript:QC.Login.signOut();">退出</a></span>'
+                    ].join("");
+                dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {
+                    nickname: QC.String.escHTML(reqData.nickname), //做xss过滤
+                    figureurl: reqData.figureurl
+                }));
+
+            }, function (opts) {//注销成功
+                alert('QQ登录 注销成功');
+            });
+            var $loginForm = $("#loginForm");
+            var $username = $("#username");
+            var $password = $("#password");
+            var $captcha = $("#captcha");
+            var $captchaImage = $("#captchaImage");
+            var $isRememberUsername = $("#isRememberUsername");
+            var $wxopenId = $("#wxopenId");
+            var $submit = $(":submit");
+
+            // 记住用户名
+            if (getCookie("memberUsername") != null) {
+                $isRememberUsername.prop("checked", true);
+                $username.val(getCookie("memberUsername"));
+                $password.focus();
+            } else {
+                $isRememberUsername.prop("checked", false);
+                $username.focus();
+            }
+
+            // 更换验证码
+            $captchaImage.click(function () {
+                $captchaImage.attr("src", "${base}/common/captcha.jhtml?captchaId=${captchaId}&timestamp=" + (new Date()).valueOf());
+            });
+
+            // 表单验证、记住用户名
+            $loginForm.validate({
+                rules: {
+                    username: "required",
+                    password: "required"
+                        [#if setting.captchaTypes ? ? &&
+            setting.captchaTypes ? seq_contains("memberLogin")
+            ]
+            ,
+            captcha: "required"
+                [ /#if]
+        },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: "${base}/common/public_key.jhtml",
+                    type: "GET",
+                    dataType: "json",
+                    cache: false,
+                    beforeSend: function () {
+                        $submit.prop("disabled", true);
+                    },
+                    success: function (data) {
+                        var rsaKey = new RSAKey();
+                        rsaKey.setPublic(b64tohex(data.modulus), b64tohex(data.exponent));
+                        var enPassword = hex2b64(rsaKey.encrypt($password.val()));
+                        $.ajax({
+                            url: $loginForm.attr("action"),
+                            type: "POST",
+                            data: {
+                                username: $username.val(),
+                                wxopenId: $wxopenId.val(),
+                                enPassword: enPassword
+                                    [#if setting.captchaTypes ? ? &&
+                        setting.captchaTypes ? seq_contains("memberLogin")
+                        ]
+                        ,
+                        captchaId: "${captchaId}",
+                            captcha
+                        :
+                        $captcha.val()
+                            [ /#if]
+                    },
+                        dataType: "json",
+                            cache
+                        :
+                        false,
+                            success
+                        :
+                        function (message) {
+                            if ($isRememberUsername.prop("checked")) {
+                                addCookie("memberUsername", $username.val(), {expires: 7 * 24 * 60 * 60});
+                            } else {
+                                removeCookie("memberUsername");
+                            }
+                            $submit.prop("disabled", false);
+                            if (message.type == "success") {
+                                [#if redirectUrl ? ?]
+                                location.href = "${redirectUrl}";
+                                [#else]
+                                location.href = "${base}/login/wxsuccess.jhtml";
+                                [ /#if]
+                            } else {
+                                $.message(message);
+                                [#if setting.captchaTypes ? ? &&
+                                setting.captchaTypes ? seq_contains("memberLogin")
+                            ]
+                                $captcha.val("");
+                                $captchaImage.attr("src", "${base}/common/captcha.jhtml?captchaId=${captchaId}&timestamp=" + (new Date()).valueOf());
+                                [ /#if]
+                            }
+                        }
+                    })
+                        ;
+                    }
+                });
+            }
+        })
+            ;
+
+        });
+    </script>
+</head>
+<body>
+
+<div class="container login">
+    <div style="margin:0px auto;width:100%;max-width: 420px;">  <!-- 新的 -->
+        <div class="wrap">
+            <div class="main">
+                <form id="loginForm" action="${base}/login/submitwx.jhtml" method="post">
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="text" id="username" name="username" class="text"
+                                       maxlength="${setting.usernameMaxLength}" placeholder="用户名/E-mail"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="password" id="password" name="password" class="text"
+                                       maxlength="${setting.passwordMaxLength}" placeholder="登录密码" autocomplete="off"/>
+                                <input type="hidden" name="wxopenId" id="wxopenId" value="${wxopenId}"/>
+
+                            </td>
+                        </tr>
+                        [#if setting.captchaTypes?? && setting.captchaTypes?seq_contains("memberLogin")]
+                        <tr>
+                            <td>
+										<span class="fieldSet">
+											<input type="text" id="captcha" placeholder="请输入验证码" name="captcha"
+                                                   class="text captcha" maxlength="4" autocomplete="off"/><img
+                                                id="captchaImage" class="captchaImage"
+                                                src="${base}/common/captcha.jhtml?captchaId=${captchaId}"
+                                                title="${message(" shop.captcha.imageTitle")}"/>
+										</span>
+                            </td>
+                        </tr>
+                        [/#if]
+                        <tr>
+                            <td>
+                                <label class="isRememberUsername">
+                                    <input type="checkbox" id="isRememberUsername" name="isRememberUsername"
+                                           value="true"/>${message("shop.login.isRememberUsername")}
+                                </label>
+                                <a href="${base}/password/find.jhtml" class="findPassword">${message("shop.login.findPassword")}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" class="submit" value="${message(" shop.login.submit")}" />
+                            </td>
+                        </tr>
+                        <tr class="register">
+                            <td>
+                                <a href="${base}/register.jhtml?redirectUrl=${redirectUrl!''}">${message("shop.login.register")}</a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

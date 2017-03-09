@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <!-- ios7.0版本以后，safari上已看不到效果 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!-- 可选default、black、black-translucent -->
+    <meta charset="UTF-8">
+    <title>支付成功</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <style type="text/css">
+        body{
+            background:#e0e0e0;
+        }
+        .main{
+            width:100%;
+            overflow:hidden;
+            max-width:440px;
+            margin:0 auto;
+            box-sizing:border-box;
+        }
+        .main_t{
+            height:60px;
+            color:#00cc33;
+            line-height:60px;
+            font-size:16px;
+            padding:0 0 0 42px;
+            box-sizing:border-box;
+            background:url(${base}/resources/weixin/ok.png) no-repeat 10px center;
+            background-size:28px;
+        }
+        .main_c{
+            overflow:hidden;
+            background:#ffffff;
+            padding:20px 0;
+        }
+        .main_c div{
+            color:#999999;
+            height:28px;
+            width:100%;
+            padding:0 10px;
+            line-height:28px;
+            box-sizing:border-box;
+        }
+        .main_c div span{
+            width:60px;
+            height:28px;
+            line-height:28px;
+            float:left;
+            text-align:justify;
+        }
+        .main_c div i{
+            height:28px;
+            float:right;
+            line-height:28px;
+        }
+        .main_c .je{
+            height:90px;
+            padding:0 10px;
+            text-align:center;
+            margin:0 0 20px 0;
+            border-bottom:1px solid #eeeeee;
+        }
+        .main_c .je i{
+            color:#333333;
+            float:none;
+        }
+        .main_c .je_t{
+            color:#333333;
+            height:30px;
+            line-height:30px;
+            font-size:14px;
+        }
+        .main_c .je_b, .main_c .je_b i{
+            font-size:30px;
+            color:#333333;
+            height:45px;
+            line-height:45px;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="main_t">支付成功</div>
+    <div class="main_c">
+        <div class="je">
+            <div class="je_t">支付金额</div>
+            <div class="je_b">¥<i>${total}</i></div>
+        </div>
+        <div class="sp">
+            <span>商&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp品</span>
+            <i>订单编号00001574373</i>
+        </div>
+        <div class="dh">
+            <span>交易单号</span>
+            <i>${dingdanhao}</i>
+        </div>
+        <div class="sj">
+            <span>成交时间</span>
+            <i class="red">${dateNowStr}</i>
+        </div>
+        <div class="zffs">
+            <span>支付方式</span>
+            <i class="red">微信支付</i>
+        </div>
+        <div class="zfzt">
+            <span>支付状态</span>
+            <i class="red">成功</i>
+        </div>
+    </div>
+</div>
+</body>
+</html>
