@@ -355,7 +355,7 @@
                 <div class="video">请选择本地要上传的路径
                   <input type="file"
                          accept="video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv"
-                         name="mediafile" v-on:change="fileSubmit('video',app.build.advertiseVideoSrc)"/>
+                         name="mediafile" v-on:change="fileSubmit(event,'video',app.build.advertiseVideoSrc)"/>
                   <span class="video_del" v-show="build.advertiseVideoSrc.src"
                         v-on:click="deleteSrc(app.build.advertiseVideoSrc)">删除</span></div>
               </dd>
@@ -408,7 +408,7 @@
                     <p class="deltitle" v-show="!item.picSrc.src">支持JPG、GIF、PNG格式的图片，不超过1M大小</p>
                     <img alt="pic" v-show="item.picSrc.src" v-bind:src="item.picSrc.src">
                     <input class="deltitle" type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
-                           name="mediafile" v-on:change="fileSubmit('loPic'+index,item.picSrc)"/>
+                           name="mediafile" v-on:change="fileSubmit(event,'loPic'+index,item.picSrc)"/>
                   </form>
                   <!--<input type="hidden" name="loPic" v-bind:value="item.picSrc.src">-->
                 </div>

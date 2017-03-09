@@ -204,7 +204,7 @@ var app = new Vue({
       if (item.picSrc.length > 3) {
         alert("最多只能上传" + 3 + "条");
       } else {
-        this.fileSubmit(id, obj);
+        this.fileSubmit(event, id, obj);
         item.picSrc.push({src: ""});
       }
     },
