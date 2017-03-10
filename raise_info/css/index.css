@@ -1,0 +1,216 @@
+.clBlue {
+    color: #336699;
+}
+.clRed {
+    color: #cc0000;
+}
+.clGray {
+    color: #999999;
+}
+body {
+    font-size: 0.7rem;
+}
+/*supportRecord  S*/
+.supportRecord {
+    color: #333333;
+    width: 100%;
+}
+.supportRecord th, .supportRecord td {
+    text-align: center;
+    font-weight: normal
+}
+.supportRecord thead tr {
+    height: 2rem;
+    background: #e6e6e6;
+}
+.supportRecord tbody tr {
+    height: 2.5rem;
+    border-bottom: 1px solid #cccccc;
+}
+.supportRecord tbody tr p {
+    height: 0.9rem;
+    line-height: 0.9rem;
+}
+/*supportRecord  E*/
+
+/*projectDetails  S*/
+.projectDetails {
+    width: 16.5rem;
+    margin: 1rem auto;
+}
+.projectDetails img, .projectDetails video {
+    width: 100%;
+}
+.projectDetails h1 {
+    font-size: 0.9rem;
+    color: #333333;
+    font-weight: normal;
+    line-height: 2.6rem;
+    text-align: center;
+}
+.projectDetails p {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    line-height: 1.3rem;
+    color: #666666;
+}
+.projectDetails .picInfo {
+    color: #333333;
+    text-align: center;
+    margin: 0 0 0.4rem;
+}
+/*projectDetails  E*/
+
+/*evolve  S*/
+.evolve {
+    padding: 0 0.6rem 0 0.9rem;
+}
+.evolve li {
+    padding: 0.5rem 0 1.5rem;
+    position: relative;
+
+}
+.evolve li:before {
+    content: "";
+    height: 100%;
+    width: 1px;
+    background: #ccc;
+    position: absolute;
+    left: 0.6rem;
+    top: 1rem;
+    z-index: -999;
+}
+.evolve li:last-of-type:before {
+    display: none;
+}
+.evolve .icon {
+    float: left;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url("../img/Pointer.png") no-repeat;
+    background-size: contain;
+}
+.evolve .infobox {
+    float: right;
+    width: 14.6rem;
+}
+.evolve .title {
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    color: #333;
+}
+.evolve .info, .evolve .date {
+    font-size: 0.7rem;
+    line-height: 1rem;
+    color: #999;
+}
+.evolve .info {
+    margin: 0.4rem 0 0;
+}
+.evolve .img {
+    width: 3.15rem;
+    height: 3.15rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    float: left;
+}
+/*evolve  E*/
+
+/*comment  S*/
+.comment {
+    padding-bottom: 2rem;
+}
+.comment>li {
+    padding: 1rem 0.5rem 1rem 0.8rem;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+}
+.comment .headerPic {
+    float: left;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 0.3rem;
+}
+.comment .infobox {
+    float: right;
+    width: 13.8rem;
+}
+.comment .title {
+    color: #336699;
+}
+.comment .info, .comment .title {
+    font-size: 0.7rem;
+    line-height: 1.16rem;
+    color: #666;
+}
+.comment .img {
+    width: 3rem;
+    height: 3rem;
+    margin: 0.4rem 0.4rem 0 0;
+    float: left;
+}
+.comment .Interaction {
+    color: #999;
+    height:0.8rem;
+    line-height: 0.8rem;
+    padding: 0.4rem 0 0;
+}
+.comment .zan, .commentBtn {
+    float: right;
+    padding-left: 1rem;
+    margin-left: 1rem;
+    height:0.8rem;
+    line-height: 0.8rem;
+}
+.comment .zan {
+    background: url("../img/zan.png") no-repeat 0 0;
+    background-size: 0.8rem;
+}
+.comment .zan.act {
+    background: url("../img/zan_hover.png") no-repeat 0 0;
+    background-size: 0.8rem;
+}
+.commentBtn {
+    background: url("../img/commentBtn.png") no-repeat 0 0;
+    background-size: 0.8rem;
+}
+.commentText{
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    background: #f5f5f5;
+    display: none;
+}
+.commentText input{
+    height: 1.6rem;
+    line-height: 1.6rem;
+    float: left;
+    box-sizing: border-box;
+    font-size: 0.6rem;
+    -webkit-appearance:none;
+}
+.commentText .text{
+    width: 13.8rem;
+    border: 1px solid #ccc;
+    text-indent: 0.4rem;
+    border-radius: 0.2rem 0 0 0.2rem;
+}
+.commentText .sure{
+    width: 3rem;
+    background: #CC0000;
+    color: #fff;
+    border-radius: 0 0.2rem 0.2rem 0;
+}
+.commentList{
+    background:#f5f5f5;
+    font-size: 0.6rem;
+    margin-top: 0.6rem;
+    padding: 0 0.4rem;
+}
+.commentList:empty{
+    display: none;
+}
+/*comment  E*/

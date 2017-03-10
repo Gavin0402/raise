@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发起众筹</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit"/>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- windows phone 点击无高光 -->
+    <!--<meta name="msapplication-tap-highlight" content="no">-->
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/jquery.cityselect.js"></script>
+    <script>
+        $(function () {
+
+            //    个人机构切换    S
+            $(".per_btn").click(function () {
+                $(".ins").hide();
+                $(".per").show();
+                $(".ins_btn").removeClass("active");
+                $(this).addClass("active");
+            });
+            $(".ins_btn").click(function () {
+                $(".per").hide();
+                $(".ins").show();
+                $(".per_btn").removeClass("active");
+                $(this).addClass("active");
+            });
+            //    个人机构切换    E
+
+
+            //    地点下拉选框    S
+            $(".location input").click(function () {
+                $(".local_sel").hide();
+                $(this).siblings(".local_sel").show();
+                $(".local_sel li").click(function () {
+                    $(this).parent().siblings("input").val($(this).html());
+                    $(".local_sel").hide();
+                });
+                $(document).click(function () {
+                    $(".local_sel").hide();
+                });
+                return false;
+            });
+            //    地点下拉选框    E
+
+
+            //    图片上传    S
+            $(".upload input").change(function () {
+                var fils=$(this).get(0).files[0];
+                console.log(fils);
+                $(this).parent().siblings(".imgpre").find("img").attr("src",window.URL.createObjectURL(fils)).show();
+            });
+            //    图片上传    E
+
+            //    身份类型选择    S
+            $(".wrap_type li").click(function () {
+                $(".wrap_type li").removeClass("active");
+                $(this).addClass("active");
+            });
+            //    身份类型选择    E
+
+            $(".location").citySelect({
+                nodata: "none",
+                required: false
+            });
+        });
+    </script>
+</head>
+<body>
+
+<p class="title">选择你的身份类型</p>
+<div class="tab_wrap">
+    <div class="tab">
+        <a class="brl active per_btn" href="javascript:;">个人</a>
+        <a class="brr ins_btn" href="javascript:;">机构</a>
+    </div>
+</div>
+<dl class="wrap_per_ins per">
+    <dd><input type="text" placeholder="输入中文姓名"></dd>
+    <dd><textarea type="text" placeholder="二代身份证，输入数字或字母"></textarea></dd>
+    <dd><input type="text" placeholder="手机号，输入纯数字"></dd>
+    <dd>
+        <div class="location">
+            <select class="prov fl"></select>
+            <select class="city fr" disabled="disabled"></select>
+        </div>
+    </dd>
+</dl>
+<dl class="wrap_per_ins ins">
+    <dd><input type="text" placeholder="输入企业/机构名称"></dd>
+    <dd><input type="text" placeholder="请填写营业执照号或组织机构代码"></dd>
+    <dd><input type="text" placeholder="法人代表姓名"></dd>
+    <dd><input type="text" placeholder="企业/机构注册地址"></dd>
+    <dd><input type="text" placeholder="输入联系人姓名"></dd>
+    <dd><input type="text" placeholder="输入联系人手机号"></dd>
+</dl>
+<p class="title mt-14">选择你的身份类型</p>
+<ul class="wrap_type clear mt-10">
+    <li class="active">检察理论</li>
+    <li>检察史</li>
+    <li>检察业务</li>
+    <li>检察综合</li>
+    <li>法学学术</li>
+    <li>法律应用</li>
+    <li>普法读物</li>
+    <li>法学教材</li>
+    <li>法制文学</li>
+</ul>
+<p class="title">上传相关资料</p>
+<div class="uppic per">
+    <span>个人身份证-正面</span>
+    <div class="imgpre">
+        <img src="" alt="pic">
+    </div>
+    <div class="upload"><input type="file">上传</div>
+</div>
+<div class="uppic per">
+    <span>个人身份证-反面</span>
+    <div class="imgpre">
+        <img src="file://F:\MINE\MyPic\57773-106.jpg" alt="pic">
+    </div>
+    <div class="upload"><input type="file">上传</div>
+</div>
+<div class="uppic ins">
+    <span>营业执照</span>
+    <div class="imgpre">
+        <img src="" alt="pic">
+    </div>
+    <div class="upload"><input type="file">上传</div>
+</div>
+<dd class="submit mb30">
+    <input class="active w_60" type="button" value="下一步">
+</dd>
+</body>
+</html>

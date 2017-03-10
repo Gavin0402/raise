@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发起众筹</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit" />
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- windows phone 点击无高光 -->
+    <!--<meta name="msapplication-tap-highlight" content="no">-->
+    <link rel="stylesheet" href="css/reset.css" type="text/css" />
+    <link rel="stylesheet" href="css/index.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+//            提交   S
+//            $(".submit input").click(function () {
+//                $(".submit input").removeClass("active");
+//                $(this).addClass("active");
+//            });
+//            提交  E
+
+            //    地点下拉选框    S
+            $(".location input").click(function () {
+                $(".local_sel").hide();
+                $(this).siblings(".local_sel").show();
+                $(".local_sel li").click(function () {
+                    $(this).parent().siblings("input").val($(this).html());
+                    $(".local_sel").hide();
+                });
+                $(document).click(function () {
+                    $(".local_sel").hide();
+                });
+                return false;
+            });
+            //    地点下拉选框    E
+
+
+            //    图片上传    S
+            $(".fil").change(function () {
+               var fils=$(this).get(0).files[0];
+                $(this).siblings("img").attr("src",window.URL.createObjectURL(fils)).show();
+                $(this).siblings("span").hide();
+                $(this).parent().css({"background":"none","padding":"0"});
+            });
+            //    图片上传    E
+        });
+    </script>
+</head>
+<body>
+<dl class="wrap_entity">
+    <dt class="title">创建你的项目信息</dt>
+    <dd class="file">
+        <span>设置封面：</span>
+        <div class="filePic">
+            <span>建议尺寸640*480，图片大小不要超过5M</span>
+            <img id="img" src="">
+            <input type="file" class="fil">
+        </div>
+    </dd>
+    <dd><span>项目标题：</span><input type="text" placeholder="请输入项目名称"></dd>
+    <dd><span>筹款目的：</span><textarea type="text" placeholder="请简单介绍一下项目"></textarea></dd>
+    <dd><span>项目地点：</span>
+        <ul class="location">
+            <li class="fl">
+                <input class="fl" type="text" placeholder="请选择省份">
+                <ul class="local_sel">
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                </ul>
+            </li>
+            <li class="fr">
+                <input class="fl" type="text" placeholder="请选择城市">
+                <ul class="local_sel">
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                </ul>
+            </li>
+        </ul>
+    </dd>
+    <dd><span>筹资金额：</span><input type="text" placeholder="输入你需要筹资的金额"></dd>
+    <dd><span>筹资天数：</span><input type="text" placeholder="输入你需要筹资的时间周期"></dd>
+    <dd><span>设置标签：</span><input type="text" placeholder="给你的项目设置一些个性标签"></dd>
+    <dd class="submit mtb40">
+        <input class="active w_40 mr_10" type="button" value="上一步">
+        <input class="active w_40" type="button" value="下一步">
+    </dd>
+</dl>
+</body>
+</html>

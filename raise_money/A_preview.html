@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发起众筹</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit"/>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- windows phone 点击无高光 -->
+    <!--<meta name="msapplication-tap-highlight" content="no">-->
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+            $(".concern").click(function () {
+                $(this).toggleClass("active");
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="wrap_preview">
+    <div class="per_info clear">
+        <img class="fl" src="img/header.png" alt="pic">
+        <div class="text_info">
+            <p>住进童话里，魔法水晶赐你不老的容颜</p>
+            <div>
+                <span class="fl">发起人：<strong>苏云金</strong></span>
+                <span class="fr concern">关注</span>
+            </div>
+        </div>
+    </div>
+    <div class="show_pic">
+        <span class="raising"></span>
+        <img src="img/pic.jpg" alt="pic">
+    </div>
+    <div class="prograss">
+        <p><span><strong>172</strong></span>支持数</p>
+        <p><span>￥<strong>15,620</strong></span>已筹款</p>
+        <div class="percent_box clear">
+            <p><span class="fr"><strong>80%</strong></span></p>
+            <div class="percent">
+                <p></p>
+            </div>
+            <p>
+                <span class="fl">剩余<strong>15天</strong></span>
+                <span class="fr">目标筹资<strong>￥20,000</strong></span>
+            </p>
+        </div>
+        <div class="support">立即支持</div>
+        <ul class="tip">
+            <li><span class="tip_ico1 tip_ico"></span><span class="tip_info">出版</span></li>
+            <li><span class="tip_ico2 tip_ico"></span><span class="tip_info">北京</span></li>
+            <li><span class="tip_ico3 tip_ico"></span><span class="tip_info">火箭兵</span><span class="tip_info">军事禁区</span><span class="tip_info">正能量</span></li>
+        </ul>
+    </div>
+    <ul class="detial_info">
+        <li><p>查看图文详情</p></li>
+        <li><p>项目评论</p></li>
+        <li><p>支持记录</p></li>
+        <li><p>项目更新</p></li>
+    </ul>
+
+</div>
+</body>
+</html>

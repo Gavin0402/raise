@@ -1,0 +1,127 @@
+.red {
+    color: #cc0000;
+}
+/*title   S*/
+.searchTit {
+    height: 2rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
+}
+.searchTit > li {
+    width: 33.33%;
+    float: left;
+    padding: 0.5rem 0;
+    font-size: 0.7rem;
+    box-sizing: border-box;
+}
+.searchChoice {
+    line-height: 1rem;
+    padding: 0 1rem;
+    color: #333333;
+    border-right: 1px solid #ccc;
+}
+.searchChoice:after {
+    content: "";
+    width: 0.6rem;
+    height: 1rem;
+    display: block;
+    float: right;
+    background: url("../img/select.png") no-repeat center center;
+    background-size: contain;
+}
+.searchTit > li:last-of-type .searchChoice {
+    border-right: none;
+}
+.choiceList {
+    position: absolute;
+    left: 0;
+    top: 2rem;
+    width: 100%;
+    background: #fff;
+    display: none;
+}
+.choiceList > li {
+    height: 1.5rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    text-indent: 1rem;
+    color: #666666;
+}
+.choiceList > li.act {
+    color: #cc0000;
+}
+.choiceList > li.act:after {
+    color: #cc0000;
+    content: "";
+    width: 0.5rem;
+    height: 1.5rem;
+    display: block;
+    float: right;
+    margin-right: 1rem;
+    background: url("../img/right.png") no-repeat center center;
+    background-size: contain;
+}
+/*title   E*/
+
+/*content  S*/
+.searchCon {
+
+}
+.searchCon li {
+    margin: 0 0.5rem;
+}
+.conImg {
+    float: left;
+    width: 5.6rem;
+    height: 4.1rem;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    margin: 0.67rem 0 0.34rem;
+}
+.conImg img{
+    width: 100%;
+}
+.conInfo {
+    float: right;
+    width: 10.8rem;
+    margin-top: 0.5rem;
+}
+.infoTit {
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.2rem;
+}
+.percentWrap {
+    font-size: 0.7rem;
+    line-height: 1rem;
+}
+.percent {
+    width: 9rem;
+    height: 0.2rem;
+    border-radius: 0.1rem;
+    background: #e4e6e5;
+    overflow: hidden;
+    margin-top: 0.4rem;
+}
+.percent p{
+    width: 66%;
+    height: 100%;
+    background: #cc0000;
+}
+.countGroup{
+    line-height: 0.7rem;
+    padding: 0.15rem 0;
+}
+.count {
+    float: left;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+    color: #666;
+    padding-right:0.4rem;
+    margin-right:0.4rem;
+    border-right: 1px solid #999;
+}
+span.count:last-of-type{
+    border-right: none;
+}
+/*content  E*/

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发起众筹</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit"/>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- windows phone 点击无高光 -->
+    <!--<meta name="msapplication-tap-highlight" content="no">-->
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="css/waves.min.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+
+//            提交   S
+//            $(".submit input").click(function () {
+//                $(".submit input").removeClass("active");
+//                $(this).addClass("active");
+//            });
+//            提交  E
+
+            //    单选框切换    S
+            $(document).on("change","input:radio",function () {
+                if ($(this).val() == "实物回报") {
+                    $(this).parents(".wrap_entity").find(".xn").hide();
+                } else {
+                    $(this).parents(".wrap_entity").find(".xn").show();
+                }
+            });
+            //    单选框切换   E
+
+            //    图片上传    S
+            $(document).on("change",".fil",function () {
+                var fils = $(this).get(0).files[0];
+                $(this).parents(".wrap_entity").find(".img_box").show().append("<img src=\"" + window.URL.createObjectURL(fils) + "\">");
+                $(this).parents(".wrap_entity").find(".filePic").append("<input type=\"file\" class=\"fil\" accept=\"image/*\"/>");
+            }).on("click",".fil",function () {
+                if ( $(this).parents(".wrap_entity").find(".img_box img").length > 2) {
+                    alert("做多只允许添加三张图片");
+                    return false;
+                }
+            });
+            $(document).on("click",".img_box img",function () {
+                $(this).parents(".wrap_entity").find(".filePic").find("input:file").eq($(this).index()+1).remove();
+                $(this).remove();
+                if(! $(this).parents(".wrap_entity").find(".img_box img").length){
+                    $(this).parents(".wrap_entity").find(".img_box").hide();
+                }
+            });
+            //    图片上传    E
+
+            //    添加新回报     S
+            (function () {
+                var num =1;
+                $(".contine").click(function () {
+                    if(num<10){
+                        num++;
+                        $(this).before('<dl class="wrap_entity"><dd class="raise_title"><p>回报<span class="order">'+num+'</span><a class="delete"></a></p></dd>\
+                                <dd class="radio"><span>回报类型：</span><div class="clear radio_wrap">\
+                                    <label><input type="radio" checked="checked" name="radio" value="实物回报"><span class="outCircle"><span class="innerCircle"></span></span>实物回报</label>\
+                                    <label><input type="radio" name="radio" value="虚拟回报"><span class="outCircle"><span class="innerCircle"></span></span>虚拟回报</label>\
+                                </div></dd>\
+                                <dd class="xn"><span>账户信息：</span><input type="text" placeholder="输入支持者用户名"></dd>\
+                                <dd class="xn"><span>联系电话：</span><input type="text" placeholder="输入支持者联系电话"></dd>\
+                                <dd class="xn"><span>联系邮箱：</span><input type="text" placeholder="输入支持者邮箱"></dd>\
+                                <dd><span>支持金额：</span><input type="text" placeholder="输入需要用户支持的金额"></dd>\
+                                <dd><span>回报标题：</span><input type="text" placeholder="输入需要用户支持的金额"></dd>\
+                                <dd><span>回报内容：</span><textarea type="text" placeholder="回报内容"></textarea></dd>\
+                                <dd><span>人数上限：</span><input type="text" placeholder="“0”为不限名额"></dd>\
+                                <dd><span>回报时间：</span><input type="text" placeholder="“0”为项目结束后立即发送"></dd>\
+                                <dd class="img_box"></dd>\
+                                <dd class="file"><span>上传图片：</span><div class="filePic">\
+                                    <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span><input type="file" class="fil" accept="image/*"/>\
+                                </div></dd></dl>');
+                    }else {
+                        alert("最多只能添加十个回报");
+                    }
+                });
+                $(document).on("click",".delete",function () {
+                    $(this).parents(".wrap_entity").remove();
+                    $(".wrap_entity").each(function (index) {
+                        $(this).find(".order").html(index+1);
+                    });
+                    num--;
+                });
+            })();
+
+            //    添加新回报     E
+        });
+    </script>
+</head>
+<body>
+<dl class="wrap_entity">
+    <dt class="title">设置你的回报信息</dt>
+    <dd class="raise_title">
+        <p>回报<span class="order">1</span></p>
+    </dd>
+    <dd class="radio">
+        <span>回报类型：</span>
+        <div class="clear radio_wrap">
+            <label><input type="radio" checked="checked" name="radio" value="实物回报"><span class="outCircle"><span
+                    class="innerCircle"></span></span>实物回报</label>
+            <label><input type="radio" name="radio" value="虚拟回报"><span class="outCircle"><span
+                    class="innerCircle"></span></span>虚拟回报</label>
+        </div>
+    </dd>
+    <dd class="xn"><span>账户信息：</span><input type="text" placeholder="输入支持者用户名"></dd>
+    <dd class="xn"><span>联系电话：</span><input type="text" placeholder="输入支持者联系电话"></dd>
+    <dd class="xn"><span>联系邮箱：</span><input type="text" placeholder="输入支持者邮箱"></dd>
+    <dd><span>支持金额：</span><input type="text" placeholder="输入需要用户支持的金额"></dd>
+    <dd><span>回报标题：</span><input type="text" placeholder="输入需要用户支持的金额"></dd>
+    <dd><span>回报内容：</span><textarea type="text" placeholder="回报内容"></textarea></dd>
+    <dd><span>人数上限：</span><input type="text" placeholder="“0”为不限名额"></dd>
+    <dd><span>回报时间：</span><input type="text" placeholder="“0”为项目结束后立即发送"></dd>
+    <dd class="img_box"></dd>
+    <dd class="file">
+        <span>上传图片：</span>
+        <div class="filePic">
+            <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
+            <input type="file" class="fil active" accept="image/*"/>
+        </div>
+    </dd>
+</dl>
+<div class="contine mt-14 mb30">+继续添加新的回报</div>
+<div class="submit mb30">
+    <input class="active w_40 mr_10" type="button" value="上一步">
+    <input class="w_40" type="button" value="提交审核">
+</div>
+</body>
+</html>

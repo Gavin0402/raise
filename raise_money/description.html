@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发起众筹</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit"/>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- windows phone 点击无高光 -->
+    <!--<meta name="msapplication-tap-highlight" content="no">-->
+    <link rel="stylesheet" href="css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+
+            //    图片上传    S
+            $(document).on("change",".fil",function () {
+                var fils = $(this).get(0).files[0];
+                $(this).siblings("img").attr("src", window.URL.createObjectURL(fils)).css("display", "block");
+                $(this).siblings("p").hide();
+                $(this).siblings(".bg_add").hide();
+            });
+            //    图片上传    E
+
+            //    编辑     S
+            $(document).on("click",".edit_btn",function () {
+                if ($(this).html() == "编辑") {
+                    $(this).parents("dd").addClass("active").find(".edit_con").attr("contenteditable", "true");
+                    $(this).parents(".edit_tit").find("input").val($(this).parents(".edit_tit").find("p").html());
+                    $(this).parents(".edit_tit").siblings(".edit_tit_num").find("span").html(12 - $(this).parents(".edit_tit").find("input").val().length)
+                    $(".edit_tit input").keyup(function (ev) {
+                        $(this).parent().siblings(".edit_tit_num").find("span").html(12 - $(this).val().length);
+                    });
+                    $(this).html("保存");
+                } else {
+                    $(this).parents("dd").removeClass("active").find(".edit_con").attr("contenteditable", "false");
+                    $(this).parents(".edit_tit").find("p").html($(this).parents(".edit_tit").find("input").val());
+                    $(this).html("编辑");
+                }
+            });
+            //    编辑     E
+
+            //    删除     S
+            $(document).on("click",".remove_btn",function () {
+                $(this).parents("dd").remove();
+                $(this).html("保存");
+            });
+            //    删除     E
+
+            //    添加文本   S
+            $(".add_text").click(function () {
+                $(".wrap_edit").append("<dd>\
+                    <div class=\"edit_tit clear\">\
+                        <p class=\"fl\">为什么我需要你的资金支持</p>\
+                        <input type=\"text\" maxlength=\"12\">\
+                        <div class=\"fr\">\
+                            <span class=\"fr remove_btn\">删除</span>\
+                            <span class=\"fr edit_btn\">编辑</span>\
+                        </div>\
+                    </div>\
+                    <p class=\"edit_tit_num\"><span>5</span>/12</p>\
+                    <p class=\"edit_con\">请在这一部分说明你的项目不同寻常的特色，为什么需要大家的支持以及详细的资金用途，这会增加你项目的可信度并由此提高筹资的成功率。</p>\
+                </dd>");
+            });
+            //    添加文本   E
+
+            //    添加图片   S
+            $(".add_pic").click(function () {
+                $(".wrap_edit").append("<dd>\
+                    <div class=\"edit_tit clear\">\
+                        <p class=\"fl\">上传照片</p>\
+                        <div class=\"fr\">\
+                            <span class=\"fr remove_btn\">删除</span>\
+                        </div>\
+                    </div>\
+                    <div class=\"edit_pic\">\
+                        <div class=\"bg_add\"></div>\
+                        <p>支持JPG、GIF、PNG格式的图片，不超过1M大小</p>\
+                        <img id=\"img\" src=\"\">\
+                        <input type=\"file\" class=\"fil\">\
+                    </div>\
+                </dd>");
+            });
+            //    添加图片   E
+        });
+    </script>
+</head>
+<body>
+<dl class="wrap_entity">
+    <dt class="title">设置你的回报信息</dt>
+    <dd><span>宣传视频：</span><input type="text" placeholder="例如：http://www.baidu.com"></dd>
+</dl>
+<dl class="wrap_edit">
+    <dt class="title">编辑你的项目详情
+        <span class="fr add_pic">添加图片</span>
+        <span class="fr mr4 add_text">添加文本</span>
+    </dt>
+    <dd>
+        <div class="edit_tit clear">
+            <p class="fl">为什么我需要你的资金支持</p>
+            <input type="text" maxlength="12">
+            <div class="fr">
+                <span class="fr remove_btn">删除</span>
+                <span class="fr edit_btn">编辑</span>
+            </div>
+        </div>
+        <p class="edit_tit_num"><span>5</span>/12</p>
+        <p class="edit_con">请在这一部分说明你的项目不同寻常的特色，为什么需要大家的支持以及详细的资
+            金用途，这会增加你项目的可信度并由此提高筹资的成功率。</p>
+    </dd>
+    <dd>
+        <div class="edit_tit clear">
+            <p class="fl">为什么我需要你的资金支持</p>
+            <input type="text" maxlength="12">
+            <div class="fr">
+                <span class="fr remove_btn">删除</span>
+                <span class="fr edit_btn">编辑</span>
+            </div>
+        </div>
+        <p class="edit_tit_num"><span>5</span>/12</p>
+        <p class="edit_con">请在这一部分说明你的项目不同寻常的特色，为什么需要大家的支持以及详细的资
+            金用途，这会增加你项目的可信度并由此提高筹资的成功率。</p>
+    </dd>
+    <dd>
+        <div class="edit_tit clear">
+            <p class="fl">上传照片</p>
+            <div class="fr">
+                <span class="fr remove_btn">删除</span>
+            </div>
+        </div>
+        <div class="edit_pic">
+            <div class="bg_add"></div>
+            <p>支持JPG、GIF、PNG格式的图片，不超过1M大小</p>
+            <img id="img" src="">
+            <input type="file" class="fil">
+        </div>
+    </dd>
+</dl>
+<div class="submit mb30">
+    <input class="active w_40 mr_10" type="button" value="上一步">
+    <input class="active w_40" type="button" value="下一步">
+</div>
+</body>
+</html>
