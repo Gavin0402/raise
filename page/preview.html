@@ -25,7 +25,6 @@
   <link rel="stylesheet" href="../css/preview.css" type="text/css"/>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
-  <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
 </head>
 <body>
 <div id="app" class="wrap_preview">
@@ -56,7 +55,7 @@
         <span class="fr">目标筹资<strong>￥{{info.target}}</strong></span>
       </p>
     </div>
-    <div class="supportBtn support" v-if="!his">立即支持</div>
+    <div class="supportBtn support" v-if="!his" v-on="">立即支持</div>
     <div class="supportBtn dissupport" v-if="his">立即支持</div>
     <ul class="tip clearfix">
       <li>
