@@ -81,14 +81,19 @@
 	background:#cccccc;
 	overflow:hidden;
 }
-.support{
+.supportBtn{
 	height:36px;
 	line-height:36px;
 	font-size:14px;
 	border-radius:4px;
-	background:#cc0000;
 	color:#ffffff;
 	text-align:center;
+}
+.support{
+	background:#cc0000;
+}
+.dissupport{
+	background:#999;;
 }
 .percent p{
 	height:100%;

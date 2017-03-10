@@ -56,7 +56,8 @@
         <span class="fr">目标筹资<strong>￥{{info.target}}</strong></span>
       </p>
     </div>
-    <div class="support">立即支持</div>
+    <div class="supportBtn support" v-if="!his">立即支持</div>
+    <div class="supportBtn dissupport" v-if="his">立即支持</div>
     <ul class="tip clearfix">
       <li>
         <span class="tip_ico1 tip_ico"></span>

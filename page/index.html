@@ -61,7 +61,7 @@
 
       <!--历史众筹  S-->
       <ul class="conList" v-show="(tabIndex.num == 1)">
-        <li class="clearfix" v-for="item in history" v-on:click="turnPage(item)">
+        <li class="clearfix" v-for="item in history" v-on:click="turnPageHis(item)">
           <img v-bind:href="item.src" alt="pic"/>
           <div class="textInfo">
             <h3 class="c666">{{item.title}}</h3>
@@ -192,7 +192,9 @@
 
           <!--证件上传  S-->
           <p class="title">上传相关资料</p>
-          <div><form></form></div><!--vue编译的时候第一个表单会消失   这个空的表单是用来解决这个问题的-->
+          <div>
+            <form></form>
+          </div><!--vue编译的时候第一个表单会消失   这个空的表单是用来解决这个问题的-->
           <div class="uppic" v-if="(build.identityIndex.num == 0)">
             <form id="positivePic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
               <span>个人身份证-正面</span>
@@ -346,27 +348,29 @@
           <!--项目描述  S-->
           <dl class="wrap_entity">
             <dt class="title">描述你的项目</dt>
-            <form id="video" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
-              <dd class="media" v-show="build.advertiseVideoSrc.src">
-                <video width="100%" height="180px" controls="controls" v-bind:src="build.advertiseVideoSrc.src"></video>
-              </dd>
-              <dd>
-                <span>宣传视频：</span>
-                <div class="video">请选择本地要上传的路径
+
+            <dd class="media" v-show="build.advertiseVideoSrc.src">
+              <video width="100%" height="180px" controls="controls" v-bind:src="build.advertiseVideoSrc.src"></video>
+            </dd>
+            <dd class="clearfix">
+              <span>宣传视频：</span>
+              <div class="video">请选择本地要上传的路径
+                <form id="video" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
                   <input type="file"
                          accept="video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv"
                          name="mediafile" v-on:change="fileSubmit(event,'video',app.build.advertiseVideoSrc)"/>
                   <span class="video_del" v-show="build.advertiseVideoSrc.src"
-                        v-on:click="deleteSrc(app.build.advertiseVideoSrc)">删除</span></div>
-              </dd>
-            </form>
-            <input type="hidden" name="video" v-bind:value="build.advertiseVideoSrc.src">
+                        v-on:click="deleteSrc(app.build.advertiseVideoSrc)">删除</span>
+                </form>
+              </div>
+              <input type="hidden" name="video" v-bind:value="build.advertiseVideoSrc.src">
+            </dd>
             <dd><span>可能风险：</span><textarea type="text" placeholder="请简单的说明一下可能会出现的风险" name="risk"></textarea></dd>
           </dl>
           <!--项目描述  E-->
 
           <!--项目详情  S-->
-          <dl class="wrap_edit" id="editHtml">
+          <dl class="wrap_edit">
             <dt class="title deltitle">编辑你的项目详情
               <span class="fr add_pic"
                     v-on:click="addDescription(app.build.detailsDescription,app.build.newPic,5)">添加图片</span>
@@ -420,7 +424,7 @@
           <!--项目详情  E-->
           <dd class="submit mb30">
             <input class="active w_40 mr_10" type="button" value="上一步" v-on:click="switchIndex(1,app.build.pageIndex)">
-            <input class="active w_40" type="button" value="下一步" v-on:click="switchIndex(3,app.build.pageIndex)">
+            <input class="active w_40" type="button" value="下一步" v-on:click="submitPage3">
           </dd>
         </li>
         <!--详情描述  E-->

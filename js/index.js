@@ -256,6 +256,18 @@ var app = new Vue({
         this.switchIndex(2, app.build.pageIndex);
       }
     },
+    submitPage3: function (e) {
+      var bOff = true;
+      var details = this.build.detailsDescription;
+      for (var i = 0; i < details.length; i++) {
+        details[i].edit.num && (bOff = false);
+      }
+      if (bOff) {
+        this.switchIndex(3, app.build.pageIndex);
+      } else {
+        alert("您还有为完成的编辑项");
+      }
+    },
     pisitionData: function () {
       this.$http.get("../js/city.json").then(function (response) {
         app.position = response.body.citylist;
@@ -311,18 +323,29 @@ var app = new Vue({
       }
       if (bOff) {
         alert("OK");
+        var str = "";
+        var details = this.build.detailsDescription;
+        this.build.advertiseVideoSrc.src && (str = "<video src='" + this.build.advertiseVideoSrc.src + "'></video>");
+        for (var i = 0; i < details.length; i++) {
+          details[i].title && details[i].title !== "为什么我需要你的资金支持" && (str += "<h1>" + details[i].title + "</h1>");
+          details[i].content && details[i].content !== "<p>请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。</p>" && (str += details[i].content);
+          details[i].picSrc.src && (str += "<img src='" + details[i].picSrc.src + "' alt='pic'>");
+        }
+        document.getElementById("intros").value = str;
         if (this.build.identityIndex.num == 0) {
           var removeNode = document.getElementById("wrap_ins");
         } else {
           var removeNode = document.getElementById("wrap_per");
         }
         removeNode.parentNode.removeChild(removeNode);
-        document.getElementById("intros").value = document.getElementById("editHtml").innerHTML;
         document.getElementById("allForm").submit();
       }
     },
     turnPage: function (item) {
       window.location.href = "preview.html?" + item.href;
+    },
+    turnPageHis: function (item) {
+      window.location.href = "preview.html?" + item.href+"&&&his=1";
     }
   },
   mounted: function () {
