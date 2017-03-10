@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>项目详情</title>
+    <title>项目动态</title>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
@@ -23,14 +23,28 @@
     <meta name="msapplication-tap-highlight" content="no">
     <!-- windows phone 点击无高光 -->
     <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/productInfo.css">
-    <script type="text/javascript" src="../js/viewport_rem.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <script type="text/javascript" src="../../js/viewport_rem.js"></script>
     <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
+    <script type="text/javascript" src="../../js/zepto.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
 </head>
 <body>
-<div class="projectDetails">
-</div>
+<ul id="app" class="evolve">
+    <li class="clearfix">
+        <div class="icon"></div>
+        <div class="infobox">
+            <p class="title">
+                <span class="date fr">今天</span>
+                <span class="date fr">天前</span>
+            </p>
+            <p class="info"></p>
+            <div class="clearfix">
+                <div class="img" style="background: url('') no-repeat;background-size: cover;"></div>
+            </div>
+        </div>
+    </li>
+</ul>
 </body>
 </html>

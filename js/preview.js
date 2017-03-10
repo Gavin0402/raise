@@ -7,23 +7,23 @@ var apiURL = "http://192.168.8.144:8081/raise/content.jhtml";
 var app = new Vue({
   el: "#app",
   data: {
-    info:{},
-    his:""
+    info: {},
+    his: ""
   },
   methods: {
     getCustomers: function () {
-      var parameter =document.URL.split('?')[1];
-      var his =document.URL.split('&&&')[1];
+      var parameter = document.URL.split('?')[1];
+      var his = document.URL.split('&&&')[1];
       his && (this.his = his);
-      this.$http.get(apiURL+"?"+parameter).then(function (response) {
+      this.$http.get(apiURL + "?" + parameter).then(function (response) {
         console.log(response)
         this.info = response.data;
       })
     },
     turnPage: function (item) {
-      window.location.href = "preview.html?url="+item.href;
+      window.location.href = "preview.html?url=" + item.href;
     },
-    concern:function () {
+    concern: function () {
 
     }
   },

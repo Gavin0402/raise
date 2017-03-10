@@ -1,4 +1,4 @@
-.clBlue {
+.clBlue{
     color: #336699;
 }
 .clRed {
@@ -87,7 +87,7 @@ body {
     float: left;
     width: 1.2rem;
     height: 1.2rem;
-    background: url("../img/Pointer.png") no-repeat;
+    background: url("../img/icon/Pointer.png") no-repeat;
     background-size: contain;
 }
 .evolve .infobox {
@@ -163,15 +163,15 @@ body {
     line-height: 0.8rem;
 }
 .comment .zan {
-    background: url("../img/zan.png") no-repeat 0 0;
+    background: url("../img/icon/zan.png") no-repeat 0 0;
     background-size: 0.8rem;
 }
 .comment .zan.act {
-    background: url("../img/zan_hover.png") no-repeat 0 0;
+    background: url("../img/icon/zan_hover.png") no-repeat 0 0;
     background-size: 0.8rem;
 }
 .commentBtn {
-    background: url("../img/commentBtn.png") no-repeat 0 0;
+    background: url("../img/icon/commentBtn.png") no-repeat 0 0;
     background-size: 0.8rem;
 }
 .commentText{

@@ -1,63 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>支持记录</title>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
-    <meta name="format-detection" content="telephone=no, email=no"/>
-    <!-- 启用360浏览器的极速模式(webkit) -->
-    <meta name="renderer" content="webkit"/>
-    <!-- 避免IE使用兼容模式 -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
-    <meta name="HandheldFriendly" content="true">
-    <!-- 微软的老式浏览器 -->
-    <meta name="MobileOptimized" content="320">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <script type="text/javascript" src="../js/viewport_rem.js"></script>
-    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
+  <meta charset="UTF-8">
+  <title>支持记录</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+  <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+  <meta name="format-detection" content="telephone=no, email=no"/>
+  <!-- 启用360浏览器的极速模式(webkit) -->
+  <meta name="renderer" content="webkit"/>
+  <!-- 避免IE使用兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+  <meta name="HandheldFriendly" content="true">
+  <!-- 微软的老式浏览器 -->
+  <meta name="MobileOptimized" content="320">
+  <!-- windows phone 点击无高光 -->
+  <!--<meta name="msapplication-tap-highlight" content="no">-->
+  <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="../css/productInfo.css" type="text/css"/>
+  <script type="text/javascript" src="../js/vue.min.js"></script>
+  <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
-<table class="supportRecord">
-    <thead>
-    <tr>
-        <th>订单序号</th>
-        <th>支持者</th>
-        <th>支持项</th>
-        <th>数量</th>
-        <th>支持时间</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>${ord.ornum}</td>
-        <td class="clBlue">${zc.supporter[0.1]}**</td>
-        <td class="clBlue">${zc.supporter}</td>
-        <td>
-            <p class="clRed">￥${zc.amount}</p>
-            <p class="clGray">无私支持</p>
-        </td>
-        <td>${ord.anti}</td>
-        <td>
-            <p>今天</p>
-            <p>${(zc.paymentDate?string("HH:mm:ss"))!}</p>
-            <p>${(zc.paymentDate?string("yyyy-MM-dd"))!}</p>
-            <p>${(zc.paymentDate?string("HH:mm:ss"))!}</p>
-        </td>
-    </tr>
-    </tbody>
+<table id="app" class="supportRecord">
+  <thead>
+  <tr>
+    <th>订单序号</th>
+    <th>支持者</th>
+    <th>支持项</th>
+    <th>数量</th>
+    <th>支持时间</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr v-for="item in starter">
+    <td>{{item.ornum}}</td>
+    <td class="clBlue">{{item.supporter}}</td>
+    <td>
+      <p class="clRed">￥{{item.amount}}</p>
+      <p class="clGray">无私支持</p>
+    </td>
+    <td>{{item.anti}}</td>
+    <td>
+      <p>{{item.jin}}</p>
+      <p>{{item.ti}}</p>
+    </td>
+  </tr>
+  </tbody>
 </table>
+<script type="text/javascript" src="../js/viewport_rem.js"></script>
+<script type="text/javascript" src="../js/supportRecord.js"></script>
 </body>
 </html>
