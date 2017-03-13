@@ -74,10 +74,7 @@
     </ul>
   </div>
   <ul class="detial_info">
-    <li><p>查看图文详情</p></li>
-    <li><p>项目评论</p></li>
-    <li><p>支持记录</p></li>
-    <li><p>项目更新</p></li>
+    <li v-for="item in detialInfo" v-on:click="turnPage(item)"><p>{{item.title}}</p></li>
   </ul>
 </div>
 </body>
