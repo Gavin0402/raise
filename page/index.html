@@ -186,7 +186,8 @@
                 v-bind:class="{'active':index == build.typeIndex.num}">{{val}}
             </li>
           </ol>
-          <input type="hidden" name="standing" v-bind:value="build.type[build.typeIndex.num]">
+          <!--<input type="hidden" name="standing" v-bind:value="build.type[build.typeIndex.num]">-->
+          <input type="hidden" name="standing" v-bind:value="build.typeIndex.num+1">
           <!--项目类型  E-->
 
           <!--证件上传  S-->

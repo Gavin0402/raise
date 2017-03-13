@@ -20,7 +20,7 @@ var app = new Vue({
       mediaDrl: "http://192.168.8.144:8081/raise/upload_file.jhtml",//表单提交地址
       /*数据*/
       identity: ["个人", "机构"],//身份类型数据
-      type: ["检察理论", "检察史", "检察业务", "检察综合", "法学学术", "法律应用", "普法读物", "法学教材", "法制文学"],//众筹类型数据
+      type: [],//众筹类型数据
       /*索引*/
       pageIndex: {num: 0},//页面索引
       identityIndex: {num: 0},//身份类型索引
@@ -210,9 +210,11 @@ var app = new Vue({
     },
     getCustomers: function () {
       this.$http.get(apiURL).then(function (response) {
+        console.log(response.data);
         this.hot = response.data.hot;
         this.history = response.data.his;
         this.info = response.data.info;
+        this.build.type = response.data.itemtype;
       })
     },
     fileSubmit: function (e, id, obj, valid) {
@@ -325,7 +327,7 @@ var app = new Vue({
         alert("OK");
         var str = "";
         var details = this.build.detailsDescription;
-        this.build.advertiseVideoSrc.src && (str = "<video src='" + this.build.advertiseVideoSrc.src + "'></video>");
+        this.build.advertiseVideoSrc.src && (str = "<video controls='controls' src='" + this.build.advertiseVideoSrc.src + "'></video>");
         for (var i = 0; i < details.length; i++) {
           details[i].title && details[i].title !== "为什么我需要你的资金支持" && (str += "<h1>" + details[i].title + "</h1>");
           details[i].content && details[i].content !== "<p>请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。</p>" && (str += details[i].content);
@@ -342,7 +344,7 @@ var app = new Vue({
       }
     },
     turnPage: function (item) {
-      window.location.href = "preview.html?" + item.href;
+      window.location.href = "preview.html?contentId=" + item.contentId+"&openId="+this.info.openId;
     },
     turnPageHis: function (item) {
       window.location.href = "preview.html?" + item.href+"&&&his=1";
