@@ -227,6 +227,13 @@ body{
 .commentList:empty{
 	display:none;
 }
+.comment .del{
+	float:right;
+	width:1rem;
+	height:1.16rem;
+	background:url("../img/icon/delred.png") no-repeat center center;
+	background-size:contain;
+}
 /*comment  E*/
 
 .edit_tit p{

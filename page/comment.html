@@ -28,15 +28,14 @@
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
-<!-- <input id="contentId" type="hidden" value="${zc.id}"/>
-<input id="userId" type="hidden" value="${userId}"/>
-<input id="zt" type="hidden" value="${orders}"/> -->
 <div id="app">
   <ul class="comment" v-if="starter.length">
-    <li class="clearfix" v-for="item in starter">
+    <li class="clearfix" v-for="(item,index) in starter">
       <img class="headerPic" v-bind:src="item.headPic" alt="pic"/>
       <div class="infobox">
-        <p class="title">{{item.userName}}</p>
+        <p class="title">{{item.userName}}
+          <span class="del" v-on:click="delComment(item,index)"></span>
+        </p>
         <p class="info">{{item.conment}}</p>
         <div class="Interaction">
           <span class="time">{{item.time}}</span>
@@ -60,7 +59,8 @@
     <input class="sure" type="button" value="确定" v-on:click="comment()">
   </div>
   <div class="commentText" v-if="!state">
-    <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-on:blur="changestate" v-model="replyText">
+    <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-on:blur="changestate"
+           v-model="replyText">
     <input class="sure" type="button" value="确定" v-on:click="repaly()">
   </div>
 </div>
