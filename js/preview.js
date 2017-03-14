@@ -47,9 +47,8 @@ var app = new Vue({
       window.location.href = item.href + "?contentId=" + this.contentId + "&openId=" + this.openId;
     },
     concern: function () {
-      alert(this.info.concern);
       this.$http.get("http://192.168.8.144:8081/raise/concern.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&concern=" + !this.info.concern).then(function (response) {
-        alert(this.info.concern);
+        console.log(this.info.concern);
         this.info.concern = !this.info.concern;
       })
     }

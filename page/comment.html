@@ -31,32 +31,37 @@
 <!-- <input id="contentId" type="hidden" value="${zc.id}"/>
 <input id="userId" type="hidden" value="${userId}"/>
 <input id="zt" type="hidden" value="${orders}"/> -->
-<div id="appId">
-  <ul class="comment">
-    <li class="clearfix">
-      <img class="headerPic" src="img/header.png" alt="pic"/>
+<div id="app">
+  <ul class="comment" v-if="starter.length">
+    <li class="clearfix" v-for="item in starter">
+      <img class="headerPic" v-bind:src="item.headPic" alt="pic"/>
       <div class="infobox">
-        <p class="title"></p>
-        <p class="info"></p>
+        <p class="title">{{item.userName}}</p>
+        <p class="info">{{item.conment}}</p>
         <div class="Interaction">
-          <span class="time">10天前</span>
-          <span class="commentBtn">评论</span>
-          <span class="zan">赞</span>
+          <span class="time">{{item.time}}</span>
+          <span class="commentBtn" v-on:click="repalycomment(item)">回复</span>
+          <span class="zan" v-bind:class="{'act':item.zan}" v-on:click="zan(item)">赞({{item.zanNum | zanNum}})</span>
         </div>
         <ul class="commentList">
-          <li></li>
+          <li v-for="list in item.discuss" v-on:click="repalyrepaly(list,item)">
+            <span class="clBlue">{{list.proactive}}</span>
+            <span v-if="list.passive">回复</span>
+            <span class="clBlue" v-if="list.passive">{{list.passive}}</span>
+            <span class="ml2">：{{list.content}}</span>
+          </li>
         </ul>
       </div>
     </li>
   </ul>
-  <div class="commentText">
-    <input class="text" type="text" placeholder="评论">
-    <textarea class="text" placeholder="评论"></textarea>
-    <input class="sure" type="button" value="确定">
+  <div style="position:absolute;left:0;right:0;top:40%;text-align:center;" v-if="!starter.length">还没有评论,快来抢沙发吧!</div>
+  <div class="commentText" v-if="state">
+    <input class="text" type="text" placeholder="评论" v-model="commentText">
+    <input class="sure" type="button" value="确定" v-on:click="comment()">
   </div>
-  <div align="center"
-       style="width:500px;height:380px;position:absolute;left:50%;margin-left:-250px;top:50%;margin-top:-190px;">
-    <p style="padding:20px 0;">还没有评论,快来抢沙发吧!</p>
+  <div class="commentText" v-if="!state">
+    <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-on:blur="changestate" v-model="replyText">
+    <input class="sure" type="button" value="确定" v-on:click="repaly()">
   </div>
 </div>
 </body>
