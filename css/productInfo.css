@@ -194,15 +194,7 @@ body {
     background: #f5f5f5;
    
 }
-.commentText input{
-    height: 1.6rem;
-    line-height: 1.6rem;
-    float: left;
-    box-sizing: border-box;
-    font-size: 0.6rem;
-    -webkit-appearance:none;
-}
-.replyText input{
+.commentText textarea{
     height: 1.6rem;
     line-height: 1.6rem;
     float: left;
@@ -216,19 +208,7 @@ body {
     text-indent: 0.4rem;
     border-radius: 0.2rem 0 0 0.2rem;
 }
-.replyText .text{
-    width: 13.8rem;
-    border: 1px solid #ccc;
-    text-indent: 0.4rem;
-    border-radius: 0.2rem 0 0 0.2rem;
-}
 .commentText .sure{
-    width: 3rem;
-    background: #CC0000;
-    color: #fff;
-    border-radius: 0 0.2rem 0.2rem 0;
-}
-.replyText .sure{
     width: 3rem;
     background: #CC0000;
     color: #fff;

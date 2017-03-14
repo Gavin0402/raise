@@ -1,7 +1,6 @@
 /**
  * Created by Administrator on 2016/11/11.
- */0
- /*大街上客服哈家首付款拉哈*/
+ */
 $(function () {
 	var p = document.getElementsByTagName("span");
 	for(var i = 0 ; i <p.length; i++){

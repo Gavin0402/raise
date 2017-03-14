@@ -1,69 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>项目评论</title>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <!-- 忽略页面中的数字识别为电话号码,email识别 -->
-    <meta name="format-detection" content="telephone=no, email=no"/>
-    <!-- 启用360浏览器的极速模式(webkit) -->
-    <meta name="renderer" content="webkit"/>
-    <!-- 避免IE使用兼容模式 -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
-    <meta name="HandheldFriendly" content="true">
-    <!-- 微软的老式浏览器 -->
-    <meta name="MobileOptimized" content="320">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
-    <script type="text/javascript" src="../js/viewport_rem.js"></script>
-    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/zepto.js"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
+  <meta charset="UTF-8">
+  <title>项目评论</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+  <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+  <meta name="format-detection" content="telephone=no, email=no"/>
+  <!-- 启用360浏览器的极速模式(webkit) -->
+  <meta name="renderer" content="webkit"/>
+  <!-- 避免IE使用兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+  <meta name="HandheldFriendly" content="true">
+  <!-- 微软的老式浏览器 -->
+  <meta name="MobileOptimized" content="320">
+  <!-- windows phone 点击无高光 -->
+  <!--<meta name="msapplication-tap-highlight" content="no">-->
+  <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="../css/productInfo.css" type="text/css"/>
+  <script type="text/javascript" src="../js/viewport_rem.js"></script>
+  <script type="text/javascript" src="../js/vue.min.js"></script>
+  <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
 <!-- <input id="contentId" type="hidden" value="${zc.id}"/>
 <input id="userId" type="hidden" value="${userId}"/>
 <input id="zt" type="hidden" value="${orders}"/> -->
-<ul class="comment">
+<div id="appId">
+  <ul class="comment">
     <li class="clearfix">
-        <img class="headerPic" src="img/header.png" alt="pic"/>
-        <div class="infobox">
-            <input type="hidden" value="${cm.id}">
-            <p class="title"></p>
-            <p class="info"></p>
-            <div class="Interaction">
-                <span class="time"></span>
-                <span class="commentBtn">回复</span>
-                <span class="zan act"></span>
-                <span class="zan"></span>
-                <span class="zan"></span>
-            </div>
-            <ul class="commentList">
-                <li></li>
-            </ul>
+      <img class="headerPic" src="img/header.png" alt="pic"/>
+      <div class="infobox">
+        <p class="title"></p>
+        <p class="info"></p>
+        <div class="Interaction">
+          <span class="time">10天前</span>
+          <span class="commentBtn">评论</span>
+          <span class="zan">赞</span>
         </div>
+        <ul class="commentList">
+          <li></li>
+        </ul>
+      </div>
     </li>
-    <div align="center" style="width:500px;height:380px;position:absolute;left:50%;margin-left:-250px;top:50%;margin-top:-190px;">
-        <p style="padding:20px 0;">还没有评论,快来抢沙发吧!</p>
-    </div>
-</ul>
-<div class="commentText">
-    <input id="replyText" class="text" type="text" placeholder="回复">
-    <input class="sure" type="button" value="确定">
-</div>
-<div class="replyText">
+  </ul>
+  <div class="commentText">
     <input class="text" type="text" placeholder="评论">
+    <textarea class="text" placeholder="评论"></textarea>
     <input class="sure" type="button" value="确定">
+  </div>
+  <div align="center"
+       style="width:500px;height:380px;position:absolute;left:50%;margin-left:-250px;top:50%;margin-top:-190px;">
+    <p style="padding:20px 0;">还没有评论,快来抢沙发吧!</p>
+  </div>
 </div>
 </body>
+<script type="text/javascript" src="../js/comment.js"></script>
 </html>

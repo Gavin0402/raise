@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017-03-10.
  */
-var apiURL = "http://192.168.8.144:8081/raise/evolve.jhtml";
+var apiURL = "http://192.168.8.144:8081/raise/comment.jhtml";
 
 
 var app = new Vue({
