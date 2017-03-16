@@ -17,6 +17,9 @@ var app = new Vue({
     replyText: "",
     replyName: "",
     userName: "",
+    mask: false,
+    indexComment: "",
+    indexDiscuss: "",
     starter: []
   },
   methods: {
@@ -50,7 +53,7 @@ var app = new Vue({
     },
     repaly: function () {
       this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&replyName=" + this.replyName).then(function (response) {
-      console.log(response.data);
+        console.log(response.data);
         app.starter[this.commentIndex].discuss.push(response.data);
         app.replyText = "";
         app.commentId = "";
@@ -70,16 +73,33 @@ var app = new Vue({
       this.placeholder = "回复";
       event.stopPropagation();
     },
-    repalyrepaly: function (event, list, item, index) {
-      this.repalycomment(event, item, index);
-      this.replyName = list.proactive;
-      this.placeholder = "@" + list.proactive;
+    repalyrepaly: function (event, list, indexDiscuss, item, index) {
+      if (list.proactive == this.userName) {
+        this.mask = true;
+        this.indexComment = index;
+        this.indexDiscuss = indexDiscuss;
+      } else {
+        this.repalycomment(event, item, index);
+        this.replyName = list.proactive;
+        this.placeholder = "@" + list.proactive;
+      }
     },
     delComment: function (item, index) {
-      this.starter.splice(index, 1);
-      /*this.$http.get("http://192.168.8.144:8081/raise/pinglun.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + item.commentId).then(function (response) {
-       console.log(response.data);
-       })*/
+      this.$http.get("http://192.168.8.144:8081/raise/delComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + item.commentId).then(function (response) {
+        console.log(response.data);
+        this.starter.splice(index, 1);
+      })
+    },
+    delRepaly: function () {
+      var comment = this.starter[this.indexComment];
+      var discuss = comment.discuss[this.indexDiscuss];
+      this.$http.get("http://192.168.8.144:8081/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
+        console.log(response.data);
+        comment.discuss.splice(app.indexDiscuss, 1);
+      })
+    },
+    closeMask: function () {
+      this.mask = false;
     }
   },
   mounted: function () {

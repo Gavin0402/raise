@@ -34,7 +34,7 @@
       <img class="headerPic" v-bind:src="item.headPic" alt="pic"/>
       <div class="infobox">
         <p class="title">{{item.commentName}}
-          <span class="del" v-on:click="delComment(item,index)"></span>
+          <span class="del" v-on:click="delComment(item,index)" v-if="( userName == item.commentName )"></span>
         </p>
         <p class="info">{{item.comment}}</p>
         <div class="Interaction">
@@ -43,7 +43,7 @@
           <span class="zan" v-bind:class="{'act':item.zan}" v-on:click="zan(item)">赞({{item.zanNum | zanNum}})</span>
         </div>
         <ul class="commentList">
-          <li v-for="list in item.discuss" v-on:click="repalyrepaly(event,list,item,index)">
+          <li v-for="(list,indexDiscuss) in item.discuss" v-on:click="repalyrepaly(event,list,indexDiscuss,item,index)">
             <span class="clBlue">{{list.proactive}}</span>
             <span v-if="list.passive">回复</span>
             <span class="clBlue" v-if="list.passive">{{list.passive}}</span>
@@ -61,6 +61,18 @@
   <div class="commentText" v-if="!state">
     <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-model="replyText" autofocus>
     <input class="sure" type="button" value="回复" v-on:click="repaly()">
+  </div>
+  <div class="mask" v-if="mask">
+    <div class="confirm">
+      <div class="confirm-title">信息
+        <span class="confirm-close"></span>
+      </div>
+      <div class="confirm-content">您确定要删除词条回复？</div>
+      <div class="confirm-btnwrap">
+        <a class="confirm-btn" v-on:click="delRepaly">确定</a>
+        <a class="confirm-btn" v-on:click="closeMask">取消</a>
+      </div>
+    </div>
   </div>
 </div>
 </body>
