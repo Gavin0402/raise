@@ -62,10 +62,10 @@
     <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-model="replyText" autofocus>
     <input class="sure" type="button" value="回复" v-on:click="repaly()">
   </div>
-  <div class="mask" v-if="mask">
+  <div class="mask" v-show="confirm">
     <div class="confirm">
       <div class="confirm-title">信息
-        <span class="confirm-close"></span>
+        <span class="confirm-close" v-on:click="closeMask"></span>
       </div>
       <div class="confirm-content">您确定要删除词条回复？</div>
       <div class="confirm-btnwrap">
@@ -73,6 +73,9 @@
         <a class="confirm-btn" v-on:click="closeMask">取消</a>
       </div>
     </div>
+  </div>
+  <div class="tipWrap" v-show="tip">
+    <div class="tip">{{tip}}</div>
   </div>
 </div>
 </body>

@@ -17,7 +17,8 @@ var app = new Vue({
     replyText: "",
     replyName: "",
     userName: "",
-    mask: false,
+    confirm: false,
+    tip: "",
     indexComment: "",
     indexDiscuss: "",
     starter: []
@@ -75,7 +76,7 @@ var app = new Vue({
     },
     repalyrepaly: function (event, list, indexDiscuss, item, index) {
       if (list.proactive == this.userName) {
-        this.mask = true;
+        this.confirm = true;
         this.indexComment = index;
         this.indexDiscuss = indexDiscuss;
       } else {
@@ -93,13 +94,22 @@ var app = new Vue({
     delRepaly: function () {
       var comment = this.starter[this.indexComment];
       var discuss = comment.discuss[this.indexDiscuss];
+      // this.$http.get("http://127.0.0.1:3000/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
       this.$http.get("http://192.168.8.144:8081/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
         console.log(response.data);
-        comment.discuss.splice(app.indexDiscuss, 1);
+        if(response.data.success){
+          this.confirm = false;
+          comment.discuss.splice(app.indexDiscuss, 1);
+        }else {
+          app.tip = "操作失败";
+          setTimeout(function () {
+            app.tip = "";
+          },1000)
+        }
       })
     },
     closeMask: function () {
-      this.mask = false;
+      this.confirm = false;
     }
   },
   mounted: function () {
