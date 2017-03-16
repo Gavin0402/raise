@@ -12,9 +12,10 @@ var app = new Vue({
     state: true,
     placeholder: "",
     commentText: "",
-    replyText: "",
     commentId: "",
-    discussId: "",
+    commentIndex: "",
+    replyText: "",
+    replyName: "",
     userName: "",
     starter: []
   },
@@ -48,29 +49,31 @@ var app = new Vue({
       })
     },
     repaly: function () {
-      this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&discussId=" + this.discussId).then(function (response) {
-        console.log(response.data);
-        app.starter.push(response.data);
+      this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&replyName=" + this.replyName).then(function (response) {
+      console.log(response.data);
+        app.starter[this.commentIndex].discuss.push(response.data);
         app.replyText = "";
         app.commentId = "";
-        app.discussId = "";
+        app.replyName = "";
       });
     },
     changestate: function () {
       this.state = true;
       this.replyText = "";
       this.commentId = "";
-      this.discussId = "";
+      this.replyName = "";
     },
-    repalycomment: function (event,item) {
+    repalycomment: function (event, item, index) {
       this.state = false;
-      /*console.log(item);*/
       this.commentId = item.commentId;
+      this.commentIndex = index;
+      this.placeholder = "回复";
       event.stopPropagation();
     },
-    repalyrepaly: function (event,list, item) {
-      this.repalycomment(event,item);
-      this.discussId = item.discussId;
+    repalyrepaly: function (event, list, item, index) {
+      this.repalycomment(event, item, index);
+      this.replyName = list.proactive;
+      this.placeholder = "@" + list.proactive;
     },
     delComment: function (item, index) {
       this.starter.splice(index, 1);

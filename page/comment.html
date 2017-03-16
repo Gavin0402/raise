@@ -39,11 +39,11 @@
         <p class="info">{{item.comment}}</p>
         <div class="Interaction">
           <span class="time">{{item.time}}</span>
-          <span class="commentBtn" v-on:click="repalycomment(event,item)">回复</span>
+          <span class="commentBtn" v-on:click="repalycomment(event,item,index)">回复</span>
           <span class="zan" v-bind:class="{'act':item.zan}" v-on:click="zan(item)">赞({{item.zanNum | zanNum}})</span>
         </div>
         <ul class="commentList">
-          <li v-for="list in item.discuss" v-on:click="repalyrepaly(event,list,item)">
+          <li v-for="list in item.discuss" v-on:click="repalyrepaly(event,list,item,index)">
             <span class="clBlue">{{list.proactive}}</span>
             <span v-if="list.passive">回复</span>
             <span class="clBlue" v-if="list.passive">{{list.passive}}</span>
