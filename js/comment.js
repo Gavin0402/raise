@@ -94,7 +94,6 @@ var app = new Vue({
     delRepaly: function () {
       var comment = this.starter[this.indexComment];
       var discuss = comment.discuss[this.indexDiscuss];
-      // this.$http.get("http://127.0.0.1:3000/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
       this.$http.get("http://192.168.8.144:8081/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
         console.log(response.data);
         if(response.data.success){

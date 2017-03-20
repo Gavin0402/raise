@@ -28,73 +28,42 @@
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
-<ul class="searchTit clearfix">
-  <li>
-    <p class="searchChoice">高级检索</p>
-    <ul class="choiceList">
-      <li class="act">全部</li>
-      <li>分类1c</li>
-      <li>分类2</li>
-      <li>分类3</li>
-    </ul>
-  </li>
-  <li>
-    <p class="searchChoice">高级检索</p>
-    <ul class="choiceList">
-      <li class="act">全部</li>
-      <li>分类1v</li>
-      <li>分类2</li>
-      <li>分类3</li>
-    </ul>
-  </li>
-  <li>
-    <p class="searchChoice">高级检索</p>
-    <ul class="choiceList">
-      <li class="act">全部</li>
-      <li>分类1b</li>
-      <li>分类2</li>
-      <li>分类3</li>
-    </ul>
-  </li>
-</ul>
-<ul class="searchCon">
-  <li class="clearfix">
-    <div class="conImg">
-      <img src="img/pic1.jpg" alt="pic"/>
-    </div>
-    <div class="conInfo">
-      <h2 class="infoTit">《夜行》：你是不是想成为一个诗人</h2>
-      <div class="percentWrap clearfix">
-        <div class="percent fl">
-          <p></p>
+<div id="app">
+  <ul class="searchTit clearfix">
+    <li v-for="(item,index) in searchTit" v-on:click="switchIndex(event,index,tabIndex)">
+      <p class="searchChoice">{{item.title}}</p>
+      <ul class="choiceList" v-show=" tabIndex.num == index">
+        <li v-bind:class="{act:index == 0}" v-for="(list,index) in item.list"
+            v-on:click="searchCriteria(event,item,list)">{{list}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <ul class="searchCon">
+    <li class="clearfix" v-for="item in starter">
+      <div class="conImg">
+        <img v-bind:src="item.picsrc" alt="pic"/>
+      </div>
+      <div class="conInfo">
+        <h2 class="infoTit">{{item.title}}</h2>
+        <div class="percentWrap clearfix">
+          <div class="percent fl">
+            <p v-bind:style="'width:'+item.progress"></p>
+          </div>
+          <span class="red fr">{{item.progress}}</span>
         </div>
-        <span class="red fr">66%</span>
-      </div>
-      <div class="countGroup">
-        <span class="count">已筹资<span class="red">￥20,000</span></span>
-        <span class="count">支持数<span class="red">58</span></span>
-      </div>
-    </div>
-  </li>
-  <li class="clearfix">
-    <div class="conImg">
-      <img src="img/pic1.jpg" alt="pic"/>
-    </div>
-    <div class="conInfo">
-      <h2 class="infoTit">《夜行》：你是不是想成为一个诗人</h2>
-      <div class="percentWrap clearfix">
-        <div class="percent fl">
-          <p></p>
+        <div class="countGroup">
+          <span class="count">已筹资<span class="red">￥{{item.raiseAmount}}</span></span>
+          <span class="count">支持数<span class="red">{{item.support}}</span></span>
         </div>
-        <span class="red fr">66%</span>
       </div>
-      <div class="countGroup">
-        <span class="count">已筹资<span class="red">￥20,000</span></span>
-        <span class="count">支持数<span class="red">58</span></span>
-      </div>
-    </div>
-  </li>
-</ul>
+    </li>
+  </ul>
+  <div class="update" v-if="more == 1">加载更多
+    <div data-loader="circle"></div>
+  </div>
+  <div class="update" v-if="more == 2">已经到底啦~~</div>
+</div>
 </body>
-<script type="text/javascript" src="js/AdvancedSearch.js"></script>
+<script type="text/javascript" src="../js/AdvancedSearch.js"></script>
 </html>

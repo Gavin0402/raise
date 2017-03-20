@@ -23,7 +23,7 @@
   <!--<meta name="msapplication-tap-highlight" content="no">-->
   <link rel="stylesheet" type="text/css" href="../css/reset.css">
   <link rel="stylesheet" type="text/css" href="../css/index.css">
-  <script type="text/javascript" src="../js/viewport_rem.js"></script>
+  <!--<script type="text/javascript" src="../js/viewport_rem.js"></script>-->
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
   <script type="text/javascript" src="../js/vue-validator.min.js"></script>
@@ -47,42 +47,37 @@
       <!--热门众筹  S-->
       <ul class="conList" v-show="(tabIndex.num == 0)">
         <li class="clearfix" v-for="item in hot" v-on:click="turnPage(item)">
-          <div class="imgWrap">
-            <img v-bind:href="item.picsrc" alt="pic"/>
-          </div>
+          <img v-bind:href="item.picsrc" alt="pic"/>
           <div class="textInfo">
-            <h3>{{item.title}}</h3>
-            <p class="textContent">{{item.content}}</p>
+            <h3 class="c666">{{item.title}}</h3>
+            <p class="c666">{{item.content}}</p>
             <strong>￥{{item.prise}}起</strong>
             <p class="progress">完成<span>{{item.progress}}</span></p>
           </div>
         </li>
-        <a class="loadMore" v-bind:href="'AdvancedSearch.html?openId='+info.openId">查看更多>></a>
-
+        <a class="loadMore" href="AdvancedSearch.html">查看更多>></a>
       </ul>
       <!--热门众筹  E-->
 
       <!--历史众筹  S-->
       <ul class="conList" v-show="(tabIndex.num == 1)">
         <li class="clearfix" v-for="item in history" v-on:click="turnPageHis(item)">
-          <div class="imgWrap">
-            <img v-bind:href="item.picsrc" alt="pic"/>
-          </div>
+          <img v-bind:href="item.src" alt="pic"/>
           <div class="textInfo">
-            <h3>{{item.title}}</h3>
-            <p class="textContent">{{item.content}}</p>
+            <h3 class="c666">{{item.title}}</h3>
+            <p class="c666">{{item.content}}</p>
             <strong>￥{{item.prise}}起</strong>
             <p class="progress">完成<span>{{item.progress}}</span></p>
           </div>
         </li>
-        <a class="loadMore" v-bind:href="'AdvancedSearch.html?openId='+info.openId">查看更多>></a>
+        <a class="loadMore" href="AdvancedSearch.html">查看更多>></a>
       </ul>
       <!--历史众筹  E-->
 
       <!--发起众筹  S-->
       <ul class="buildRaise" v-show="(tabIndex.num == 2)">
         <!--项目资料  S-->
-        <li v-show="(build.pageIndex.num ==0)">
+        <li v-show="(build.pageIndex.num == 0)">
           <!--身份类型  S-->
           <div class="tab_wrap">
             <p class="title">选择你的身份类型</p>
@@ -186,8 +181,8 @@
           <!--身份类型  E-->
 
           <!--项目类型  S-->
-          <p class="title">选择你要创建的项目类型</p>
-          <ol class="wrap_type clearfix">
+          <p class="title mt-14">选择你要创建的项目类型</p>
+          <ol class="wrap_type clearfix mt-10">
             <li v-for="(val, index) in build.type" v-on:click="switchIndex(index,app.build.typeIndex)"
                 v-bind:class="{'active':index == build.typeIndex.num}">{{val}}
             </li>
@@ -232,7 +227,6 @@
               </div>
             </form>
             <input type="hidden" name="inversePic" v-bind:value="build.IDoppositeSrc.src">
-            <p class="errorscenter" v-if="page1.per.positive.invalid || page1.per.inverse.invalid">*请上传图片</p>
           </div>
           <div class="uppic" v-if="(build.identityIndex.num == 1)">
             <form id="licensePic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
@@ -249,8 +243,9 @@
               </div>
             </form>
             <input type="hidden" name="licensePic" v-bind:value="build.businessLicenseSrc.src">
-            <p class="errorscenter" v-if="page1.ins.licenseImg.invalid">*请上传图片</p>
           </div>
+          <p class="errorscenter" v-if="page1.per.positive.invalid || page1.per.inverse.invalid">*请上传图片</p>
+          <p class="errorscenter" v-if="page1.ins.licenseImg.invalid">*请上传图片</p>
           <!--证件上传  E-->
           <dd class="submit mb30">
             <input class="active w_60" type="button" value="下一步" v-on:click="submitPage1"/>
@@ -264,7 +259,7 @@
             <dt class="title">创建你的项目信息</dt>
             <dd class="file">
               <span>设置封面：</span>
-              <div v-bind:class="['filePic',{pl3:!build.coverPicSrc.src,filePicBg:!build.coverPicSrc.src}]">
+              <div v-bind:class="['filePic',{pl56:!build.coverPicSrc.src,filePicBg:!build.coverPicSrc.src}]">
                 <form id="coverPic" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
                   <span v-show="!build.coverPicSrc.src">建议尺寸640*480，图片大小不要超过5M</span>
                   <img v-bind:src="build.coverPicSrc.src" v-show="build.coverPicSrc.src" alt="pic">
@@ -341,9 +336,9 @@
               <p class="errors" v-if="selfdomValid.selfdomnum.invalid">*最多输入三个自定义标签</p>
             </dd>
             <dd class="submit mtb40">
-              <input class="active w_35 mr_10" type="button" value="上一步"
+              <input class="active w_40 mr_10" type="button" value="上一步"
                      v-on:click="switchIndex(0,app.build.pageIndex)">
-              <input class="active w_35" type="button" value="下一步" v-on:click="submitPage2">
+              <input class="active w_40" type="button" value="下一步" v-on:click="submitPage2">
             </dd>
           </dl>
         </li>
@@ -361,12 +356,12 @@
             <dd class="clearfix">
               <span>宣传视频：</span>
               <div class="video">请选择本地要上传的路径
-                <span class="video_del" v-show="build.advertiseVideoSrc.src"
-                      v-on:click="deleteSrc(app.build.advertiseVideoSrc)">删除</span>
                 <form id="video" v-bind:action="build.mediaDrl" method="post" enctype="multipart/form-data">
                   <input type="file"
-                         accept="video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv, video/mov"
+                         accept="video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv"
                          name="mediafile" v-on:change="fileSubmit(event,'video',app.build.advertiseVideoSrc)"/>
+                  <span class="video_del" v-show="build.advertiseVideoSrc.src"
+                        v-on:click="deleteSrc(app.build.advertiseVideoSrc)">删除</span>
                 </form>
               </div>
               <input type="hidden" name="video" v-bind:value="build.advertiseVideoSrc.src">
@@ -429,8 +424,8 @@
           </dl>
           <!--项目详情  E-->
           <dd class="submit mb30">
-            <input class="active w_35 mr_10" type="button" value="上一步" v-on:click="switchIndex(1,app.build.pageIndex)">
-            <input class="active w_35" type="button" value="下一步" v-on:click="submitPage3">
+            <input class="active w_40 mr_10" type="button" value="上一步" v-on:click="switchIndex(1,app.build.pageIndex)">
+            <input class="active w_40" type="button" value="下一步" v-on:click="submitPage3">
           </dd>
         </li>
         <!--详情描述  E-->
@@ -507,7 +502,7 @@
             </dd>
             <dd class="file mt-30">
               <span>上传图片：</span>
-              <div class="filePic filePicBg pl3">
+              <div class="filePic filePicBg pl56">
                 <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
                 <form class="absolute" method="post" enctype="multipart/form-data" v-for="(list,index) in item.picSrc"
                       v-bind:id="indexParent+'favorerPic'+index" v-bind:action="build.mediaDrl"
@@ -525,8 +520,8 @@
             +继续添加新的回报
           </div>
           <div class="submit mb30">
-            <input class="active w_35 mr_10" type="button" value="上一步" v-on:click="switchIndex(2,app.build.pageIndex)">
-            <input class="active w_35" type="button" value="提交审核" v-on:click="submit"/>
+            <input class="active w_40 mr_10" type="button" value="上一步" v-on:click="switchIndex(2,app.build.pageIndex)">
+            <input class="active w_40" type="button" value="提交审核" v-on:click="submit"/>
           </div>
           <input type="hidden" name="count" v-bind:value="build.returnInfo.length">
         </li>

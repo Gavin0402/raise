@@ -223,6 +223,8 @@ var app = new Vue({
       this.$http.post(this.build.mediaDrl, formData).then(function (data) {
         obj.src = data.data.filePath;
         valid && This.handleValidation(e, valid);
+      },function (response) {
+        alert("上传失败");
       });
     },
     submitPage1: function (e) {
