@@ -23,13 +23,16 @@
   <!--<meta name="msapplication-tap-highlight" content="no">-->
   <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
   <link rel="stylesheet" href="../css/preview.css" type="text/css"/>
+  <script type="text/javascript" src="../js/viewport_rem.js"></script>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
 <div id="app" class="wrap_preview">
   <div class="per_info clearfix">
-    <img class="fl" v-bind:src="info.headerPic" alt="pic">
+    <div class="imgWrap">
+      <img class="fl" v-bind:src="info.headerPic" alt="pic">
+    </div>
     <div class="text_info">
       <p>{{info.title}}</p>
       <div>

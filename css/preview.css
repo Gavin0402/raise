@@ -2,71 +2,84 @@
 	color:#333333;
 }
 .per_info{
-	padding:20px 14px 26px;
-	height:80px;
+	padding:1rem 1rem 0.7rem;
+}
+.per_info .imgWrap{
+	float:left;
+	width:4.2rem;
+	height:4.2rem;
+	border-radius:50%;
+	overflow:hidden;
+	background:#ccc;
+	margin-right:1rem;
 }
 .per_info img{
+	width:100%;
 	height:100%;
-	margin-right:20px;
+}
+.text_info{
+	float:left;
+	width:10.8rem;
 }
 .text_info p{
-	padding-left:4px;
-	font-size:16px;
-	line-height:26px;
-	min-height:50px;
+	font-size:0.84rem;
+	line-height:2.2rem;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 .text_info span{
-	font-size:12px;
-	line-height:38px;
+	font-size:0.74rem;
+	line-height:2rem;
 }
 .text_info strong{
 	color:#cc0000;
 }
 .text_info .concern{
-	padding:0 4px 0 20px;
+	padding:0 0.2rem 0 1rem;
 	background:url("../img/icon/concern.png") no-repeat 0 center;
-	background-size:16px;
+	background-size:0.8rem;
 }
 .text_info .concern.active{
 	background:url("../img/icon/concerning.png") no-repeat 0 center;
-	background-size:16px;
+	background-size:0.8rem;
 }
 .show_pic{
 	position:relative;
-	margin:0 14px 16px 14px;
+	margin:0 1rem 0.4rem;
 }
 .show_pic .raising{
 	position:absolute;
 	left:0;
 	top:0;
-	width:80px;
-	height:80px;
+	width:4rem;
+	height:4rem;
 	background:url("../img/icon/raiseing.png") no-repeat;
 	background-size:100%;
 }
 .show_pic img{
 	width:100%;
-	min-height:100px;
+	min-height:5rem;
 }
 .prograss{
-	padding:0 34px;
+	padding:0 1.7rem;
 }
 .prograss > p{
-	font-size:12px;
-	line-height:36px;
+	font-size:0.7rem;
+	line-height:2rem;
 }
 .prograss > p span{
-	font-size:24px;
-	margin-right:6px;
+	font-size:1.2rem;
+	margin-right:0.3rem;
 }
 .prograss > p strong{
 	color:#cc0000;
 }
 .percent_box{
-	font-size:12px;
-	line-height:26px;
-	margin-bottom:20px;
-	margin-top:-8px;
+	font-size:0.7rem;
+	line-height:1.4rem;
+	margin-bottom:1rem;
+	margin-top:-0.4rem;
 }
 .percent_box span{
 	color:#999999;
@@ -76,16 +89,16 @@
 }
 .percent{
 	width:100%;
-	height:10px;
-	border-radius:5px;
+	height:0.5rem;
+	border-radius:0.25rem;
 	background:#cccccc;
 	overflow:hidden;
 }
 .supportBtn{
-	height:36px;
-	line-height:36px;
-	font-size:14px;
-	border-radius:4px;
+	height:2rem;
+	line-height:2rem;
+	font-size:0.84rem;
+	border-radius:0.2rem;
 	color:#ffffff;
 	text-align:center;
 }
@@ -100,20 +113,20 @@
 	background:#cc0000;
 }
 .tip{
-	line-height:30px;
-	font-size:12px;
+	line-height:1.5rem;
+	font-size:0.7rem;
 	color:#999999;
-	padding:6px 0;
+	padding:0.3rem 0;
 }
 .tip > li{
 	float:left;
-	padding: 0 10px 0 2px;
+	padding: 0 0.5rem 0 0.1rem;
 }
 .tip_ico{
 	float:left;
-	width:16px;
-	height:30px;
-	margin-right:4px;
+	width:1rem;
+	height:1.5rem;
+	margin-right:0.2rem;
 }
 .tip_ico1{
 	background:url("../img/icon/tip1.png") no-repeat center center /contain ;
@@ -124,35 +137,35 @@
 .tip_ico3{
 	background:url("../img/icon/tip3.png") no-repeat center center /contain ;
 }
-.tip_info{margin-right:4px;}
+.tip_info{margin-right:0.2rem;}
 .detial_info{
 	border-bottom:1px solid #ccc;
 }
 .detial_info li{
-	padding:0 14px;
-	font-size:14px;
-	line-height:40px;
-	height:40px;
+	padding:0 0.8rem;
+	font-size:0.76rem;
+	line-height:2.2rem;
+	height:2.2rem;
 	border-top:1px solid #ccc;
 }
 .detial_info li p{
 	background:url("../img/icon/right.png") no-repeat right center;
-	background-size:8px;
+	background-size:0.4rem;
 }
 
 .wrap_entity .raise_title{
-	margin:-26px 0 -12px;
+	margin:-1.3rem 0 -0.7rem;
 }
 .raise_title p{
 	border-bottom:1px solid #cccccc;
-	line-height:40px;
-	font-size:16px;
+	line-height:2rem;
+	font-size:0.8rem;
 	color:#cc0000;
 }
 .raise_title .delete{
 	float:right;
-	width:40px;
-	height:40px;
+	width:2rem;
+	height:2rem;
 	background:url("../img/icon/delete.png") no-repeat center center;
-	background-size:20px;
+	background-size:1rem;
 }

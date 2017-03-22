@@ -124,33 +124,30 @@ body{
 	padding-bottom:2rem;
 }
 .comment > li{
-	padding:1rem 0.5rem 1rem 0.8rem;
+	padding:1rem 0.8rem 1rem;
 	position:relative;
 	border-bottom:1px solid #cccccc;
 }
 .comment .headerPic{
 	float:left;
-	width:2.3rem;
-	height:2.3rem;
+	width:4rem;
+	height:4rem;
 	border-radius:0.3rem;
 }
 .comment .infobox{
 	float:right;
-	width:13.8rem;
+	width:11.6rem;
 }
 .comment .title{
 	color:#336699;
 }
 .comment .info, .comment .title{
-	font-size:0.7rem;
-	line-height:1.16rem;
+	font-size:0.8rem;
+	line-height:1.4rem;
 	color:#666666;
-}
-.comment .img{
-	width:3rem;
-	height:3rem;
-	margin:0.4rem 0.4rem 0 0;
-	float:left;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 .comment .Interaction{
 	color:#999999;
@@ -197,11 +194,10 @@ body{
 
 }
 .commentText input{
-	height:1.6rem;
-	line-height:1.6rem;
+	height:1.8rem;
 	float:left;
 	box-sizing:border-box;
-	font-size:0.6rem;
+	font-size:0.7rem;
 	-webkit-appearance:none;
 }
 .commentText .text{
@@ -218,7 +214,7 @@ body{
 }
 .commentList{
 	background:#f5f5f5;
-	font-size:0.6rem;
+	font-size:0.7rem;
 	margin-top:0.6rem;
 }
 .commentList span{
