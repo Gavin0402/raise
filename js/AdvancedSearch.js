@@ -3,28 +3,32 @@
  */
 
 var apiURL = "http://192.168.8.144:8081/raise/retrieval.jhtml";
+var loadMoreURL = "http://192.168.8.144:8081/raise/advancedLucene.jhtml";
 
 
 var app = new Vue({
   el: "#app",
   data: {
+    type: "",
     openId: {},
     tabIndex: {num: 999},//菜单索引
-    searchType: [
-      ["全部", "分类1q", "分类2", "分类3"],
-      ["全部", "分类1w", "分类2", "分类3"],
-      ["全部", "分类1e", "分类2", "分类3"]
-    ],
+    searchType: [],
     starter: [],
-    more: 0
+    more: 0,
+    page: 1,
   },
   methods: {
     getCustomers: function () {
       var parameter = document.URL.split('?')[1];
-      this.openId = parameter.split('=')[1];
-      this.$http.get(apiURL).then(function (response) {
+      var arr = parameter.split('&');
+      this.type = arr[0].split('=')[1];
+      this.openId = arr[1].split('=')[1];
+      this.$http.get(apiURL + "?type=" + this.type).then(function (response) {
         console.log(response)
-        this.starter = response.data.item;
+        app.starter = response.data.item;
+        app.searchType.push({"title": response.data.itemType[0], "list": response.data.itemType});
+        app.searchType.push({"title": response.data.dataType[0], "list": response.data.dataType});
+        app.searchType.push({"title": response.data.raiseType[0], "list": response.data.raiseType});
       })
     },
     switchIndex: function (event, index, obj) {
@@ -34,6 +38,15 @@ var app = new Vue({
     searchCriteria: function (event, item, list) {
       item.title = list;
       this.tabIndex.num = 999;
+      var json = {};
+      this.page = 0;
+      json.page = this.page;
+      json.itemType = this.searchType[0].title;
+      json.dataType = this.searchType[1].title;
+      json.raiseType = this.searchType[2].title;
+      app.$http.post(loadMoreURL, json).then(function (response) {
+        app.starter = response.data;
+      });
       event.stopPropagation();
     }
   },
@@ -50,7 +63,22 @@ window.onscroll = function () {
   var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
   var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
   if (scrollTop + windowHeight === scrollHeight) {
-    // alert(5555);
-    // app.$http.post("http://127.0.0.1:3000/test",{"time":"20170310","person":"小红"}).then(function (response) {});
+    var json = {};
+    app.more = 1;
+    app.page = app.page + 1
+    json.page = app.page;
+    json.itemType = app.searchType[0].title;
+    json.dataType = app.searchType[1].title;
+    json.raiseType = app.searchType[2].title;
+    app.$http.post(loadMoreURL, json).then(function (response) {
+      console.log(response.data);
+      if (response.data.length) {
+        for (var i = 0; i < response.data.length; i++) {
+          app.starter.push(response.data[i]);
+        }
+      } else {
+        app.more = 2;
+      }
+    });
   }
 };

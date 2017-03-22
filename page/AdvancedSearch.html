@@ -30,7 +30,7 @@
 <body>
 <div id="app">
   <ul class="searchTit clearfix">
-    <li v-for="(item,index) in searchTit" v-on:click="switchIndex(event,index,tabIndex)">
+    <li v-for="(item,index) in searchType" v-on:click="switchIndex(event,index,tabIndex)">
       <p class="searchChoice">{{item.title}}</p>
       <ul class="choiceList" v-show=" tabIndex.num == index">
         <li v-bind:class="{act:index == 0}" v-for="(list,index) in item.list"
