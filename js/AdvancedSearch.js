@@ -24,8 +24,12 @@ var app = new Vue({
       this.type = arr[0].split('=')[1];
       this.openId = arr[1].split('=')[1];
       this.$http.get(apiURL + "?type=" + this.type).then(function (response) {
-        console.log(response)
-        app.starter = response.data.item;
+        window.scrollTo(0,0);
+        if (response.data.item.length) {
+          app.starter = response.data.item;
+        } else {
+          app.more = 3;
+        }
         app.searchType.push({"title": response.data.itemType[0], "list": response.data.itemType});
         app.searchType.push({"title": response.data.dataType[0], "list": response.data.dataType});
         app.searchType.push({"title": response.data.raiseType[0], "list": response.data.raiseType});
@@ -45,10 +49,24 @@ var app = new Vue({
       json.dataType = this.searchType[1].title;
       json.raiseType = this.searchType[2].title;
       app.$http.post(loadMoreURL, json).then(function (response) {
+        window.scrollTo(0,0);
+        if (response.data.length) {
+          app.starter = response.data;
+          this.more = 0;
+        } else {
+          app.more = 3;
+        }
         app.starter = response.data;
       });
       event.stopPropagation();
-    }
+    },
+    turnPage: function (item) {
+      if (this.type == "hot") {
+        window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.openId;
+      } else {
+        window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.info.openId + "&&&his=1";
+      }
+    },
   },
   mounted: function () {
     this.getCustomers();

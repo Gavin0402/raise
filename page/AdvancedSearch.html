@@ -33,14 +33,14 @@
     <li v-for="(item,index) in searchType" v-on:click="switchIndex(event,index,tabIndex)">
       <p class="searchChoice">{{item.title}}</p>
       <ul class="choiceList" v-show=" tabIndex.num == index">
-        <li v-bind:class="{act:index == 0}" v-for="(list,index) in item.list"
+        <li v-for="(list,index) in item.list" v-bind:class="{act:item.title == list}"
             v-on:click="searchCriteria(event,item,list)">{{list}}
         </li>
       </ul>
     </li>
   </ul>
   <ul class="searchCon">
-    <li class="clearfix" v-for="item in starter">
+    <li class="clearfix" v-for="item in starter" v-on:click="turnPage(item)">
       <div class="conImg">
         <img v-bind:src="item.picsrc" alt="pic"/>
       </div>
@@ -63,6 +63,7 @@
     <div data-loader="circle"></div>
   </div>
   <div class="update" v-if="more == 2">已经到底啦~~</div>
+  <div class="nofind" v-if="more == 3">没有您要找的内容~~</div>
 </div>
 </body>
 <script type="text/javascript" src="../js/AdvancedSearch.js"></script>

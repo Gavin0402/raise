@@ -10,7 +10,7 @@
 	left:0;
 	top:0;
 	width:100%;
-	background:#ffffff;
+	background:#f5f5f5;
 }
 .searchTit > li{
 	width:33.33%;
@@ -42,7 +42,7 @@
 	left:0;
 	top:2rem;
 	width:100%;
-	background:#ffffff;
+	background:#f5f5f5;
 }
 .choiceList > li{
 	height:1.8rem;
@@ -91,7 +91,7 @@
 .conInfo{
 	float:right;
 	width:10.8rem;
-	margin-top:0.7rem;
+	margin-top:0.8rem;
 }
 .infoTit{
 	font-size:0.8rem;
@@ -101,11 +101,12 @@
 .percentWrap{
 	font-size:0.7rem;
 	line-height:1rem;
+	padding:0.3rem 0;
 }
 .percent{
 	width:8rem;
-	height:0.2rem;
-	border-radius:0.1rem;
+	height:0.3rem;
+	border-radius:0.15rem;
 	background:#e4e6e5;
 	overflow:hidden;
 	margin-top:0.4rem;
@@ -115,13 +116,14 @@
 	background:#cc0000;
 }
 .countGroup{
-	line-height:0.7rem;
+	height:1.2rem;
+	line-height:1.2rem;
 	padding:0.15rem 0;
 }
 .count{
 	float:left;
-	font-size:0.7rem;
-	line-height:0.7rem;
+	font-size:0.74rem;
+	line-height:1.2rem;
 	color:#999;
 	padding-right:0.4rem;
 	margin-right:0.4rem;
@@ -133,6 +135,13 @@ span.count:last-of-type{
 .update{
 	height:2rem;
 	line-height:2rem;
+	font-size:0.8rem;
+	text-align:center;
+	color:#999;
+}
+.nofind{
+	height:10rem;
+	line-height:10rem;
 	font-size:0.8rem;
 	text-align:center;
 	color:#999;

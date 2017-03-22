@@ -349,7 +349,7 @@ var app = new Vue({
       window.location.href = "preview.html?contentId=" + item.contentId+"&openId="+this.info.openId;
     },
     turnPageHis: function (item) {
-      window.location.href = "preview.html?" + item.href+"&&&his=1";
+      window.location.href = "preview.html?contentId=" + item.contentId+"&openId="+this.info.openId+"&&&his=1";
     }
   },
   mounted: function () {

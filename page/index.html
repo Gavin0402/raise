@@ -34,9 +34,8 @@
   <form id="allForm" v-bind:action="build.formDrl" method="post">
     <!--切换菜单  S-->
     <ul class="TabMenu clearfix">
-      <li v-for="(val, index) in title" v-on:click="switchIndex(index,app.tabIndex)"
-          v-bind:class="{'active':index == tabIndex}"><span
-        class="bgSpan"></span>{{val}}
+      <li v-for="(val, index) in title" v-bind:class="{active:index==tabIndex.num}" v-on:click="switchIndex(index,app.tabIndex)"
+          v-bind:class="{'active':index == tabIndex}">{{val}}
       </li>
     </ul>
     <!--切换菜单  E-->
@@ -45,37 +44,50 @@
     <div class="TabCon">
 
       <!--热门众筹  S-->
-      <ul class="conList" v-show="(tabIndex.num == 0)">
+      <ul class="searchCon" v-show="(tabIndex.num == 0)">
         <li class="clearfix" v-for="item in hot" v-on:click="turnPage(item)">
-          <div class="imgWrap">
-            <img v-bind:href="item.picsrc" alt="pic"/>
+          <div class="conImg">
+            <img v-bind:src="item.picsrc" alt="pic"/>
           </div>
-          <div class="textInfo">
-            <h3>{{item.title}}</h3>
-            <p class="textContent">{{item.content}}</p>
-            <strong>￥{{item.prise}}起</strong>
-            <p class="progress">完成<span>{{item.progress}}</span></p>
+          <div class="conInfo">
+            <h2 class="infoTit">{{item.title}}</h2>
+            <div class="percentWrap clearfix">
+              <div class="percent fl">
+                <p v-bind:style="'width:'+item.progress"></p>
+              </div>
+              <span class="red fr">{{item.progress}}</span>
+            </div>
+            <div class="countGroup">
+              <span class="count">已筹资<span class="red">￥{{item.raiseAmount}}</span></span>
+              <span class="count">支持数<span class="red">{{item.support}}</span></span>
+            </div>
           </div>
         </li>
-        <a class="loadMore" v-bind:href="'AdvancedSearch.html?type=hot&openId='+info.openId">查看更多>></a>
-
+        <li><a class="loadMore" v-bind:href="'AdvancedSearch.html?type=hot&openId='+info.openId">查看更多>></a></li>
       </ul>
       <!--热门众筹  E-->
 
       <!--历史众筹  S-->
-      <ul class="conList" v-show="(tabIndex.num == 1)">
+      <ul class="searchCon" v-show="(tabIndex.num == 1)">
         <li class="clearfix" v-for="item in history" v-on:click="turnPageHis(item)">
-          <div class="imgWrap">
-            <img v-bind:href="item.picsrc" alt="pic"/>
+          <div class="conImg">
+            <img v-bind:src="item.picsrc" alt="pic"/>
           </div>
-          <div class="textInfo">
-            <h3>{{item.title}}</h3>
-            <p class="textContent">{{item.content}}</p>
-            <strong>￥{{item.prise}}起</strong>
-            <p class="progress">完成<span>{{item.progress}}</span></p>
+          <div class="conInfo">
+            <h2 class="infoTit">{{item.title}}</h2>
+            <div class="percentWrap clearfix">
+              <div class="percent fl">
+                <p v-bind:style="'width:'+item.progress"></p>
+              </div>
+              <span class="red fr">{{item.progress}}</span>
+            </div>
+            <div class="countGroup">
+              <span class="count">已筹资<span class="red">￥{{item.raiseAmount}}</span></span>
+              <span class="count">支持数<span class="red">{{item.support}}</span></span>
+            </div>
           </div>
         </li>
-        <a class="loadMore" v-bind:href="'AdvancedSearch.html?type=his&openId='+info.openId">查看更多>></a>
+        <li><a class="loadMore" v-bind:href="'AdvancedSearch.html?type=his&openId='+info.openId">查看更多>></a></li>
       </ul>
       <!--历史众筹  E-->
 
