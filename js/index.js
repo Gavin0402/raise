@@ -25,9 +25,15 @@ var app = new Vue({
       pageIndex: {num: 0},//页面索引
       identityIndex: {num: 0},//身份类型索引
       typeIndex: {num: 0},//众筹类型索引
+      IDinfo: {
+        IDtype: ["身份证", "护照"],//证件类型
+        IDnum: "",//证件类型
+        IDtypeSelect: "身份证",//选中证件类型
+        IDerrors: "请填写有效的18位身份证号码",//选中证件类型
+      },
       /*图片路径*/
-      IDcorrectSrc: {src: ""},//身份证正面照
-      IDoppositeSrc: {src: ""},//身份证反面照
+      IDcorrectSrc: {src: ""},//证件正面照
+      IDoppositeSrc: {src: ""},//证件反面照
       businessLicenseSrc: {src: ""},//营业执照照片
       coverPicSrc: {src: ""},//封面照片
       advertiseVideoSrc: {src: ""},//宣传视频
@@ -223,9 +229,23 @@ var app = new Vue({
       this.$http.post(this.build.mediaDrl, formData).then(function (data) {
         obj.src = data.data.filePath;
         valid && This.handleValidation(e, valid);
-      },function (response) {
+      }, function (response) {
         alert("上传失败");
       });
+    },
+    IDtypeMethod: function (event) {
+      if (this.build.IDinfo.IDtypeSelect == "身份证") {
+        this.$options.validators.IDnum = function (val) {
+          return /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/.test(val);
+        };
+        this.build.IDinfo.IDerrors = "请填写有效的18位身份证号码";
+      } else if (this.build.IDinfo.IDtypeSelect == "护照") {
+        this.$options.validators.IDnum = function (val) {
+          return /^1[45][0-9]{7}|G[0-9]{8}|P[0-9]{7}|S[0-9]{7,8}|D[0-9]+$/.test(val);
+        };
+        this.build.IDinfo.IDerrors = "请填写有效的18位";
+      }
+      this.page1.per.IDnum.invalid = !this.$options.validators.IDnum(this.build.IDinfo.IDnum);
     },
     submitPage1: function (e) {
       var bOff = true;
@@ -346,10 +366,10 @@ var app = new Vue({
       }
     },
     turnPage: function (item) {
-      window.location.href = "preview.html?contentId=" + item.contentId+"&openId="+this.info.openId;
+      window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.info.openId;
     },
     turnPageHis: function (item) {
-      window.location.href = "preview.html?contentId=" + item.contentId+"&openId="+this.info.openId+"&&&his=1";
+      window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.info.openId + "&&&his=1";
     }
   },
   mounted: function () {

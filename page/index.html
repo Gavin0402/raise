@@ -34,7 +34,8 @@
   <form id="allForm" v-bind:action="build.formDrl" method="post">
     <!--切换菜单  S-->
     <ul class="TabMenu clearfix">
-      <li v-for="(val, index) in title" v-bind:class="{active:index==tabIndex.num}" v-on:click="switchIndex(index,app.tabIndex)"
+      <li v-for="(val, index) in title" v-bind:class="{active:index==tabIndex.num}"
+          v-on:click="switchIndex(index,app.tabIndex)"
           v-bind:class="{'active':index == tabIndex}">{{val}}
       </li>
     </ul>
@@ -115,11 +116,17 @@
               <p class="errors" v-if="page1.per.username.invalid">*请输入正确的中文名字(2~5个汉字之间)</p>
             </dd>
             <dd>
-              <validity field="IDnum" :validators="['IDnum']">
-                <input type="text" placeholder="二代身份证，输入数字或字母 (必填)" name="cardType"
-                       @input="handleValidation(event,page1.per.IDnum)" @blur="handleValidation(event,page1.per.IDnum)">
-              </validity>
-              <p class="errors" v-if="page1.per.IDnum.invalid">*请填写有效的18位身份证号码</p>
+              <div class="IDwrap">
+                <validity field="IDnum" :validators="['IDnum']">
+                  <input class="IDnum fl" type="text" placeholder="输入证件号码 (必填)" name="cardType" v-model="build.IDinfo.IDnum"
+                         @input="handleValidation(event,page1.per.IDnum)"
+                         @blur="handleValidation(event,page1.per.IDnum)">
+                </validity>
+                <select class="IDtype fl" name="IDtype" v-model="build.IDinfo.IDtypeSelect" v-on:change="IDtypeMethod(event)">
+                  <option v-for="item in build.IDinfo.IDtype" v-bind:value="item">{{item}}</option>
+                </select>
+              </div>
+              <p class="errors" v-if="page1.per.IDnum.invalid">*{{build.IDinfo.IDerrors}}</p>
             </dd>
             <dd>
               <validity field="telnum" :validators="['telnum']">

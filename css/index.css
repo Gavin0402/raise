@@ -416,6 +416,29 @@ input[type="radio"]:checked + span .innerCircle{
 	width:15rem;
 	font-size:0.7rem;
 	-webkit-appearance:none;
+	box-sizing:border-box;
+}
+.wrap_per_ins  .IDwrap{
+	margin:0 auto;
+	width:15rem;
+	height: 1.8rem;
+}
+.wrap_per_ins input.IDnum{
+	width:11rem;
+	border-right:none;
+}
+.wrap_per_ins .IDtype{
+	width: 4rem;
+	text-indent: 0.4rem;
+	height: 1.8rem;
+	line-height: 1.8rem;
+	font-size: 0.7rem;
+	border: 1px solid #666666;
+	-webkit-appearance: none;
+	background: url(../img/icon/select.png) no-repeat 90% center;
+	background-size: 0.6rem;
+	background-color: #ffffff;
+	box-sizing:border-box;
 }
 .wrap_per_ins input[type="text"]{
 	height:1.8rem;
