@@ -116,7 +116,7 @@
             </dd>
             <dd>
               <validity field="IDnum" :validators="['IDnum']">
-                <input type="text" placeholder="二代身份证，输入数字或字母 (必填)" name="cardNo"
+                <input type="text" placeholder="二代身份证，输入数字或字母 (必填)" name="cardType"
                        @input="handleValidation(event,page1.per.IDnum)" @blur="handleValidation(event,page1.per.IDnum)">
               </validity>
               <p class="errors" v-if="page1.per.IDnum.invalid">*请填写有效的18位身份证号码</p>
