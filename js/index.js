@@ -77,28 +77,50 @@ var app = new Vue({
       /*回报信息*/
       returnInfo: [
         {
-          type: 1,
           picSrc: [
             {src: ""}
           ],
-          faMoney: {"invalid": ""},
-          reTitlw: {"invalid": ""},
-          faPeople: {"invalid": ""},
+          type: 1,
+          lotteryNum: "抽出1个奖品",
           freight: {"invalid": ""},
-          retime: {"invalid": ""},
+          lotteryReg: {"invalid": ""},
+          normal: {
+            faMoney: {"invalid": ""},
+            reTitlw: {"invalid": ""},
+            content: {"invalid": ""},
+            faPeople: {"invalid": ""},
+            retime: {"invalid": ""},
+          },
+          lottery: {
+            faMoney: {"invalid": ""},
+            content: {"invalid": ""},
+            faPeople: {"invalid": ""},
+            retime: {"invalid": ""},
+          },
         }
       ],
       /*添加回报*/
       newReturn: {
-        type: 1,
         picSrc: [
           {src: ""}
         ],
-        faMoney: {"invalid": ""},
-        reTitlw: {"invalid": ""},
-        faPeople: {"invalid": ""},
+        type: 1,
+        lotteryNum: "抽出1个奖品",
         freight: {"invalid": ""},
-        retime: {"invalid": ""},
+        lotteryReg: {"invalid": ""},
+        normal: {
+          faMoney: {"invalid": ""},
+          reTitlw: {"invalid": ""},
+          content: {"invalid": ""},
+          faPeople: {"invalid": ""},
+          retime: {"invalid": ""},
+        },
+        lottery: {
+          faMoney: {"invalid": ""},
+          content: {"invalid": ""},
+          faPeople: {"invalid": ""},
+          retime: {"invalid": ""},
+        },
       },
     },
     position: [],
@@ -322,26 +344,31 @@ var app = new Vue({
       var returnInfo = this.build.returnInfo;
       var bOff = true;
       for (var i = 0; i < returnInfo.length; i++) {
-        if (returnInfo[i].faMoney.invalid === "" || returnInfo[i].faMoney.invalid === true) {
-          returnInfo[i].faMoney.invalid = true;
-          bOff = false;
-        }
-        if (returnInfo[i].reTitlw.invalid === "" || returnInfo[i].reTitlw.invalid === true) {
-          returnInfo[i].reTitlw.invalid = true;
-          bOff = false;
-        }
-        if (returnInfo[i].faPeople.invalid === "" || returnInfo[i].faPeople.invalid === true) {
-          returnInfo[i].faPeople.invalid = true;
-          bOff = false;
-        }
-        if (returnInfo[i].retime.invalid === "" || returnInfo[i].retime.invalid === true) {
-          returnInfo[i].retime.invalid = true;
-          bOff = false;
-        }
-        if (returnInfo[i].type === 1) {
-          if (returnInfo[i].freight.invalid === "" || returnInfo[i].freight.invalid === true) {
-            returnInfo[i].freight.invalid = true;
-            bOff = false;
+        if (returnInfo[i].type == 3) {
+          for (attr in returnInfo[i].lottery) {
+            if (returnInfo[i].lottery[attr].invalid === "" || returnInfo[i].lottery[attr].invalid === true) {
+              returnInfo[i].lottery[attr].invalid = true;
+              bOff = false;
+            }
+          }
+          if (returnInfo[i].lotteryNum == "抽出多个奖品") {
+            if (returnInfo[i].lotteryReg.invalid === "" || returnInfo[i].lotteryReg.invalid === true) {
+              returnInfo[i].lotteryReg.invalid = true;
+              bOff = false;
+            }
+          }
+        } else {
+          for (attr in returnInfo[i].normal) {
+            if (returnInfo[i].normal[attr].invalid === "" || returnInfo[i].normal[attr].invalid === true) {
+              returnInfo[i].normal[attr].invalid = true;
+              bOff = false;
+            }
+          }
+          if (returnInfo[i].type == 1) {
+            if (returnInfo[i].freight.invalid === "" || returnInfo[i].freight.invalid === true) {
+              returnInfo[i].freight.invalid = true;
+              bOff = false;
+            }
           }
         }
       }

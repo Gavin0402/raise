@@ -95,7 +95,7 @@
       <!--发起众筹  S-->
       <ul class="buildRaise" v-show="(tabIndex.num == 2)">
         <!--项目资料  S-->
-        <li v-show="(build.pageIndex.num ==0)">
+        <li v-show="(build.pageIndex.num ==3)">
           <!--身份类型  S-->
           <div class="tab_wrap">
             <p class="title">选择你的身份类型</p>
@@ -118,11 +118,13 @@
             <dd>
               <div class="IDwrap">
                 <validity field="IDnum" :validators="['IDnum']">
-                  <input class="IDnum fl" type="text" placeholder="输入证件号码 (必填)" name="cardType" v-model="build.IDinfo.IDnum"
+                  <input class="IDnum fl" type="text" placeholder="输入证件号码 (必填)" name="cardType"
+                         v-model="build.IDinfo.IDnum"
                          @input="handleValidation(event,page1.per.IDnum)"
                          @blur="handleValidation(event,page1.per.IDnum)">
                 </validity>
-                <select class="IDtype fl" name="IDtype" v-model="build.IDinfo.IDtypeSelect" v-on:change="IDtypeMethod(event)">
+                <select class="IDtype fl" name="IDtype" v-model="build.IDinfo.IDtypeSelect"
+                        v-on:change="IDtypeMethod(event)">
                   <option v-for="item in build.IDinfo.IDtype" v-bind:value="item">{{item}}</option>
                 </select>
               </div>
@@ -455,92 +457,160 @@
         <!--详情描述  E-->
 
         <!--回报信息  S-->
-        <li v-show="(build.pageIndex.num == 3)">
-          <dl class="wrap_entity" v-for="(item,indexParent) in build.returnInfo">
-            <dt class="title" v-if="!indexParent">设置你的回报信息</dt>
-            <dd class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
-              class="delete" v-on:click="delArr(app.build.returnInfo,indexParent)"></a></p></dd>
-            <dd class="radio ReturnType">
-              <span>回报类型：</span>
-              <div class="clearfix radio_wrap">
-                <label><input type="radio" checked="checked" v-bind:name="'retype'+indexParent" value="1"
-                              v-model="item.type">
-                  <span class="outCircle"><span class="innerCircle"></span></span>实物回报
-                </label>
-                <label><input type="radio" v-bind:name="'retype'+indexParent" value="2" v-model="item.type">
-                  <span class="outCircle"><span class="innerCircle"></span></span>虚拟回报
-                </label>
-              </div>
-            </dd>
-            <dd><span>支持金额：</span>
-              <validity field="faMoney" :validators="['faMoney']">
-                <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
-                       @input="handleValidation(event,item.faMoney)" @blur="handleValidation(event,item.faMoney)">
-              </validity>
-              <p class="errors" v-if="item.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
-            </dd>
-            <dd><span>回报标题：</span>
-              <validity field="reTitlw" :validators="['unempty']">
-                <input type="text" placeholder="给你的项目回报设置一个标题" v-bind:name="'reTitlw'+indexParent"
-                       @input="handleValidation(event,item.reTitlw)" @blur="handleValidation(event,item.reTitlw)">
-              </validity>
-              <p class="errors" v-if="item.reTitlw.invalid">*请添加标题</p>
-            </dd>
-            <dd><span>回报内容：</span>
-              <textarea type="text" placeholder="请简单的说明一下回报的内容" v-bind:name="'reContent'+indexParent"></textarea>
-            </dd>
-            <dd><span>人数上限：</span>
-              <validity field="faPeople" :validators="['faPeople']">
-                <input type="text" placeholder="“0”为不限名额" v-bind:name="'faPeople'+indexParent"
-                       @input="handleValidation(event,item.faPeople)" @blur="handleValidation(event,item.faPeople)">
-              </validity>
-              <p class="errors" v-if="item.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
-            </dd>
-            <dd v-if="item.type == 1">
-              <span>运 &nbsp&nbsp&nbsp&nbsp&nbsp 费：</span>
-              <validity field="freight" :validators="['freight']">
-                <input type="text" placeholder="“0”为包邮，默认单位元" v-bind:name="'freight'+indexParent"
-                       @input="handleValidation(event,item.freight)" @blur="handleValidation(event,item.freight)">
-              </validity>
-              <p class="errors" v-if="item.freight.invalid">*运费只能为整数,最多为99元</p>
-            </dd>
-            <dd class="radio invoice" v-if="item.type == 1">
-              <span>发 &nbsp&nbsp&nbsp&nbsp&nbsp 票：</span>
-              <div class="clearfix radio_wrap">
-                <label><input type="radio" checked="checked" v-bind:name="'invoice'+indexParent" value="不可开发票">
-                  <span class="outCircle"><span class="innerCircle"></span></span>不可开发票</label>
-                <label><input type="radio" v-bind:name="'invoice'+indexParent" value="可开发票">
-                  <span class="outCircle"><span class="innerCircle"></span></span>可开发票</label>
-              </div>
-            </dd>
-            <dd><span>回报时间：</span>
-              <validity field="retime" :validators="['retime']">
-                <input type="text" placeholder="“0”为项目结束后立即发送" v-bind:name="'retime'+indexParent"
-                       @input="handleValidation(event,item.retime)" @blur="handleValidation(event,item.retime)">
-              </validity>
-              <p class="errors" v-if="item.retime.invalid">*回报时间只能为整数,最长为999天</p>
-            </dd>
-            <dd class="img_box">
-              <img v-for="(list,index) in item.picSrc" v-on:click="delArr(item.picSrc,index)" v-bind:src="list.src"
-                   v-if="list.src" alt="pic">
-            </dd>
-            <dd class="file mt-30">
-              <span>上传图片：</span>
-              <div class="filePic filePicBg pl3">
-                <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
-                <form class="absolute" method="post" enctype="multipart/form-data" v-for="(list,index) in item.picSrc"
-                      v-bind:id="indexParent+'favorerPic'+index" v-bind:action="build.mediaDrl"
-                      v-if="index == (item.picSrc.length-1)">
-                  <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
-                         name="mediafile"
-                         v-on:change="addPic(indexParent+'favorerPic'+index,list,item)">
-                </form>
-              </div>
-              <input v-for="(list,index) in item.picSrc" type="hidden" v-bind:name="indexParent+'favorerPic'+index"
-                     v-bind:value="list.src">
-            </dd>
-          </dl>
-          <div class="contine mt-14 mb30" v-on:click="addDescription(app.build.returnInfo,app.build.newReturn,10)">
+        <li v-show="(build.pageIndex.num == 0)">
+          <div class="retuen" v-for="(item,indexParent) in build.returnInfo">
+            <div class="title" v-if="!indexParent">设置你的回报信息</div>
+            <div class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
+              class="delete" v-on:click="delArr(app.build.returnInfo,indexParent)"></a></p></div>
+            <dl class="wrap_entity">
+              <dd class="radio ReturnType">
+                <span>回报类型：</span>
+                <div class="clearfix radio_wrap">
+                  <label><input type="radio" checked="checked" v-bind:name="'retype'+indexParent" value="1"
+                                v-model="item.type">
+                    <span class="outCircle"><span class="innerCircle"></span></span>实物回报
+                  </label>
+                  <label><input type="radio" v-bind:name="'retype'+indexParent" value="2" v-model="item.type">
+                    <span class="outCircle"><span class="innerCircle"></span></span>虚拟回报
+                  </label>
+                  <label><input type="radio" v-bind:name="'retype'+indexParent" value="3" v-model="item.type">
+                    <span class="outCircle"><span class="innerCircle"></span></span>抽奖回报
+                  </label>
+                </div>
+              </dd>
+            </dl>
+            <dl id="normalReturn" class="wrap_entity" v-show="item.type != 3">
+              <dd><span>支持金额：</span>
+                <validity field="faMoney" :validators="['faMoney']">
+                  <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
+                         @input="handleValidation(event,item.normal.faMoney)"
+                         @blur="handleValidation(event,item.normal.faMoney)">
+                </validity>
+                <p class="errors" v-if="item.normal.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
+              </dd>
+              <dd><span>回报标题：</span>
+                <validity field="reTitlw" :validators="['unempty']">
+                  <input type="text" placeholder="给你的项目回报设置一个标题" v-bind:name="'reTitlw'+indexParent"
+                         @input="handleValidation(event,item.normal.reTitlw)"
+                         @blur="handleValidation(event,item.normal.reTitlw)">
+                </validity>
+                <p class="errors" v-if="item.normal.reTitlw.invalid">*请添加标题</p>
+              </dd>
+              <dd><span>回报内容：</span>
+                <textarea type="text" placeholder="请简单的说明一下回报的内容" v-bind:name="'reContent'+indexParent"></textarea>
+              </dd>
+              <dd><span>人数上限：</span>
+                <validity field="faPeople" :validators="['faPeople']">
+                  <input type="text" placeholder="“0”为不限名额" v-bind:name="'faPeople'+indexParent"
+                         @input="handleValidation(event,item.normal.faPeople)"
+                         @blur="handleValidation(event,item.normal.faPeople)">
+                </validity>
+                <p class="errors" v-if="item.normal.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
+              </dd>
+              <dd v-if="item.type == 1">
+                <span>运 &nbsp&nbsp&nbsp&nbsp&nbsp 费：</span>
+                <validity field="freight" :validators="['freight']">
+                  <input type="text" placeholder="“0”为包邮，默认单位元" v-bind:name="'freight'+indexParent"
+                         @input="handleValidation(event,item.freight)" @blur="handleValidation(event,item.freight)">
+                </validity>
+                <p class="errors" v-if="item.freight.invalid">*运费只能为整数,最多为99元</p>
+              </dd>
+              <dd class="radio invoice" v-if="item.type == 1">
+                <span>发 &nbsp&nbsp&nbsp&nbsp&nbsp 票：</span>
+                <div class="clearfix radio_wrap">
+                  <label><input type="radio" checked="checked" v-bind:name="'invoice'+indexParent" value="不可开发票">
+                    <span class="outCircle"><span class="innerCircle"></span></span>不可开发票</label>
+                  <label><input type="radio" v-bind:name="'invoice'+indexParent" value="可开发票">
+                    <span class="outCircle"><span class="innerCircle"></span></span>可开发票</label>
+                </div>
+              </dd>
+              <dd><span>回报时间：</span>
+                <validity field="retime" :validators="['retime']">
+                  <input type="text" placeholder="“0”为项目结束后立即发送" v-bind:name="'retime'+indexParent"
+                         @input="handleValidation(event,item.normal.retime)"
+                         @blur="handleValidation(event,item.normal.retime)">
+                </validity>
+                <p class="errors" v-if="item.normal.retime.invalid">*回报时间只能为整数,最长为999天</p>
+              </dd>
+            </dl>
+            <dl id="lotteryReturn" class="wrap_entity" v-show="item.type == 3">
+              <dd><span>支持金额：</span>
+                <validity field="faMoney" :validators="['faMoney']">
+                  <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'lotteryfaMoney'+indexParent"
+                         @input="handleValidation(event,item.lottery.faMoney)"
+                         @blur="handleValidation(event,item.lottery.faMoney)">
+                </validity>
+                <p class="errors" v-if="item.lottery.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
+              </dd>
+              <dd><span>奖品个数：</span>
+                <select class="lotterySelect" name="lotteryNum" v-bind:value="item.lotteryNum"
+                        v-model="item.lotteryNum">
+                  <option value="共抽出1个奖品">抽出1个奖品</option>
+                  <option value="抽出多个奖品">抽出多个奖品</option>
+                </select>
+              </dd>
+              <dd v-if="(item.lotteryNum == '抽出多个奖品')"><span>具体规则：</span>
+                <validity field="lotteryReg" :validators="['faPeople']">
+                  <input type="text" placeholder="每几个支持者抽出1名中奖者" v-bind:name="'lotteryReg'+indexParent"
+                         @input="handleValidation(event,item.lotteryReg)"
+                         @blur="handleValidation(event,item.lotteryReg)">
+                </validity>
+                <p class="errors" v-if="item.lotteryReg.invalid">*回报人数上限只能为整数,最多为999个</p>
+              </dd>
+              <dd><span>中奖机会：</span>
+                <select class="lotterySelect" name="lotteryChance">
+                  <option value="每个用户支持多次只得一个抽奖号">每个用户支持多次得一个抽奖号</option>
+                  <option value="每个用户支持多次得多个抽奖号">每个用户支持多次得多个抽奖号</option>
+                </select>
+              </dd>
+              <dd><span>奖品内容：</span>
+                <validity field="content" :validators="['unempty']">
+                  <textarea type="text" placeholder="请简单的说明一下奖品的内容" v-bind:name="'lotteryContent'+indexParent"
+                            @input="handleValidation(event,item.lottery.content)"
+                            @blur="handleValidation(event,item.lottery.content)"></textarea>
+                </validity>
+                <p class="errors" v-if="item.lottery.content.invalid">*奖品内容不能为空</p>
+              </dd>
+              <dd><span>人数上限：</span>
+                <validity field="faPeople" :validators="['faPeople']">
+                  <input type="text" placeholder="“0”为不限名额" v-bind:name="'faPeople'+indexParent"
+                         @input="handleValidation(event,item.lottery.faPeople)"
+                         @blur="handleValidation(event,item.lottery.faPeople)">
+                </validity>
+                <p class="errors" v-if="item.lottery.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
+              </dd>
+              <dd><span>发奖时间：</span>
+                <validity field="retime" :validators="['retime']">
+                  <input type="text" placeholder="“0”为项目结束后立即发送" v-bind:name="'retime'+indexParent"
+                         @input="handleValidation(event,item.lottery.retime)"
+                         @blur="handleValidation(event,item.lottery.retime)">
+                </validity>
+                <p class="errors" v-if="item.lottery.retime.invalid">*发奖时间只能为整数,最长为999天</p>
+              </dd>
+            </dl>
+            <dl class="wrap_entity">
+              <dd class="img_box">
+                <img v-for="(list,index) in item.picSrc" v-on:click="delArr(item.picSrc,index)" v-bind:src="list.src"
+                     v-if="list.src" alt="pic">
+              </dd>
+              <dd class="file mt-30">
+                <span>上传图片：</span>
+                <div class="filePic filePicBg pl3">
+                  <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
+                  <form class="absolute" method="post" enctype="multipart/form-data" v-for="(list,index) in item.picSrc"
+                        v-bind:id="indexParent+'favorerPic'+index" v-bind:action="build.mediaDrl"
+                        v-if="index == (item.picSrc.length-1)">
+                    <input type="file" accept="image/jpeg, image/jpg, image/bmp, image/gif, image/png"
+                           name="mediafile"
+                           v-on:change="addPic(indexParent+'favorerPic'+index,list,item)">
+                  </form>
+                </div>
+                <input v-for="(list,index) in item.picSrc" type="hidden" v-bind:name="indexParent+'favorerPic'+index"
+                       v-bind:value="list.src">
+              </dd>
+            </dl>
+          </div>
+          <div class="contine mb30" v-on:click="addDescription(app.build.returnInfo,app.build.newReturn,10)">
             +继续添加新的回报
           </div>
           <div class="submit mb30">
