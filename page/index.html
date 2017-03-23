@@ -95,7 +95,7 @@
       <!--发起众筹  S-->
       <ul class="buildRaise" v-show="(tabIndex.num == 2)">
         <!--项目资料  S-->
-        <li v-show="(build.pageIndex.num ==3)">
+        <li v-show="(build.pageIndex.num ==0)">
           <!--身份类型  S-->
           <div class="tab_wrap">
             <p class="title">选择你的身份类型</p>
@@ -457,7 +457,7 @@
         <!--详情描述  E-->
 
         <!--回报信息  S-->
-        <li v-show="(build.pageIndex.num == 0)">
+        <li v-show="(build.pageIndex.num == 3)">
           <div class="retuen" v-for="(item,indexParent) in build.returnInfo">
             <div class="title" v-if="!indexParent">设置你的回报信息</div>
             <div class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
