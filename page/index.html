@@ -497,7 +497,12 @@
                 <p class="errors" v-if="item.normal.reTitlw.invalid">*请添加标题</p>
               </dd>
               <dd><span>回报内容：</span>
-                <textarea type="text" placeholder="请简单的说明一下回报的内容" v-bind:name="'reContent'+indexParent"></textarea>
+                <validity field="content" :validators="['unempty']">
+                  <textarea type="text" placeholder="请简单的说明一下回报的内容" v-bind:name="'reContent'+indexParent"
+                            @input="handleValidation(event,item.normal.content)"
+                            @blur="handleValidation(event,item.normal.content)"></textarea>
+                </validity>
+                <p class="errors" v-if="item.normal.content.invalid">*回报内容不能为空</p>
               </dd>
               <dd><span>人数上限：</span>
                 <validity field="faPeople" :validators="['faPeople']">
