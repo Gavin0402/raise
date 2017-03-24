@@ -548,9 +548,8 @@
                 <p class="errors" v-if="item.lottery.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
               </dd>
               <dd><span>奖品个数：</span>
-                <select class="lotterySelect" name="lotteryNum" v-bind:value="item.lotteryNum"
-                        v-model="item.lotteryNum">
-                  <option value="共抽出1个奖品">抽出1个奖品</option>
+                <select class="lotterySelect" name="lotteryNum" v-model="item.lotteryNum">
+                  <option value="抽出1个奖品">抽出1个奖品</option>
                   <option value="抽出多个奖品">抽出多个奖品</option>
                 </select>
               </dd>
