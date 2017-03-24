@@ -479,7 +479,7 @@
                 </div>
               </dd>
             </dl>
-            <dl id="normalReturn" class="wrap_entity" v-show="item.type != 3">
+            <dl v-bind:id="'normal'+indexParent" class="wrap_entity" v-show="item.type != 3">
               <dd><span>支持金额：</span>
                 <validity field="faMoney" :validators="['faMoney']">
                   <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
@@ -538,7 +538,7 @@
                 <p class="errors" v-if="item.normal.retime.invalid">*回报时间只能为整数,最长为999天</p>
               </dd>
             </dl>
-            <dl id="lotteryReturn" class="wrap_entity" v-show="item.type == 3">
+            <dl v-bind:id="'lottery'+indexParent" class="wrap_entity" v-show="item.type == 3">
               <dd><span>支持金额：</span>
                 <validity field="faMoney" :validators="['faMoney']">
                   <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"

@@ -345,7 +345,8 @@ var app = new Vue({
       var bOff = true;
       for (var i = 0; i < returnInfo.length; i++) {
         if (returnInfo[i].type == 3) {
-          var remove = document.getElementById("normalReturn");
+          var removeNode = document.getElementById("normal"+i);
+          removeNode.parentNode.removeChild(removeNode);
           for (attr in returnInfo[i].lottery) {
             if (returnInfo[i].lottery[attr].invalid === "" || returnInfo[i].lottery[attr].invalid === true) {
               returnInfo[i].lottery[attr].invalid = true;
@@ -359,7 +360,8 @@ var app = new Vue({
             }
           }
         } else {
-          var remove = document.getElementById("lotteryReturn");
+          var removeNode = document.getElementById("lottery"+i);
+          removeNode.parentNode.removeChild(removeNode);
           for (attr in returnInfo[i].normal) {
             if (returnInfo[i].normal[attr].invalid === "" || returnInfo[i].normal[attr].invalid === true) {
               returnInfo[i].normal[attr].invalid = true;
@@ -391,7 +393,6 @@ var app = new Vue({
           var removeNode = document.getElementById("wrap_per");
         }
         removeNode.parentNode.removeChild(removeNode);
-        remove.parentNode.removeChild(remove);
         document.getElementById("allForm").submit();
       }
     },
