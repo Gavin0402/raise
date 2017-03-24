@@ -541,14 +541,14 @@
             <dl id="lotteryReturn" class="wrap_entity" v-show="item.type == 3">
               <dd><span>支持金额：</span>
                 <validity field="faMoney" :validators="['faMoney']">
-                  <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'lotteryfaMoney'+indexParent"
+                  <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
                          @input="handleValidation(event,item.lottery.faMoney)"
                          @blur="handleValidation(event,item.lottery.faMoney)">
                 </validity>
                 <p class="errors" v-if="item.lottery.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
               </dd>
               <dd><span>奖品个数：</span>
-                <select class="lotterySelect" name="lotteryNum" v-model="item.lotteryNum">
+                <select class="lotterySelect" v-bind:name="'lotteryNum'+indexParent" v-model="item.lotteryNum">
                   <option value="抽出1个奖品">抽出1个奖品</option>
                   <option value="抽出多个奖品">抽出多个奖品</option>
                 </select>
@@ -562,14 +562,14 @@
                 <p class="errors" v-if="item.lotteryReg.invalid">*回报人数上限只能为整数,最多为999个</p>
               </dd>
               <dd><span>中奖机会：</span>
-                <select class="lotterySelect" name="lotteryChance">
+                <select class="lotterySelect"v-bind:name="'lotteryChance'+indexParent">
                   <option value="每个用户支持多次只得一个抽奖号">每个用户支持多次得一个抽奖号</option>
                   <option value="每个用户支持多次得多个抽奖号">每个用户支持多次得多个抽奖号</option>
                 </select>
               </dd>
               <dd><span>奖品内容：</span>
                 <validity field="content" :validators="['unempty']">
-                  <textarea type="text" placeholder="请简单的说明一下奖品的内容" v-bind:name="'lotteryContent'+indexParent"
+                  <textarea type="text" placeholder="请简单的说明一下奖品的内容" v-bind:name="'reContent'+indexParent"
                             @input="handleValidation(event,item.lottery.content)"
                             @blur="handleValidation(event,item.lottery.content)"></textarea>
                 </validity>
