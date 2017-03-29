@@ -243,6 +243,15 @@ span.count:last-of-type{
 	padding:0.3rem 0.5rem;
 	box-sizing:border-box;
 }
+.wrap_entity dd.range input{
+	width:5.5rem;
+	float:left;
+}
+.wrap_entity dd.range .divide{
+	width:2rem;
+	margin-right:0;
+	text-align:center;
+}
 .wrap_entity .radio span{
 	vertical-align:middle;
 }
@@ -275,13 +284,16 @@ span.count:last-of-type{
 	float:left;
 	margin-right:0.7rem;
 	line-height:0.8rem;
+	margin-bottom: 0.8rem;
 }
-.radio label:last-child{
+.radio label:last-child,.radio label:nth-of-type(3n){
 	margin-right:0;
 }
 .radio_wrap{
 	display:inline-block;
 	vertical-align:middle;
+	width:13rem;
+	margin-bottom:-1rem;
 }
 .outCircle, .innerCircle{
 	float:left;

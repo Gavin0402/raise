@@ -45,7 +45,7 @@
     <div class="TabCon">
 
       <!--热门众筹  S-->
-      <ul class="searchCon" v-show="(tabIndex.num == 0)">
+      <ul class="searchCon" v-show="(tabIndex.num == 2)">
         <li class="clearfix" v-for="item in hot" v-on:click="turnPage(item)">
           <div class="conImg">
             <img v-bind:src="item.picsrc" alt="pic"/>
@@ -93,9 +93,9 @@
       <!--历史众筹  E-->
 
       <!--发起众筹  S-->
-      <ul class="buildRaise" v-show="(tabIndex.num == 2)">
+      <ul class="buildRaise" v-show="(tabIndex.num == 0)">
         <!--项目资料  S-->
-        <li v-show="(build.pageIndex.num ==0)">
+        <li v-show="(build.pageIndex.num ==3)">
           <!--身份类型  S-->
           <div class="tab_wrap">
             <p class="title">选择你的身份类型</p>
@@ -457,7 +457,7 @@
         <!--详情描述  E-->
 
         <!--回报信息  S-->
-        <li v-show="(build.pageIndex.num == 3)">
+        <li v-show="(build.pageIndex.num == 0)">
           <div class="retuen" v-for="(item,indexParent) in build.returnInfo">
             <div class="title" v-if="!indexParent">设置你的回报信息</div>
             <div class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
@@ -468,18 +468,24 @@
                 <div class="clearfix radio_wrap">
                   <label><input type="radio" checked="checked" v-bind:name="'retype'+indexParent" value="1"
                                 v-model="item.type">
-                    <span class="outCircle"><span class="innerCircle"></span></span>实物回报
+                    <span class="outCircle"><span class="innerCircle"></span></span>无私回报
                   </label>
                   <label><input type="radio" v-bind:name="'retype'+indexParent" value="2" v-model="item.type">
-                    <span class="outCircle"><span class="innerCircle"></span></span>虚拟回报
+                    <span class="outCircle"><span class="innerCircle"></span></span>抽奖支持
                   </label>
                   <label><input type="radio" v-bind:name="'retype'+indexParent" value="3" v-model="item.type">
-                    <span class="outCircle"><span class="innerCircle"></span></span>抽奖回报
+                    <span class="outCircle"><span class="innerCircle"></span></span>电商商品
+                  </label>
+                  <label><input type="radio" v-bind:name="'retype'+indexParent" value="4" v-model="item.type">
+                    <span class="outCircle"><span class="innerCircle"></span></span>电商积分
+                  </label>
+                  <label><input type="radio" v-bind:name="'retype'+indexParent" value="5" v-model="item.type">
+                    <span class="outCircle"><span class="innerCircle"></span></span>个人商品
                   </label>
                 </div>
               </dd>
             </dl>
-            <dl v-bind:id="'normal'+indexParent" class="wrap_entity" v-show="item.type != 3">
+            <dl v-bind:id="'normal'+indexParent" class="wrap_entity" v-show="item.type != 2 && item.type != 1 ">
               <dd><span>支持金额：</span>
                 <validity field="faMoney" :validators="['faMoney']">
                   <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
@@ -488,13 +494,27 @@
                 </validity>
                 <p class="errors" v-if="item.normal.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
               </dd>
-              <dd><span>回报标题：</span>
+              <dd v-if="item.type != 3"><span>回报标题：</span>
                 <validity field="reTitlw" :validators="['unempty']">
                   <input type="text" placeholder="给你的项目回报设置一个标题" v-bind:name="'reTitlw'+indexParent"
                          @input="handleValidation(event,item.normal.reTitlw)"
                          @blur="handleValidation(event,item.normal.reTitlw)">
                 </validity>
                 <p class="errors" v-if="item.normal.reTitlw.invalid">*请添加标题</p>
+              </dd>
+              <dd class="range clearfix" v-if="item.type == 3"><span>回报区间：</span>
+                <validity field="reTitlw" :validators="['unempty']">
+                  <input type="text" placeholder="最低报价" v-bind:name="'reTitlw'+indexParent"
+                         @input="handleValidation(event,item.normal.reTitlw)"
+                         @blur="handleValidation(event,item.normal.reTitlw)">
+                </validity>
+                <span class="divide">—</span>
+                <validity field="reTitlw" :validators="['unempty']">
+                  <input type="text" placeholder="最高报价" v-bind:name="'reTitlw'+indexParent"
+                         @input="handleValidation(event,item.normal.reTitlw)"
+                         @blur="handleValidation(event,item.normal.reTitlw)">
+                </validity>
+                <!--<p class="errors" v-if="item.normal.reTitlw.invalid">*请添加标题</p>-->
               </dd>
               <dd><span>回报内容：</span>
                 <validity field="content" :validators="['unempty']">
@@ -512,7 +532,7 @@
                 </validity>
                 <p class="errors" v-if="item.normal.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
               </dd>
-              <dd v-if="item.type == 1">
+              <dd v-if="item.type == 5">
                 <span>运 &nbsp&nbsp&nbsp&nbsp&nbsp 费：</span>
                 <validity field="freight" :validators="['freight']">
                   <input type="text" placeholder="“0”为包邮，默认单位元" v-bind:name="'freight'+indexParent"
@@ -520,7 +540,7 @@
                 </validity>
                 <p class="errors" v-if="item.freight.invalid">*运费只能为整数,最多为99元</p>
               </dd>
-              <dd class="radio invoice" v-if="item.type == 1">
+              <dd class="radio invoice" v-if="item.type == 5">
                 <span>发 &nbsp&nbsp&nbsp&nbsp&nbsp 票：</span>
                 <div class="clearfix radio_wrap">
                   <label><input type="radio" checked="checked" v-bind:name="'invoice'+indexParent" value="不可开发票">
@@ -538,7 +558,7 @@
                 <p class="errors" v-if="item.normal.retime.invalid">*回报时间只能为整数,最长为999天</p>
               </dd>
             </dl>
-            <dl v-bind:id="'lottery'+indexParent" class="wrap_entity" v-show="item.type == 3">
+            <dl v-bind:id="'lottery'+indexParent" class="wrap_entity" v-show="item.type == 2">
               <dd><span>支持金额：</span>
                 <validity field="faMoney" :validators="['faMoney']">
                   <input type="text" placeholder="输入需要用户支持的金额" v-bind:name="'faMoney'+indexParent"
@@ -562,7 +582,7 @@
                 <p class="errors" v-if="item.lotteryReg.invalid">*回报人数上限只能为整数,最多为999个</p>
               </dd>
               <dd><span>中奖机会：</span>
-                <select class="lotterySelect"v-bind:name="'lotteryChance'+indexParent">
+                <select class="lotterySelect" v-bind:name="'lotteryChance'+indexParent">
                   <option value="每个用户支持多次只得一个抽奖号">每个用户支持多次得一个抽奖号</option>
                   <option value="每个用户支持多次得多个抽奖号">每个用户支持多次得多个抽奖号</option>
                 </select>
@@ -597,7 +617,7 @@
                 <img v-for="(list,index) in item.picSrc" v-on:click="delArr(item.picSrc,index)" v-bind:src="list.src"
                      v-if="list.src" alt="pic">
               </dd>
-              <dd class="file mt-30">
+              <dd class="file mt-30" v-if="item.type != 3 && item.type != 1 ">
                 <span>上传图片：</span>
                 <div class="filePic filePicBg pl3">
                   <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
