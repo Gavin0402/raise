@@ -26,7 +26,6 @@
   <script type="text/javascript" src="../js/viewport_rem.js"></script>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
-  <script type="text/javascript" src="../js/vue-validator.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -183,28 +182,24 @@
 
           <!--个人身份证-正面-->
           <div class="uppic" v-if="build.identityIndex == 0">
-            <form id="positivePic">
-              <span>个人身份证-正面</span>
-              <div class="imgpre"><img :src="page1.per.positive.value" v-show="page1.per.positive.value" alt="pic">
-              </div>
-              <div class="upload">
-                <input type="file" :accept="build.imgAccept" name="mediafile"
-                       @change="fileSubmit('positivePic',page1.per.positive,'unempty')">上传
-              </div>
-            </form>
+            <span>个人身份证-正面</span>
+            <div class="imgpre"><img :src="page1.per.positive.value" v-show="page1.per.positive.value" alt="pic">
+            </div>
+            <div class="upload">
+              <input type="file" :accept="build.imgAccept" name="mediafile" id="positivePic"
+                     @change="fileSubmit('positivePic',app.page1.per.positive,'unempty')">上传
+            </div>
             <input type="hidden" name="positivePic" :value="page1.per.positive.value">
           </div>
 
           <!--个人身份证-反面-->
           <div class="uppic" v-if="build.identityIndex == 0">
-            <form id="inversePic">
-              <span>个人身份证-反面</span>
-              <div class="imgpre"><img :src="page1.per.inverse.value" v-show="page1.per.inverse.value" alt="pic"></div>
-              <div class="upload">
-                <input type="file" :accept="build.imgAccept" name="mediafile"
-                       @change="fileSubmit('inversePic',page1.per.inverse,'unempty')">上传
-              </div>
-            </form>
+            <span>个人身份证-反面</span>
+            <div class="imgpre"><img :src="page1.per.inverse.value" v-show="page1.per.inverse.value" alt="pic"></div>
+            <div class="upload">
+              <input id="inversePic" type="file" :accept="build.imgAccept" name="mediafile"
+                     @change="fileSubmit('inversePic',app.page1.per.inverse,'unempty')">上传
+            </div>
             <input type="hidden" name="inversePic" :value="page1.per.inverse.value">
             <p class="errorscenter" v-if="page1.per.positive.invalid || page1.per.inverse.invalid">
               {{validateMsg.pic}}</p>
@@ -212,16 +207,14 @@
 
           <!--营业执照-->
           <div class="uppic" v-if="build.identityIndex == 1">
-            <form id="licensePic">
-              <span>营业执照</span>
-              <div class="imgpre">
-                <img :src="page1.ins.licenseImg.value" v-show="page1.ins.licenseImg.value" alt="pic">
-              </div>
-              <div class="upload">
-                <input type="file" :accept="build.imgAccept" name="mediafile"
-                       @change="fileSubmit('licensePic',page1.ins.licenseImg,'unempty')">上传
-              </div>
-            </form>
+            <span>营业执照</span>
+            <div class="imgpre">
+              <img :src="page1.ins.licenseImg.value" v-show="page1.ins.licenseImg.value" alt="pic">
+            </div>
+            <div class="upload">
+              <input id="licensePic" type="file" :accept="build.imgAccept" name="mediafile"
+                     @change="fileSubmit('licensePic',page1.ins.licenseImg,'unempty')">上传
+            </div>
             <input type="hidden" name="licensePic" :value="page1.ins.licenseImg.value">
             <p class="errorscenter" v-if="page1.ins.licenseImg.invalid">{{validateMsg.pic}}</p>
           </div>
@@ -239,12 +232,10 @@
             <dd class="file">
               <span>设置封面：</span>
               <div :class="['filePic',{pl3:!page2.cover.value,filePicBg:!page2.cover.value}]">
-                <form>
-                  <span v-show="!page2.cover.value">建议尺寸640*480，图片大小不要超过5M</span>
-                  <img :src="page2.cover.value" v-show="page2.cover.value" alt="pic">
-                  <input type="file" class="fil" :accept="build.imgAccept" name="mediafile"
-                         @change="fileSubmit('coverPic',page2.cover,'unempty')">
-                </form>
+                <span v-show="!page2.cover.value">建议尺寸640*480，图片大小不要超过5M</span>
+                <img :src="page2.cover.value" v-show="page2.cover.value" alt="pic">
+                <input id="coverPic" type="file" class="fil" :accept="build.imgAccept" name="mediafile"
+                       @change="fileSubmit('coverPic',page2.cover,'unempty')">
                 <input type="hidden" name="coverPic" :value="page2.cover.value">
               </div>
               <p class="errors" v-if="page2.cover.invalid">{{validateMsg.pic}}</p>
@@ -305,24 +296,22 @@
         <!--项目信息  E-->
 
         <!--详情描述  S-->
-        <li v-show="build.pageIndex == 0">
+        <li v-show="build.pageIndex == 7">
           <!--项目描述  S-->
           <dl class="wrap_entity">
             <dt class="title">描述你的项目</dt>
-            <dd class="media" v-show="build.advertiseVideoSrc">
-              <video width="100%" height="180px" controls="controls" :src="build.advertiseVideoSrc"></video>
+            <dd class="media" v-show="build.advertiseVideoSrc.value">
+              <video width="100%" height="180px" controls="controls" :src="build.advertiseVideoSrc.value"></video>
             </dd>
             <dd class="clearfix">
               <span>宣传视频：</span>
               <div class="video">请选择本地要上传的路径
-                <span class="video_del" v-show="build.advertiseVideoSrc"
-                      @click="build.advertiseVideoSrc == ''">删除</span>
-                <form id="video">
-                  <input type="file" :accept="build.videoAccept" name="mediafile"
-                         @change="fileSubmit('video',build.advertiseVideoSrc)"/>
-                </form>
+                <span class="video_del" v-show="build.advertiseVideoSrc.value"
+                      @click="build.advertiseVideoSrc.value = ''">删除</span>
+                <input type="file" :accept="build.videoAccept" name="mediafile" id="video"
+                       @change="fileSubmit('video',app.build.advertiseVideoSrc)"/>
               </div>
-              <input type="hidden" name="video" :value="build.advertiseVideoSrc">
+              <input type="hidden" name="video" :value="build.advertiseVideoSrc.value">
             </dd>
             <dd><span>可能风险：</span><textarea type="text" placeholder="请简单的说明一下可能会出现的风险" name="risk"></textarea></dd>
           </dl>
@@ -361,19 +350,14 @@
               <!--图片结构  S-->
               <div v-if="item.type">
                 <div class="edit_tit clearfix deltitle pl10">上传照片
-                  <span class="fr" v-show="!item.edit "
-                        @click="build.detailsDescription.splice(index, 1)" v-if="index>1">删除</span>
+                  <span class="fr" @click="build.detailsDescription.splice(index, 1)" v-if="index>1">删除</span>
                 </div>
                 <div class="edit_pic">
-                  <form :id="'loPic'+index" :action="build.mediaDrl" method="post"
-                        enctype="multipart/form-data">
-                    <div class="bg_add deltitle" v-show="!item.picSrc.src"></div>
-                    <p class="deltitle" v-show="!item.picSrc.src">支持JPG、GIF、PNG格式的图片，不超过1M大小</p>
-                    <img alt="pic" v-show="item.picSrc.src" :src="item.picSrc.src">
-                    <input class="deltitle" type="file" :accept="build.imgAccept"
-                           name="mediafile" @change="fileSubmit(event,'loPic'+index,item.picSrc)"/>
-                  </form>
-                  <!--<input type="hidden" name="loPic" :value="item.picSrc.src">-->
+                  <div class="bg_add deltitle" v-show="!item.picSrc.value"></div>
+                  <p class="deltitle" v-show="!item.picSrc.value">支持JPG、GIF、PNG格式的图片，不超过1M大小</p>
+                  <img alt="pic" v-show="item.picSrc.value" :src="item.picSrc.value">
+                  <input class="deltitle" type="file" :accept="build.imgAccept" :id="'loPic'+index"
+                         name="mediafile" @change="fileSubmit('loPic'+index,item.picSrc)"/>
                 </div>
               </div>
               <!--图片结构  E-->
@@ -389,7 +373,7 @@
         <!--详情描述  E-->
 
         <!--回报信息  S-->
-        <li v-show="build.pageIndex == 3">
+        <li v-show="build.pageIndex == 0">
           <div class="retuen" v-for="(item,indexParent) in build.returnInfo">
             <div class="title" v-if="!indexParent">设置你的回报信息</div>
             <div class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
@@ -417,60 +401,70 @@
                 </div>
               </dd>
             </dl>
-            <dl :id="'normal'+indexParent" class="wrap_entity" v-show="item.type != 2 && item.type != 1 ">
+            <dl class="wrap_entity" v-if="item.type != 1">
               <dd><span>支持金额：</span>
-                <validity field="faMoney" :validators="['faMoney']">
-                  <input type="text" placeholder="输入需要用户支持的金额" :name="'faMoney'+indexParent"
-                         @input="validate(event,item.normal.faMoney)"
-                         @blur="validate(event,item.normal.faMoney)">
-                </validity>
-                <p class="errors" v-if="item.normal.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
+                <input type="text" placeholder="输入需要用户支持的金额" :name="'faMoney'+indexParent"
+                       v-model="item.public.faMoney.value" @input="validate('faMoney',item.public.faMoney)"
+                       @blur="validate('faMoney',item.public.faMoney)">
+                <p class="errors" v-if="item.public.faMoney.invalid">{{validateMsg.faMoney}}</p>
               </dd>
-              <dd v-if="item.type != 3"><span>回报标题：</span>
-                <validity field="reTitlw" :validators="['unempty']">
-                  <input type="text" placeholder="给你的项目回报设置一个标题" :name="'reTitlw'+indexParent"
-                         @input="validate(event,item.normal.reTitlw)"
-                         @blur="validate(event,item.normal.reTitlw)">
-                </validity>
-                <p class="errors" v-if="item.normal.reTitlw.invalid">*请添加标题</p>
+              <dd v-if="item.type == 4||item.type == 5"><span>回报标题：</span>
+                <input type="text" placeholder="给你的项目回报设置一个标题" :name="'reTitlw'+indexParent"
+                       v-model="item.reTitlw.value" @input="validate('unempty',item.reTitlw)"
+                       @blur="validate('unempty',item.reTitlw)">
+                <p class="errors" v-if="item.reTitlw.invalid">{{validateMsg.title}}</p>
               </dd>
               <dd class="range clearfix" v-if="item.type == 3"><span>回报区间：</span>
-                <validity field="reTitlw" :validators="['unempty']">
-                  <input type="text" placeholder="最低报价" :name="'reTitlw'+indexParent"
-                         @input="validate(event,item.normal.reTitlw)"
-                         @blur="validate(event,item.normal.reTitlw)">
-                </validity>
+                <input type="text" placeholder="最低价" :name="'lowPrice'+indexParent"
+                       v-model="item.range.lowPrice.value"
+                       @input="highPriceValidate(item.range.lowPrice,item.range.highPrice)"
+                       @blur="highPriceValidate(item.range.lowPrice,item.range.highPrice)">
                 <span class="divide">—</span>
-                <validity field="reTitlw" :validators="['unempty']">
-                  <input type="text" placeholder="最高报价" :name="'reTitlw'+indexParent"
-                         @input="validate(event,item.normal.reTitlw)"
-                         @blur="validate(event,item.normal.reTitlw)">
-                </validity>
-                <!--<p class="errors" v-if="item.normal.reTitlw.invalid">*请添加标题</p>-->
+                <input type="text" placeholder="最高价" :name="'highPrice'+indexParent"
+                       v-model="item.range.highPrice.value"
+                       @input="highPriceValidate(item.range.lowPrice,item.range.highPrice)"
+                       @blur="highPriceValidate(item.range.lowPrice,item.range.highPrice)">
+                <p class="errors" v-if="item.range.lowPrice.invalid && !item.range.highPrice.invalid">
+                  {{validateMsg.faMoney}}</p>
+                <p class="errors" v-if="item.range.highPrice.invalid">*高价位必须高于低价位</p>
               </dd>
-              <dd><span>回报内容：</span>
-                <validity field="content" :validators="['unempty']">
-                  <textarea type="text" placeholder="请简单的说明一下回报的内容" :name="'reContent'+indexParent"
-                            @input="validate(event,item.normal.content)"
-                            @blur="validate(event,item.normal.content)"></textarea>
-                </validity>
-                <p class="errors" v-if="item.normal.content.invalid">*回报内容不能为空</p>
+              <dd v-if="item.type ==2 "><span>奖品个数：</span>
+                <select class="lotterySelect" :name="'lotteryNum'+indexParent" v-model="item.lottery.lotteryNum">
+                  <option value="抽出1个奖品">抽出1个奖品</option>
+                  <option value="抽出多个奖品">抽出多个奖品</option>
+                </select>
+              </dd>
+              <dd v-if="(item.lottery.lotteryNum == '抽出多个奖品')"><span>具体规则：</span>
+                <input type="text" placeholder="每几个支持者抽出1名中奖者" :name="'lotteryReg'+indexParent"
+                       v-model="item.lottery.lotteryReg.value" @input="validate('faPeople',item.lottery.lotteryReg)"
+                       @blur="validate('faPeople',item.lottery.lotteryReg)">
+                <p class="errors" v-if="item.lottery.lotteryReg.invalid">{{validateMsg.faPeople}}</p>
+              </dd>
+              <dd v-if="item.type ==2 "><span>中奖机会：</span>
+                <select class="lotterySelect" :name="'lotteryChance'+indexParent">
+                  <option value="每个用户支持多次只得一个抽奖号">每个用户支持多次得一个抽奖号</option>
+                  <option value="每个用户支持多次得多个抽奖号">每个用户支持多次得多个抽奖号</option>
+                </select>
+              </dd>
+              <dd>
+                <span v-if="item.type !=2 ">回报内容：</span>
+                <span v-if="item.type == 2">奖品内容：</span>
+                <textarea type="text" placeholder="请简单的说明一下内容" :name="'reContent'+indexParent"
+                          v-model="item.public.content.value" @input="validate('unempty',item.public.content)"
+                          @blur="validate('unempty',item.public.content)"></textarea>
+                <p class="errors" v-if="item.public.content.invalid">{{validateMsg.unempty}}</p>
               </dd>
               <dd><span>人数上限：</span>
-                <validity field="faPeople" :validators="['faPeople']">
-                  <input type="text" placeholder="“0”为不限名额" :name="'faPeople'+indexParent"
-                         @input="validate(event,item.normal.faPeople)"
-                         @blur="validate(event,item.normal.faPeople)">
-                </validity>
-                <p class="errors" v-if="item.normal.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
+                <input type="text" placeholder="“0”为不限名额" :name="'faPeople'+indexParent"
+                       v-model="item.public.faPeople.value" @input="validate('faPeople',item.public.faPeople)"
+                       @blur="validate('faPeople',item.public.faPeople)">
+                <p class="errors" v-if="item.public.faPeople.invalid">{{validateMsg.faPeople}}</p>
               </dd>
               <dd v-if="item.type == 5">
                 <span>运 &nbsp&nbsp&nbsp&nbsp&nbsp 费：</span>
-                <validity field="freight" :validators="['freight']">
-                  <input type="text" placeholder="“0”为包邮，默认单位元" :name="'freight'+indexParent"
-                         @input="validate(event,item.freight)" @blur="validate(event,item.freight)">
-                </validity>
-                <p class="errors" v-if="item.freight.invalid">*运费只能为整数,最多为99元</p>
+                <input type="text" placeholder="“0”为包邮，默认单位元" :name="'freight'+indexParent" v-model="item.freight.value"
+                       @input="validate('freight',item.freight)" @blur="validate('freight',item.freight)">
+                <p class="errors" v-if="item.freight.invalid">{{validateMsg.freight}}</p>
               </dd>
               <dd class="radio invoice" v-if="item.type == 5">
                 <span>发 &nbsp&nbsp&nbsp&nbsp&nbsp 票：</span>
@@ -481,92 +475,35 @@
                     <span class="outCircle"><span class="innerCircle"></span></span>可开发票</label>
                 </div>
               </dd>
-              <dd><span>回报时间：</span>
-                <validity field="retime" :validators="['retime']">
-                  <input type="text" placeholder="“0”为项目结束后立即发送" :name="'retime'+indexParent"
-                         @input="validate(event,item.normal.retime)"
-                         @blur="validate(event,item.normal.retime)">
-                </validity>
-                <p class="errors" v-if="item.normal.retime.invalid">*回报时间只能为整数,最长为999天</p>
+              <dd>
+                <span v-if="item.type !=2 ">回报时间：</span>
+                <span v-if="item.type == 2">发奖时间：</span>
+                <input type="text" placeholder="“0”为项目结束后立即发送" :name="'retime'+indexParent"
+                       v-model="item.public.retime.value" @input="validate('retime',item.public.retime)"
+                       @blur="validate('retime',item.public.retime)">
+                <p class="errors" v-if="item.public.retime.invalid">{{validateMsg.retime}}</p>
               </dd>
-            </dl>
-            <dl :id="'lottery'+indexParent" class="wrap_entity" v-show="item.type == 2">
-              <dd><span>支持金额：</span>
-                <validity field="faMoney" :validators="['faMoney']">
-                  <input type="text" placeholder="输入需要用户支持的金额" :name="'faMoney'+indexParent"
-                         @input="validate(event,item.lottery.faMoney)"
-                         @blur="validate(event,item.lottery.faMoney)">
-                </validity>
-                <p class="errors" v-if="item.lottery.faMoney.invalid">*支持金额 (只能为整数,最高为99999元)</p>
-              </dd>
-              <dd><span>奖品个数：</span>
-                <select class="lotterySelect" :name="'lotteryNum'+indexParent" v-model="item.lotteryNum">
-                  <option value="抽出1个奖品">抽出1个奖品</option>
-                  <option value="抽出多个奖品">抽出多个奖品</option>
-                </select>
-              </dd>
-              <dd v-if="(item.lotteryNum == '抽出多个奖品')"><span>具体规则：</span>
-                <validity field="lotteryReg" :validators="['faPeople']">
-                  <input type="text" placeholder="每几个支持者抽出1名中奖者" :name="'lotteryReg'+indexParent"
-                         @input="validate(event,item.lotteryReg)"
-                         @blur="validate(event,item.lotteryReg)">
-                </validity>
-                <p class="errors" v-if="item.lotteryReg.invalid">*回报人数上限只能为整数,最多为999个</p>
-              </dd>
-              <dd><span>中奖机会：</span>
-                <select class="lotterySelect" :name="'lotteryChance'+indexParent">
-                  <option value="每个用户支持多次只得一个抽奖号">每个用户支持多次得一个抽奖号</option>
-                  <option value="每个用户支持多次得多个抽奖号">每个用户支持多次得多个抽奖号</option>
-                </select>
-              </dd>
-              <dd><span>奖品内容：</span>
-                <validity field="content" :validators="['unempty']">
-                  <textarea type="text" placeholder="请简单的说明一下奖品的内容" :name="'reContent'+indexParent"
-                            @input="validate(event,item.lottery.content)"
-                            @blur="validate(event,item.lottery.content)"></textarea>
-                </validity>
-                <p class="errors" v-if="item.lottery.content.invalid">*奖品内容不能为空</p>
-              </dd>
-              <dd><span>人数上限：</span>
-                <validity field="faPeople" :validators="['faPeople']">
-                  <input type="text" placeholder="“0”为不限名额" :name="'faPeople'+indexParent"
-                         @input="validate(event,item.lottery.faPeople)"
-                         @blur="validate(event,item.lottery.faPeople)">
-                </validity>
-                <p class="errors" v-if="item.lottery.faPeople.invalid">*回报人数上限只能为整数,最多为999个</p>
-              </dd>
-              <dd><span>发奖时间：</span>
-                <validity field="retime" :validators="['retime']">
-                  <input type="text" placeholder="“0”为项目结束后立即发送" :name="'retime'+indexParent"
-                         @input="validate(event,item.lottery.retime)"
-                         @blur="validate(event,item.lottery.retime)">
-                </validity>
-                <p class="errors" v-if="item.lottery.retime.invalid">*发奖时间只能为整数,最长为999天</p>
-              </dd>
-            </dl>
-            <dl class="wrap_entity">
               <dd class="img_box">
-                <img v-for="(list,index) in item.picSrc" @click="item.picSrc.splice(index, 1)" :src="list.src"
-                     v-if="list.src" alt="pic">
+                <img v-for="(list,index) in item.picSrc" @click="item.picSrc.splice(index, 1)" :src="list.value"
+                     v-if="list.value" alt="pic">
               </dd>
-              <dd class="file mt-30" v-if="item.type != 3 && item.type != 1 ">
+              <dd class="file mt-30" v-if="item.type != 3">
                 <span>上传图片：</span>
                 <div class="filePic filePicBg pl3">
                   <span>支持jpg、jpeg、png、gif格式，大小不超过500KB</span>
-                  <form class="absolute" method="post" enctype="multipart/form-data" v-for="(list,index) in item.picSrc"
-                        :id="indexParent+'favorerPic'+index" :action="build.mediaDrl"
-                        v-if="index == (item.picSrc.length-1)">
-                    <input type="file" :accept="build.imgAccept"
-                           name="mediafile"
-                           @change="addPic(indexParent+'favorerPic'+index,list,item)">
-                  </form>
+                  <input type="file" :accept="build.imgAccept" name="mediafile" :id="indexParent+'favorerPic'+index"
+                         v-for="(list,index) in item.picSrc" v-if="index == (item.picSrc.length-1)"
+                         @change="addPic(indexParent+'favorerPic'+index,list,item)">
                 </div>
                 <input v-for="(list,index) in item.picSrc" type="hidden" :name="indexParent+'favorerPic'+index"
-                       :value="list.src">
+                       :value="list.value">
               </dd>
             </dl>
+            <div class="blankBoard" v-if="item.type == 1">
+              感谢您的无私支持~~
+            </div>
           </div>
-          <div class="contine mb30" @click="addDescription(app.build.returnInfo,app.build.newReturn,10)">
+          <div class="contine mb30" @click="addDescription(build.returnInfo,build.newReturn,10)">
             +继续添加新的回报
           </div>
           <div class="submit mb30">

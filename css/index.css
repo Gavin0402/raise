@@ -64,6 +64,13 @@
 	position:relative;
 	bottom:-0.8rem;
 }
+.blankBoard{
+	height:16rem;
+	line-height:16rem;
+	text-align:center;
+	font-size:0.8rem;
+	color:#666;
+}
 body{
 	color:#333333;
 }
@@ -669,6 +676,7 @@ input[type="radio"]:checked + span .innerCircle{
 }
 .edit_pic img{
 	width:100%;
+	display:block;
 }
 .edit_pic input[type="file"]{
 	position:absolute;

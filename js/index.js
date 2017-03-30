@@ -17,6 +17,7 @@ var app = new Vue({
     /*新建数据*/
     build: {
       formDrl: "http://192.168.8.144:8081/raise/fundingSub.jhtml",//表单提交地址
+      // mediaDrl: "http://127.0.0.1:3001/test",//表单提交地址
       mediaDrl: "http://192.168.8.144:8081/raise/upload_file.jhtml",//表单提交地址
       imgAccept: "image/jpeg, image/jpg, image/bmp, image/gif, image/png",
       videoAccept: "video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv, video/mov",
@@ -27,24 +28,19 @@ var app = new Vue({
       pageIndex: 0,//页面索引
       identityIndex: 0,//身份类型索引
       typeIndex: 0,//众筹类型索引
-      advertiseVideoSrc: "",//宣传视频
+      advertiseVideoSrc: {value: ""},//宣传视频
       /*项目详情*/
       detailsDescription: [
         {
-          type: 0,//添加类型（文本/图片）
+          type: 0,//添加类型（文本）
           edit: 0,
           title: "为什么我需要你的资金支持",
           content: "<p>请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。</p>",
           contentEdit: "请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。",
-          picSrc: {src: ""},
         },
         {
-          type: 1,//添加类型（文本/图片）
-          edit: 0,
-          title: "",
-          content: "",
-          contentEdit: "",
-          picSrc: {src: ""},
+          type: 1,//添加类型（图片）
+          picSrc: {value: ""},
         }
       ],
       /*添加文本*/
@@ -54,63 +50,54 @@ var app = new Vue({
         title: "为什么我需要你的资金支持",
         content: "<p>请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。</p>",
         contentEdit: "请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。",
-        picSrc: {src: ""},
       },
       /*添加图片*/
       newPic: {
         type: 1,//添加类型（文本/图片）
-        edit: 0,
-        title: "",
-        content: "",
-        contentEdit: "",
-        picSrc: {src: ""},
+        picSrc: {value: ""},
       },
       /*回报信息*/
       returnInfo: [
         {
-          picSrc: [
-            {src: ""}
-          ],
           type: 1,
-          lotteryNum: "抽出1个奖品",
+          picSrc: [{value: ""}],
           freight: {invalid: "", value: ""},
-          lotteryReg: {invalid: "", value: ""},
-          normal: {
+          reTitlw: {invalid: "", value: ""},
+          range: {
+            lowPrice: {invalid: "", value: ""},
+            highPrice: {invalid: "", value: ""},
+          },
+          public: {
             faMoney: {invalid: "", value: ""},
-            reTitlw: {invalid: "", value: ""},
             content: {invalid: "", value: ""},
             faPeople: {invalid: "", value: ""},
             retime: {invalid: "", value: ""},
           },
           lottery: {
-            faMoney: {invalid: "", value: ""},
-            content: {invalid: "", value: ""},
-            faPeople: {invalid: "", value: ""},
-            retime: {invalid: "", value: ""},
+            lotteryReg: {invalid: "", value: ""},
+            lotteryNum: "抽出1个奖品",
           },
         }
       ],
       /*添加回报*/
       newReturn: {
-        picSrc: [
-          {src: ""}
-        ],
         type: 1,
-        lotteryNum: "抽出1个奖品",
+        picSrc: [{value: ""}],
         freight: {invalid: "", value: ""},
-        lotteryReg: {invalid: "", value: ""},
-        normal: {
+        reTitlw: {invalid: "", value: ""},
+        range: {
+          lowPrice: {invalid: "", value: ""},
+          highPrice: {invalid: "", value: ""},
+        },
+        public: {
           faMoney: {invalid: "", value: ""},
-          reTitlw: {invalid: "", value: ""},
           content: {invalid: "", value: ""},
           faPeople: {invalid: "", value: ""},
           retime: {invalid: "", value: ""},
         },
         lottery: {
-          faMoney: {invalid: "", value: ""},
-          content: {invalid: "", value: ""},
-          faPeople: {invalid: "", value: ""},
-          retime: {invalid: "", value: ""},
+          lotteryReg: {invalid: "", value: ""},
+          lotteryNum: "抽出1个奖品",
         },
       },
     },
@@ -162,10 +149,11 @@ var app = new Vue({
       chuziShare: "*出资份额须在1~100之间'",
       selfdomlength: "*每个标签不超过5个字符",
       selfdomnum: "*最多输入三个自定义标签",
-      faMoney: "",
-      faPeople: "",
-      freight: "",
-      retime: "",
+      faMoney: "*支持金额 (只能为整数,最高为99999元)",
+      title: "*请添加标题",
+      faPeople: "*回报人数上限只能为整数,最多为999个",
+      freight: "*运费只能为整数,最多为99元",
+      retime: "*回报时间只能为整数,最长为999天",
     }
   },
   validators: { // `numeric` and `url` custom validator is local registration
@@ -211,14 +199,14 @@ var app = new Vue({
   },
   methods: {
     getCustomers: function () {
-    this.$http.get(apiURL).then(function (response) {
-      console.log(response.data);
-      this.hot = response.data.hot;
-      this.history = response.data.his;
-      this.info = response.data.info;
-      this.build.type = response.data.itemtype;
-    })
-  },
+      this.$http.get(apiURL).then(function (response) {
+        console.log(response.data);
+        this.hot = response.data.hot;
+        this.history = response.data.his;
+        this.info = response.data.info;
+        this.build.type = response.data.itemtype;
+      })
+    },
     pisitionData: function () {
       this.$http.get("../js/city.json").then(function (response) {
         app.position = response.body.citylist;
@@ -244,15 +232,17 @@ var app = new Vue({
       if (item.picSrc.length > 3) {
         alert("最多只能上传" + 3 + "条");
       } else {
-        this.fileSubmit( id, obj);
-        item.picSrc.push({src: ""});
+        this.fileSubmit(id, obj);
+        item.picSrc.push({value: ""});
       }
     },
     fileSubmit: function (id, valid, method) {
       var This = this;
-      var formData = new FormData(document.getElementById(id));//表单id
+      var formData = new FormData();
+      var file = document.getElementById(id).files[0];
+      formData.append('file', file);
       this.$http.post(this.build.mediaDrl, formData).then(function (res) {
-        this[valid].value = res.data.filePath;
+        valid.value = res.data.filePath;
         method && This.validate(method, valid);
       }, function (response) {
         alert("上传失败");
@@ -272,6 +262,11 @@ var app = new Vue({
     selfdomValidate: function () {
       this.selfdomValid.selfdomlength.invalid = !this.$options.validators.selfdomlength(this.selfdomValid.value);
       this.selfdomValid.selfdomnum.invalid = !this.$options.validators.selfdomnum(this.selfdomValid.value);
+    },
+    highPriceValidate: function (low, high) {
+      low.invalid = !this.$options.validators.faMoney(low.value);
+      high.invalid = parseInt(high.value) < parseInt(low.value);
+      high.invalid = !this.$options.validators.faMoney(high.value);
     },
     submitPage1: function (e) {
       var bOff = true;
@@ -310,31 +305,27 @@ var app = new Vue({
       var returnInfo = this.build.returnInfo;
       var bOff = true;
       for (var i = 0; i < returnInfo.length; i++) {
-        if (returnInfo[i].type == 3) {
-          var removeNode = document.getElementById("normal" + i);
-          removeNode.parentNode.removeChild(removeNode);
-          for (attr in returnInfo[i].lottery) {
-            if (returnInfo[i].lottery[attr].invalid === "" || returnInfo[i].lottery[attr].invalid === true) {
-              returnInfo[i].lottery[attr].invalid = true;
+        if (returnInfo[i].type != 1) {
+          bOff = _check(returnInfo[i].public);
+          if (returnInfo[i].type == 2) {
+            if (returnInfo[i].lottery.lotteryNum == "抽出多个奖品") {
+              if (returnInfo[i].lottery.lotteryReg.invalid === "" || returnInfo[i].lottery.lotteryReg.invalid === true) {
+                returnInfo[i].lottery.lotteryReg.invalid = true;
+                bOff = false;
+              }
+            }
+          } else if (returnInfo[i].type == 3) {
+            bOff = _check(returnInfo[i].range);
+          } else if (returnInfo[i].type == 4) {
+            if (returnInfo[i].reTitlw.invalid === "" || returnInfo[i].reTitlw.invalid === true) {
+              returnInfo[i].reTitlw.invalid = true;
               bOff = false;
             }
-          }
-          if (returnInfo[i].lotteryNum == "抽出多个奖品") {
-            if (returnInfo[i].lotteryReg.invalid === "" || returnInfo[i].lotteryReg.invalid === true) {
-              returnInfo[i].lotteryReg.invalid = true;
+          } else if (returnInfo[i].type == 5) {
+            if (returnInfo[i].reTitlw.invalid === "" || returnInfo[i].reTitlw.invalid === true) {
+              returnInfo[i].reTitlw.invalid = true;
               bOff = false;
             }
-          }
-        } else {
-          var removeNode = document.getElementById("lottery" + i);
-          removeNode.parentNode.removeChild(removeNode);
-          for (attr in returnInfo[i].normal) {
-            if (returnInfo[i].normal[attr].invalid === "" || returnInfo[i].normal[attr].invalid === true) {
-              returnInfo[i].normal[attr].invalid = true;
-              bOff = false;
-            }
-          }
-          if (returnInfo[i].type == 1) {
             if (returnInfo[i].freight.invalid === "" || returnInfo[i].freight.invalid === true) {
               returnInfo[i].freight.invalid = true;
               bOff = false;
@@ -344,21 +335,17 @@ var app = new Vue({
       }
       if (bOff) {
         alert("OK");
+        // 详情描述字符串的拼接
         var str = "";
         var details = this.build.detailsDescription;
-        this.build.advertiseVideoSrc.src && (str = "<video controls='controls' src='" + this.build.advertiseVideoSrc.src + "'></video>");
+        this.build.advertiseVideoSrc.src && (str = "<video controls='controls' src='" + this.build.advertiseVideoSrc.value + "'></video>");
         for (var i = 0; i < details.length; i++) {
           details[i].title && details[i].title !== "为什么我需要你的资金支持" && (str += "<h1>" + details[i].title + "</h1>");
           details[i].content && details[i].content !== "<p>请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。</p>" && (str += details[i].content);
-          details[i].picSrc.src && (str += "<img src='" + details[i].picSrc.src + "' alt='pic'>");
+          details[i].picSrc.src && (str += "<img src='" + details[i].picSrc.value + "' alt='pic'>");
         }
         document.getElementById("intros").value = str;
-        if (this.build.identityIndex.num == 0) {
-          var removeNode = document.getElementById("wrap_ins");
-        } else {
-          var removeNode = document.getElementById("wrap_per");
-        }
-        removeNode.parentNode.removeChild(removeNode);
+        //表单提交
         document.getElementById("allForm").submit();
       }
     },
@@ -376,6 +363,7 @@ var app = new Vue({
 });
 
 function _check(page) {
+  var bOff = true;
   for (attr in page) {
     if (page[attr].invalid === "" || page[attr].invalid === true) {
       page[attr].invalid = true;
