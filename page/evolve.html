@@ -24,25 +24,30 @@
   <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
   <link rel="stylesheet" href="../css/productInfo.css" type="text/css"/>
   <script type="text/javascript" src="../js/viewport_rem.js"></script>
+  <script type="text/javascript" src="../js/fastclick.js"></script>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
-<ul id="app" class="evolve">
-  <li class="clearfix" v-for="item in starter.dynamic">
-    <div class="icon"></div>
-    <div class="infobox">
-      <p class="title">
-        {{starter.info.userName}}
-        <span class="date fr">{{item.dayNum}}</span>
-      </p>
-      <p class="info">{{item.context}}</p>
-      <div class="clearfix">
-        <div class="img" v-for="src in item.pic" v-bind:style="'background: url('+src+') no-repeat;background-size: cover;'"></div>
+<div id="app">
+  <ul class="evolve">
+    <li class="clearfix" v-for="item in starter.dynamic">
+      <div class="icon"></div>
+      <div class="infobox">
+        <p class="title">
+          {{starter.info.userName}}
+          <span class="date fr">{{item.dayNum}}</span>
+        </p>
+        <p class="info">{{item.context}}</p>
+        <div class="clearfix">
+          <div class="img" v-for="src in item.pic"
+               v-bind:style="'background: url('+src+') no-repeat;background-size: cover;'"></div>
+        </div>
       </div>
-    </div>
-  </li>
-</ul>
+    </li>
+  </ul>
+  <div class="nodata" v-if="!starter.length">还没有项目更新啊,再等等吧~~</div>
+</div>
 <script type="text/javascript" src="../js/evolve.js"></script>
 </body>
 </html>

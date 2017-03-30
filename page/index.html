@@ -24,6 +24,7 @@
   <link rel="stylesheet" type="text/css" href="../css/reset.css">
   <link rel="stylesheet" type="text/css" href="../css/index.css">
   <script type="text/javascript" src="../js/viewport_rem.js"></script>
+  <script type="text/javascript" src="../js/fastclick.js"></script>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
@@ -94,7 +95,8 @@
         <li v-show="build.pageIndex ==0">
           <!--身份类型  S-->
           <div class="tab_wrap">
-            <p class="title">选择你的身份类型</p>
+            <!--<p class="title">选择你的身份类型</p>-->
+            <p class="title">请核对你的身份信息</p>
             <div class="tab">
               <a class="per_btn" v-for="(val, index) in build.identity" @click="build.identityIndex=index"
                  :class="{'active':index == build.identityIndex ,brl:index == 0,brr:index == 1}">{{val}}</a>
@@ -102,38 +104,49 @@
             <input type="hidden" name="identityType" :value="build.identity[build.identityIndex ]">
           </div>
           <!--个人回报-->
-          <dl id="wrap_per" class="wrap_per_ins" v-if="build.identityIndex == 0">
-            <dd>
-              <input type="text" placeholder="输入中文姓名(必填)" name="originator" v-model="page1.per.username.value"
-                     @input="validate('username',page1.per.username)" @blur="validate('username',page1.per.username)">
-              <p class="errors" v-if="page1.per.username.invalid">{{validateMsg.usename}}</p>
-            </dd>
-            <dd>
-              <input type="text" placeholder="输入证件号码 (必填)" name="cardType" v-model="page1.per.IDnum.value"
-                     @input="validate('IDnum',page1.per.IDnum)" @blur="validate('IDnum',page1.per.IDnum)">
-              <p class="errors" v-if="page1.per.IDnum.invalid">{{validateMsg.IDnum}}</p>
-            </dd>
-            <dd>
-              <input type="text" placeholder="手机号，输入纯数字(必填)" name="phone" v-model="page1.per.telnum.value"
-                     @input="validate('telnum',page1.per.telnum)" @blur="validate('telnum',page1.per.telnum)">
-              <p class="errors" v-if="page1.per.telnum.invalid">{{validateMsg.telnum}}</p>
-            </dd>
-            <dd>
+          <!--<dl class="wrap_per_ins" v-if="build.identityIndex == 0">
+          <dd>
+            <input type="text" placeholder="输入中文姓名(必填)" name="originator" v-model="page1.per.username.value"
+                   @input="validate('username',page1.per.username)" @blur="validate('username',page1.per.username)">
+            <p class="errors" v-if="page1.per.username.invalid">{{validateMsg.usename}}</p>
+          </dd>
+          <dd>
+            <input type="text" placeholder="输入证件号码 (必填)" name="cardType" v-model="page1.per.IDnum.value"
+                   @input="validate('IDnum',page1.per.IDnum)" @blur="validate('IDnum',page1.per.IDnum)">
+            <p class="errors" v-if="page1.per.IDnum.invalid">{{validateMsg.IDnum}}</p>
+          </dd>
+          <dd>
+            <input type="text" placeholder="手机号，输入纯数字(必填)" name="phone" v-model="page1.per.telnum.value"
+                   @input="validate('telnum',page1.per.telnum)" @blur="validate('telnum',page1.per.telnum)">
+            <p class="errors" v-if="page1.per.telnum.invalid">{{validateMsg.telnum}}</p>
+          </dd>
+          <dd>
+            <div class="location">
+              <select id="loProvince" class="prov fl" name="loProvince" v-model="page1.per.loProvince.value"
+                      @change="townData('city1',page1.per.loProvince.value,page1.per.loProvince,'unempty')"
+                      @blur="validate('unempty',page1.per.loProvince)">
+                <option v-for="item in position" :value="item.p">{{item.p}}</option>
+              </select>
+              <select class="city fr" name="loCity" v-bind="{disabled:!page1.per.loProvince.value}">
+                <option v-for="item in city1" :value="item.n">{{item.n}}</option>
+              </select>
+            </div>
+            <p class="errors" v-if="page1.per.loProvince.invalid">{{validateMsg.location}}</p>
+          </dd>
+        </dl>-->
+          <dl class="wrap_entity" v-if="">
+            <dd><span>中文姓名：</span><input type="text" :value="info.name" disabled></dd>
+            <dd><span>身份证号：</span><input type="text" :value="info.cardNo" disabled></dd>
+            <dd><span>联系方式：</span><input type="text" :value="info.phone" disabled></dd>
+            <dd><span>项目地点：</span>
               <div class="location">
-                <select id="loProvince" class="prov fl" name="loProvince" v-model="page1.per.loProvince.value"
-                        @change="townData('city1',page1.per.loProvince.value,'unempty',page1.per.loProvince)"
-                        @blur="validate('unempty',page1.per.loProvince)">
-                  <option v-for="item in position" :value="item.p">{{item.p}}</option>
-                </select>
-                <select class="city fr" name="loCity" v-bind="{disabled:!page1.per.loProvince.value}">
-                  <option v-for="item in city1" :value="item.n">{{item.n}}</option>
-                </select>
+                <select class="prov fl" :value="info.province" disabled></select>
+                <select class="city fr" :value="info.city" disabled></select>
               </div>
-              <p class="errors" v-if="page1.per.loProvince.invalid">{{validateMsg.location}}</p>
             </dd>
           </dl>
           <!--机构回报-->
-          <dl id="wrap_ins" class="wrap_per_ins" v-if="build.identityIndex == 1">
+          <!--<dl class="wrap_per_ins" v-if="build.identityIndex == 1">
             <dd>
               <input type="text" placeholder="输入企业/机构名称" name="tradeName" v-model="page1.ins.tradeName.value"
                      @input="validate('unempty',page1.ins.tradeName)" @blur="validate('unempty',page1.ins.tradeName)">
@@ -164,6 +177,14 @@
                      @input="validate('unempty',page1.ins.qyPhone)" @blur="validate('unempty',page1.ins.qyPhone)">
               <p class="errors" v-if="page1.ins.qyPhone.invalid">{{validateMsg.telnum}}</p>
             </dd>
+          </dl>-->
+          <dl class="wrap_entity" v-if="">
+            <dd><span>企业名称：</span><input type="text" :value="info.name" disabled></dd>
+            <dd><span>营业执照：</span><input type="text" :value="info.cardNo" disabled></dd>
+            <dd><span>法人姓名：</span><input type="text" :value="info.phone" disabled></dd>
+            <dd><span>公司地址：</span><input type="text" :value="info.phone" disabled></dd>
+            <dd><span>发&nbsp;起&nbsp;人：</span><input type="text" :value="info.phone" disabled></dd>
+            <dd><span>联系方式：</span><input type="text" :value="info.phone" disabled></dd>
           </dl>
           <!--身份类型  E-->
 
@@ -178,10 +199,10 @@
           <!--项目类型  E-->
 
           <!--证件上传  S-->
-          <p class="title">上传相关资料</p>
+          <!--<p class="title">上传相关资料</p>-->
 
           <!--个人身份证-正面-->
-          <div class="uppic" v-if="build.identityIndex == 0">
+          <!--<div class="uppic" v-if="build.identityIndex == 0">
             <span>个人身份证-正面</span>
             <div class="imgpre"><img :src="page1.per.positive.value" v-show="page1.per.positive.value" alt="pic">
             </div>
@@ -190,10 +211,10 @@
                      @change="fileSubmit('positivePic',app.page1.per.positive,'unempty')">上传
             </div>
             <input type="hidden" name="positivePic" :value="page1.per.positive.value">
-          </div>
+          </div>-->
 
           <!--个人身份证-反面-->
-          <div class="uppic" v-if="build.identityIndex == 0">
+          <!--<div class="uppic" v-if="build.identityIndex == 0">
             <span>个人身份证-反面</span>
             <div class="imgpre"><img :src="page1.per.inverse.value" v-show="page1.per.inverse.value" alt="pic"></div>
             <div class="upload">
@@ -203,10 +224,10 @@
             <input type="hidden" name="inversePic" :value="page1.per.inverse.value">
             <p class="errorscenter" v-if="page1.per.positive.invalid || page1.per.inverse.invalid">
               {{validateMsg.pic}}</p>
-          </div>
+          </div>-->
 
           <!--营业执照-->
-          <div class="uppic" v-if="build.identityIndex == 1">
+          <!--<div class="uppic" v-if="build.identityIndex == 1">
             <span>营业执照</span>
             <div class="imgpre">
               <img :src="page1.ins.licenseImg.value" v-show="page1.ins.licenseImg.value" alt="pic">
@@ -217,10 +238,11 @@
             </div>
             <input type="hidden" name="licensePic" :value="page1.ins.licenseImg.value">
             <p class="errorscenter" v-if="page1.ins.licenseImg.invalid">{{validateMsg.pic}}</p>
-          </div>
+          </div>-->
           <!--证件上传  E-->
           <dd class="submit mb30">
-            <input class="active w_60" type="button" value="下一步" @click="submitPage1"/>
+            <!--<input class="active w_60" type="button" value="下一步" @click="submitPage1"/>-->
+            <input class="active w_60" type="button" value="下一步" @click="build.pageIndex = 1"/>
           </dd>
         </li>
         <!--项目资料  E-->
@@ -257,7 +279,7 @@
                         @blur="validate('unempty',page2.itemProvince)">
                   <option v-for="item in position" :value="item.p">{{item.p}}</option>
                 </select>
-                <select class="city fr" name="loCity" v-bind="{disabled:!page2.itemProvince.value}">
+                <select class="city fr" name="itemCity" v-bind="{disabled:!page2.itemProvince.value}">
                   <option v-for="item in city2" :value="item.n">{{item.n}}</option>
                 </select>
               </div>

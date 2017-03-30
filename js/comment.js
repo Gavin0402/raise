@@ -3,6 +3,11 @@
  */
 var apiURL = "http://192.168.8.144:8081/raise/comment.jhtml";
 
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function () {
+    FastClick.attach(document.body);
+  }, false);
+}
 
 var app = new Vue({
   el: "#app",
@@ -46,6 +51,10 @@ var app = new Vue({
       });
     },
     comment: function () {
+      if(!this.commentText){
+        alert("请输入评论内容");
+        return false;
+      }
       this.$http.get("http://192.168.8.144:8081/raise/pinglun.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&context=" + this.commentText).then(function (response) {
         console.log(response.data);
         app.starter.unshift(response.data);
@@ -53,6 +62,10 @@ var app = new Vue({
       })
     },
     repaly: function () {
+      if(!this.replyText){
+        alert("请输入回复内容");
+        return false;
+      }
       this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&replyName=" + this.replyName).then(function (response) {
         console.log(response.data);
         app.starter[this.commentIndex].discuss.push(response.data);
@@ -72,7 +85,6 @@ var app = new Vue({
       this.commentId = item.commentId;
       this.commentIndex = index;
       this.placeholder = "回复";
-      event.stopPropagation();
     },
     repalyrepaly: function (event, list, indexDiscuss, item, index) {
       if (list.proactive == this.userName) {
@@ -96,14 +108,14 @@ var app = new Vue({
       var discuss = comment.discuss[this.indexDiscuss];
       this.$http.get("http://192.168.8.144:8081/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
         console.log(response.data);
-        if(response.data.success){
+        if (response.data.success) {
           this.confirm = false;
           comment.discuss.splice(app.indexDiscuss, 1);
-        }else {
+        } else {
           app.tip = "操作失败";
           setTimeout(function () {
             app.tip = "";
-          },1000)
+          }, 1000)
         }
       })
     },
@@ -122,5 +134,16 @@ var app = new Vue({
         return value;
       }
     }
-  }
+  },
+  directives: {
+    focus: {
+      inserted: function (el, state) {
+        if (state.value) {
+          setTimeout(function () {
+            el.focus();
+          }, 100);
+        }
+      }
+    }
+  },
 });

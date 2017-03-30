@@ -38,6 +38,9 @@
 .cf00{
 	color:#ff0000;;
 }
+.textcen{
+	text-align:center;;
+}
 .absolute{
 	position:absolute;
 	width:100%;
@@ -91,7 +94,6 @@ body{
 	width:33.33%;
 	height:2rem;
 	line-height:2rem;
-	text-align:center;;
 	text-align:center;
 	font-size:0.8rem;
 	box-sizing:border-box;

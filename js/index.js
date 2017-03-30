@@ -3,6 +3,11 @@
  */
 var apiURL = "http://192.168.8.144:8081/raise/zccb.jhtml";
 
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function() {
+    FastClick.attach(document.body);
+  }, false);
+}
 
 var app = new Vue({
   el: "#app",
@@ -240,6 +245,7 @@ var app = new Vue({
       var This = this;
       var formData = new FormData();
       var file = document.getElementById(id).files[0];
+      console.log(file);
       formData.append('file', file);
       this.$http.post(this.build.mediaDrl, formData).then(function (res) {
         valid.value = res.data.filePath;
@@ -293,7 +299,9 @@ var app = new Vue({
       var bOff = true;
       var details = this.build.detailsDescription;
       for (var i = 0; i < details.length; i++) {
-        details[i].edit.num && (bOff = false);
+        if (details[i].edit) {
+          details[i].edit.num && (bOff = false);
+        }
       }
       if (bOff) {
         this.build.pageIndex = 3;
@@ -342,7 +350,9 @@ var app = new Vue({
         for (var i = 0; i < details.length; i++) {
           details[i].title && details[i].title !== "为什么我需要你的资金支持" && (str += "<h1>" + details[i].title + "</h1>");
           details[i].content && details[i].content !== "<p>请在这里说明你的项目特色，以及详细的资 金用途，这会增加项目的可信度并由此提高筹资的成功率。</p>" && (str += details[i].content);
-          details[i].picSrc.src && (str += "<img src='" + details[i].picSrc.value + "' alt='pic'>");
+          if (details[i].picSrc) {
+            details[i].picSrc.value && (str += "<img src='" + details[i].picSrc.value + "' alt='pic'>");
+          }
         }
         document.getElementById("intros").value = str;
         //表单提交
@@ -361,6 +371,7 @@ var app = new Vue({
     this.pisitionData();
   }
 });
+
 
 function _check(page) {
   var bOff = true;

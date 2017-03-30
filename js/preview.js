@@ -3,6 +3,12 @@
  */
 var apiURL = "http://192.168.8.144:8081/raise/content.jhtml";
 
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function() {
+    FastClick.attach(document.body);
+  }, false);
+}
+
 
 var app = new Vue({
   el: "#app",
@@ -48,7 +54,6 @@ var app = new Vue({
     },
     concern: function () {
       this.$http.get("http://192.168.8.144:8081/raise/concern.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&concern=" + !this.info.concern).then(function (response) {
-        console.log(this.info.concern);
         this.info.concern = !this.info.concern;
       })
     }

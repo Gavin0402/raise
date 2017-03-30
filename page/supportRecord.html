@@ -27,32 +27,35 @@
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
-<table id="app" class="supportRecord">
-  <thead>
-  <tr>
-    <th>订单序号</th>
-    <th>支持者</th>
-    <th>支持项</th>
-    <th>数量</th>
-    <th>支持时间</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr v-for="item in starter">
-    <td>{{item.ornum}}</td>
-    <td class="clBlue">{{item.supporter}}</td>
-    <td>
-      <p class="clRed">￥{{item.amount}}</p>
-      <p class="clGray">无私支持</p>
-    </td>
-    <td>{{item.anti}}</td>
-    <td>
-      <p>{{item.jin}}</p>
-      <p>{{item.ti}}</p>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div id="app">
+  <table class="supportRecord">
+    <thead>
+    <tr>
+      <th>订单序号</th>
+      <th>支持者</th>
+      <th>支持项</th>
+      <th>数量</th>
+      <th>支持时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="item in starter">
+      <td>{{item.ornum}}</td>
+      <td class="clBlue">{{item.supporter}}</td>
+      <td>
+        <p class="clRed">￥{{item.amount}}</p>
+        <p class="clGray">无私支持</p>
+      </td>
+      <td>{{item.anti}}</td>
+      <td>
+        <p>{{item.jin}}</p>
+        <p>{{item.ti}}</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="nodata" v-if="!starter.length">还没有人支持啊,您来帮帮忙吧~~</div>
+</div>
 <script type="text/javascript" src="../js/viewport_rem.js"></script>
 <script type="text/javascript" src="../js/supportRecord.js"></script>
 </body>

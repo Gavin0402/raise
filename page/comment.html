@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
   <link rel="stylesheet" href="../css/productInfo.css" type="text/css"/>
   <script type="text/javascript" src="../js/viewport_rem.js"></script>
+  <script type="text/javascript" src="../js/fastclick.js"></script>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
@@ -39,7 +40,7 @@
         <p class="info">{{item.comment}}</p>
         <div class="Interaction">
           <span class="time">{{item.time}}</span>
-          <span class="commentBtn" v-on:click="repalycomment(event,item,index)">回复</span>
+          <span class="commentBtn" v-on:click.stop="repalycomment(event,item,index)">回复</span>
           <span class="zan" v-bind:class="{'act':item.zan}" v-on:click="zan(item)">赞({{item.zanNum | zanNum}})</span>
         </div>
         <ul class="commentList">
@@ -53,13 +54,13 @@
       </div>
     </li>
   </ul>
-  <div style="position:absolute;left:0;right:0;top:40%;text-align:center;" v-if="!starter.length">还没有评论,快来抢沙发吧!</div>
+  <div class="nodata" v-if="!starter.length">还没有评论啊,快来抢沙发吧~~</div>
   <div class="commentText" v-if="state">
-    <input class="text" type="text" placeholder="评论" v-model="commentText" autofocus>
+    <input class="text" type="text" placeholder="评论" v-model="commentText" v-focus="state">
     <input class="sure" type="button" value="评论" v-on:click="comment()">
   </div>
   <div class="commentText" v-if="!state">
-    <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-model="replyText" autofocus>
+    <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-model="replyText" v-focus="!state">
     <input class="sure" type="button" value="回复" v-on:click="repaly()">
   </div>
   <div class="mask" v-show="confirm">

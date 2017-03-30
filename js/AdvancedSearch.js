@@ -5,6 +5,12 @@
 var apiURL = "http://192.168.8.144:8081/raise/retrieval.jhtml";
 var loadMoreURL = "http://192.168.8.144:8081/raise/advancedLucene.jhtml";
 
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function() {
+    FastClick.attach(document.body);
+  }, false);
+}
+
 
 var app = new Vue({
   el: "#app",
