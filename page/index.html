@@ -31,10 +31,10 @@
 <body>
 <div id="app">
   <!--<pre>{{validation}}</pre>-->
-  <form id="allForm" :action="build.formDrl" method="post">
+  <form id="allForm" :action="build.formDrl" method="post" v-cloak>
     <!--切换菜单  S-->
     <ul class="TabMenu clearfix">
-      <li v-for="(val, index) in title" :class="{active:index==tabIndex}" @click="tabIndex=index">{{val}}</li>
+      <li v-for="(val, index) in title" :class="{active:index==tabIndex}" @click="buildRaise(index)">{{val}}</li>
     </ul>
     <!--切换菜单  E-->
 
@@ -48,7 +48,7 @@
             <img :src="item.picsrc" alt="pic"/>
           </div>
           <div class="conInfo">
-            <h2 class="infoTit">{{item.title}}</h2>
+            <h2 class="infoTit" v-html="item.title"></h2>
             <div class="percentWrap clearfix">
               <div class="percent fl">
                 <p :style="'width:'+item.progress"></p>
@@ -72,7 +72,7 @@
             <img :src="item.picsrc" alt="pic"/>
           </div>
           <div class="conInfo">
-            <h2 class="infoTit">{{item.title}}</h2>
+            <h2 class="infoTit" v-html="item.title"></h2>
             <div class="percentWrap clearfix">
               <div class="percent fl">
                 <p :style="'width:'+item.progress"></p>
@@ -94,15 +94,22 @@
         <!--项目资料  S-->
         <li v-show="build.pageIndex ==0">
           <!--身份类型  S-->
-          <div class="tab_wrap">
-            <!--<p class="title">选择你的身份类型</p>-->
-            <p class="title">请核对你的身份信息</p>
+          <!--<div class="tab_wrap">
+            <p class="title">选择你的身份类型</p>
             <div class="tab">
               <a class="per_btn" v-for="(val, index) in build.identity" @click="build.identityIndex=index"
                  :class="{'active':index == build.identityIndex ,brl:index == 0,brr:index == 1}">{{val}}</a>
             </div>
             <input type="hidden" name="identityType" :value="build.identity[build.identityIndex ]">
-          </div>
+          </div>-->
+          <!--<div class="tab_wrap">
+            <p class="title">请核对你的身份信息</p>
+            <div class="tab">
+              <a class="per_btn active br" v-if="info.cardType=='个人'">个人信息</a>
+              <a class="per_btn active br" v-if="info.cardType=='机构'">机构信息</a>
+            </div>
+          </div>-->
+          <p class="title">请核对你的身份信息</p>
           <!--个人回报-->
           <!--<dl class="wrap_per_ins" v-if="build.identityIndex == 0">
           <dd>
@@ -134,14 +141,18 @@
             <p class="errors" v-if="page1.per.loProvince.invalid">{{validateMsg.location}}</p>
           </dd>
         </dl>-->
-          <dl class="wrap_entity" v-if="">
+          <dl class="wrap_entity" v-if="info.cardType=='个人'">
             <dd><span>中文姓名：</span><input type="text" :value="info.name" disabled></dd>
             <dd><span>身份证号：</span><input type="text" :value="info.cardNo" disabled></dd>
             <dd><span>联系方式：</span><input type="text" :value="info.phone" disabled></dd>
             <dd><span>项目地点：</span>
               <div class="location">
-                <select class="prov fl" :value="info.province" disabled></select>
-                <select class="city fr" :value="info.city" disabled></select>
+                <select class="prov fl" disabled>
+                  <option :value="info.province" checked>{{info.province}}</option>
+                </select>
+                <select class="city fr" disabled>
+                  <option :value="info.city" checked>{{info.city}}</option>
+                </select>
               </div>
             </dd>
           </dl>
@@ -178,12 +189,12 @@
               <p class="errors" v-if="page1.ins.qyPhone.invalid">{{validateMsg.telnum}}</p>
             </dd>
           </dl>-->
-          <dl class="wrap_entity" v-if="">
-            <dd><span>企业名称：</span><input type="text" :value="info.name" disabled></dd>
-            <dd><span>营业执照：</span><input type="text" :value="info.cardNo" disabled></dd>
-            <dd><span>法人姓名：</span><input type="text" :value="info.phone" disabled></dd>
-            <dd><span>公司地址：</span><input type="text" :value="info.phone" disabled></dd>
-            <dd><span>发&nbsp;起&nbsp;人：</span><input type="text" :value="info.phone" disabled></dd>
+          <dl class="wrap_entity" v-if="info.cardType=='机构'">
+            <dd><span>企业名称：</span><input type="text" :value="info.tradeName" disabled></dd>
+            <dd><span>营业执照：</span><input type="text" :value="info.license" disabled></dd>
+            <dd><span>法人姓名：</span><input type="text" :value="info.lawPerson" disabled></dd>
+            <dd><span>公司地址：</span><input type="text" :value="info.inRegister" disabled></dd>
+            <dd><span>发&nbsp;起&nbsp;人：</span><input type="text" :value="info.name" disabled></dd>
             <dd><span>联系方式：</span><input type="text" :value="info.phone" disabled></dd>
           </dl>
           <!--身份类型  E-->
@@ -343,9 +354,9 @@
           <dl class="wrap_edit">
             <dt class="title deltitle">编辑你的项目详情
               <span class="fr add_pic"
-                    @click="addDescription(build.detailsDescription,build.newPic,5)">添加图片</span>
+                    @click="addDescription(build.detailsDescription,build.newPic)">添加图片</span>
               <span class="fr mr4 add_text"
-                    @click="addDescription(build.detailsDescription,build.newText,5)">添加文本</span>
+                    @click="addDescription(build.detailsDescription,build.newText)">添加文本</span>
             </dt>
             <dd v-for="(item, index) in build.detailsDescription">
               <!--文本结构  S-->
@@ -436,7 +447,7 @@
                        @blur="validate('unempty',item.reTitlw)">
                 <p class="errors" v-if="item.reTitlw.invalid">{{validateMsg.title}}</p>
               </dd>
-              <dd class="range clearfix" v-if="item.type == 3"><span>回报区间：</span>
+              <dd class="range clearfix" v-if="item.type == 3"><span>价格区间：</span>
                 <input type="text" placeholder="最低价" :name="'lowPrice'+indexParent"
                        v-model="item.range.lowPrice.value"
                        @input="highPriceValidate(item.range.lowPrice,item.range.highPrice)"
@@ -482,13 +493,13 @@
                        @blur="validate('faPeople',item.public.faPeople)">
                 <p class="errors" v-if="item.public.faPeople.invalid">{{validateMsg.faPeople}}</p>
               </dd>
-              <dd v-if="item.type == 5">
+              <dd v-if="item.type == 5 || item.type == 3">
                 <span>运 &nbsp&nbsp&nbsp&nbsp&nbsp 费：</span>
                 <input type="text" placeholder="“0”为包邮，默认单位元" :name="'freight'+indexParent" v-model="item.freight.value"
                        @input="validate('freight',item.freight)" @blur="validate('freight',item.freight)">
                 <p class="errors" v-if="item.freight.invalid">{{validateMsg.freight}}</p>
               </dd>
-              <dd class="radio invoice" v-if="item.type == 5">
+              <dd class="radio invoice" v-if="item.type == 5 || item.type == 3">
                 <span>发 &nbsp&nbsp&nbsp&nbsp&nbsp 票：</span>
                 <div class="clearfix radio_wrap">
                   <label><input type="radio" checked="checked" :name="'invoice'+indexParent" value="不可开发票">

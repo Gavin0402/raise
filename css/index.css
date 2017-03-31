@@ -1,3 +1,6 @@
+[v-cloak] {
+	display: none;
+}
 /*common  S*/
 .w_35{
 	width:35%;
@@ -231,6 +234,11 @@ span.count:last-of-type{
 	width:13rem;
 	font-size:0.7rem;
 	-webkit-appearance:none;
+}
+.wrap_entity dd input[disabled], .wrap_entity dd select[disabled]{
+	border:1px solid #666;
+	color:#666;
+	background-color:#fff;
 }
 .wrap_entity dd input[type="text"]{
 	height:1.8rem;
@@ -494,7 +502,6 @@ input[type="radio"]:checked + span .innerCircle{
 }
 .tab{
 	display:inline-block;
-	width:5.8rem;
 	height:1.5rem;
 }
 .tab a{
@@ -503,7 +510,7 @@ input[type="radio"]:checked + span .innerCircle{
 	height:1.5rem;
 	line-height:1.5rem;
 	font-size:0.7rem;
-	width:2.8rem;
+	padding: 0 0.6rem;
 	background-color:#ffffff;
 	border:1px solid #cc0000;
 }
@@ -516,6 +523,9 @@ input[type="radio"]:checked + span .innerCircle{
 }
 .brr{
 	border-radius:0 0.2rem 0.2rem 0;
+}
+.br{
+	border-radius:0.2rem;
 }
 .ins{
 	display:none;

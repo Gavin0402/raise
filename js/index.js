@@ -4,7 +4,7 @@
 var apiURL = "http://192.168.8.144:8081/raise/zccb.jhtml";
 
 if ('addEventListener' in document) {
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     FastClick.attach(document.body);
   }, false);
 }
@@ -27,7 +27,7 @@ var app = new Vue({
       imgAccept: "image/jpeg, image/jpg, image/bmp, image/gif, image/png",
       videoAccept: "video/avi, video/rmvb, video/3GP, video/wmv, video/mkv, video/mp4, video/wmv, video/mov",
       /*数据*/
-      identity: ["个人", "机构"],//身份类型数据
+      /*identity: ["个人", "机构"],//身份类型数据*/
       type: [],//众筹类型数据
       /*索引*/
       pageIndex: 0,//页面索引
@@ -217,6 +217,14 @@ var app = new Vue({
         app.position = response.body.citylist;
       })
     },
+    buildRaise: function (index) {
+      if (index == 2 && !this.info.cardType) {
+        alert("请先补全个人信息");
+        window.location = "/raise/page/index.html";
+      } else {
+        this.tabIndex = index;
+      }
+    },
     saveEdit: function (item) {
       var arr = item.contentEdit.split("\n");
       var str = "";
@@ -227,7 +235,7 @@ var app = new Vue({
       item.edit = 0;
     },
     addDescription: function (parent, children, num) {
-      if (parent.length > num - 1) {
+      if (num && (parent.length > num - 1)) {
         alert("最多只能上传" + num + "条");
       } else {
         parent.push(JSON.parse(JSON.stringify(children)));
