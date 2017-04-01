@@ -134,7 +134,7 @@ var app = new Vue({
       purpose: {invalid: "", value: ""},
       totaltarget: {invalid: "", value: ""},
       timelimit: {invalid: "", value: ""},
-      chuziShare: {invalid: "", value: ""},
+     /* chuziShare: {invalid: "", value: ""},*/
       itemProvince: {invalid: "", value: ""},
     },
     selfdomValid: {
@@ -257,7 +257,6 @@ var app = new Vue({
       var This = this;
       var formData = new FormData();
       var file = document.getElementById(id).files[0];
-      console.log(file);
       formData.append('file', file);
       this.$http.post(this.build.mediaDrl, formData).then(function (res) {
         valid.value = res.data.filePath;
@@ -389,6 +388,7 @@ function _check(page) {
   var bOff = true;
   for (attr in page) {
     if (page[attr].invalid === "" || page[attr].invalid === true) {
+      console.log(attr);
       page[attr].invalid = true;
       bOff = false;
     }
