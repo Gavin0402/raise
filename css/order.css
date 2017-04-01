@@ -1,0 +1,251 @@
+body {
+  background: #f2f2f2;
+  color: #333333;
+}
+.color-red {
+  color: #cc0000;
+}
+.radio-wrap {
+  padding-top: 0.6rem;
+}
+.radio input {
+  display: none;
+}
+.radio label {
+  float: left;
+  margin-right: 1rem;
+  line-height: 0.8rem;
+}
+.radio label:last-child,
+.radio label:nth-of-type(3n) {
+  margin-right: 0;
+}
+.outCircle,
+.innerCircle {
+  float: left;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.outCircle {
+  padding: 0.1rem;
+  border: 1px solid #696969;
+}
+input[type="radio"]:checked + span .innerCircle,
+input[type="checkbox"]:checked + span .innerCircle {
+  background: #cc0000;
+}
+.btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.6rem;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+.btn a {
+  display: block;
+  height: 1.7rem;
+  line-height: 1.7rem;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #ffffff;
+  background: #cc0000;
+  border-radius: 0.15rem;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+/*order  S*/
+.order {
+  padding-bottom: 3rem;
+}
+.order .title {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0 0.9rem;
+  font-size: 0.77rem;
+}
+.order .location {
+  padding: 0.5rem 2.4rem 0.4rem;
+  background: #ffffff;
+  position: relative;
+  margin-bottom: 0.84rem;
+}
+.order .location p {
+  line-height: 0.8rem;
+  padding: 0.1rem 0;
+  font-size: 0.6rem;
+}
+.order .location:before,
+.order .location:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0.2rem;
+  background: url("../img/icon/orderLine.png") repeat-x 0 0 / auto 0.2rem;
+}
+.order .location:before {
+  top: 0;
+}
+.order .location:after {
+  bottom: 0;
+}
+.order .location .bg-local {
+  position: absolute;
+  left: 0.9rem;
+  top: 1.43rem;
+  width: 0.7rem;
+  height: 0.97rem;
+  background: url("../img/icon/orderLocal.png") no-repeat 0 0 / contain;
+}
+.order .location .bg-right {
+  position: absolute;
+  right: 0.9rem;
+  top: 1.63rem;
+  width: 0.34rem;
+  height: 0.57rem;
+  background: url("../img/icon/orderRight.png") no-repeat 0 0 / contain;
+}
+.order .con-list > li {
+  background: #ffffff;
+  border-bottom: 1px solid #cccccc;
+  padding: 0 0.85rem;
+  line-height: 2.16rem;
+  font-size: 0.6rem;
+}
+.order .con-list > li:last-of-type {
+  border: none;
+}
+.order .con-list input,
+.order .con-list textarea {
+  width: 12rem;
+  height: 1.5rem;
+  text-indent: 0.5rem;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  vertical-align: middle;
+  font-size: 0.6rem;
+  background: 0;
+}
+.order .con-list .remark {
+  border: none;
+}
+.order .list-tit {
+  font-size: 0.7rem;
+  color: #666666;
+  width: 4.2rem;
+  float: left;
+}
+.order .list-tit-small {
+  font-size: 0.6rem;
+  color: #666666;
+  width: 4.2rem;
+  float: left;
+}
+.order .amount {
+  margin-top: 0.56rem;
+}
+.order .amount span {
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  text-align: center;
+  background: #f5f5f5;
+  float: left;
+}
+.order .amount input {
+  float: left;
+  width: 1.4rem;
+  height: 1.1rem;
+  box-sizing: border-box;
+  border: 0.05rem solid #cccccc;
+  border-radius: 0.15rem;
+  margin: 0 0.42rem;
+}
+/*order  E*/
+/*selfless  S*/
+.selfless {
+  font-size: 0.6rem;
+}
+.selfless .title {
+  padding: 0 0.6rem;
+  height: 2.2rem;
+  line-height: 2.2rem;
+  font-size: 0.77rem;
+  color: #666666;
+}
+.selfless .support-money {
+  padding: 1rem 0.6rem;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  background: #ffffff;
+  margin-bottom: 0.5rem;
+}
+.selfless .support-money input[type="text"] {
+  padding-left: 1.17rem;
+  background: url("../img/icon/money.png") no-repeat 0.45rem center / 0.75rem;
+}
+.selfless input[type="text"] {
+  width: 100%;
+  height: 1.6rem;
+  box-sizing: border-box;
+  border: 0.05rem solid #cccccc;
+  border-radius: 0.15rem;
+  font-size: 0.6rem;
+  text-indent: 0.45rem;
+  background: 0;
+}
+.selfless .money-list {
+  margin-bottom: 1rem;
+}
+.selfless .money-list li {
+  float: left;
+  position: relative;
+  width: 5.2rem;
+  height: 1.5rem;
+  line-height: 1.42rem;
+  text-align: center;
+  font-size: 0.55rem;
+  box-sizing: border-box;
+  border: 0.05rem solid #cccccc;
+  border-radius: 0.15rem;
+  margin-right: 0.6rem;
+}
+.selfless .money-list li:last-of-type {
+  margin-right: 0;
+}
+.selfless .money-list li.act {
+  border-color: #cc0000;
+}
+.selfless .money-list li.act:after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: url("../img/icon/right_top.png") no-repeat 0 0 / contain;
+}
+.selfless .support-tel {
+  padding: 1rem 0.6rem;
+  background: #ffffff;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+.selfless .support-total {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: 0.77rem;
+  padding: 0 0.6rem;
+  background: #ffffff;
+  border-bottom: 1px solid #cccccc;
+}
+.selfless .support-total span {
+  float: right;
+  color: #cc0000;
+}
+/*selfless  E*/
+/*# sourceMappingURL=order.css.map */

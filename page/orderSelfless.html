@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>个人中心</title>
+  <title>提交订单</title>
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
   <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
@@ -22,82 +22,34 @@
   <!-- windows phone 点击无高光 -->
   <!--<meta name="msapplication-tap-highlight" content="no">-->
   <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
-  <link rel="stylesheet" href="../css/person.css" type="text/css"/>
+  <link rel="stylesheet" href="../css/order.css" type="text/css"/>
   <script type="text/javascript" src="../js/viewport_rem.js"></script>
   <script type="text/javascript" src="../js/fastclick.js"></script>
   <script type="text/javascript" src="../js/vue.min.js"></script>
   <script type="text/javascript" src="../js/vue-resource.min.js"></script>
 </head>
 <body>
-<div id="app">
-  <div class="panel">
-    <div class="person-info clearfix">
-      <img src="../img/pic/header.png" alt="pic">
-      <div class="text">
-        <p>admin</p>
-        <p>积分：666</p>
-      </div>
-      <div class="letter act"></div>
-    </div>
-    <p class="welcome">中国检查出版社欢迎您！</p>
+<div id="app" class="selfless">
+  <p class="title">感谢您的无私支持</p>
+  <div class="support-money">
+    <ul class="money-list clearfix">
+      <li class="act">10元&nbsp;</li>
+      <li>20元&nbsp;</li>
+      <li>30元&nbsp;</li>
+    </ul>
+    <input type="text" placeholder="支持其他金额（不低于1元）">
   </div>
-  <ul class="my-list clearfix">
-    <li>
-      <div class="bg"></div>
-      <p>我的收藏</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>我的产品</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>我的众筹</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>积分优惠券</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>订单记录</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>活动公告</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>我的收藏</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>个人资料</p>
-    </li>
-  </ul>
-  <ul class="footer clearfix">
-    <li class="active">
-      <div class="bg"></div>
-      <p>关于我们</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>关于我们</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>关于我们</p>
-    </li>
-    <li>
-      <div class="bg"></div>
-      <p>关于我们</p>
-    </li>
-    <li class="act">
-      <div class="bg"></div>
-      <p>关于我们</p>
-    </li>
-  </ul>
+  <div class="support-tel">
+    <input type="text" placeholder="输入手机号，项目成功或失败时退款通知（选填）">
+  </div>
+  <div class="support-total">
+    支持总额
+    <span>￥10</span>
+  </div>
+  <div class="btn">
+    <a href="#">立即支持</a>
+  </div>
 </div>
-<!--<script type="text/javascript" src="../js/person.js"></script>-->
+<!--<script type="text/javascript" src="../js/order.js"></script>-->
 </body>
 </html>

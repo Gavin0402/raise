@@ -1,3 +1,12 @@
+body{
+  background:#f0f0f0;
+}
+.bg-pisition-x(@num,@width:2) {
+  background-position:unit(-@num*@width, rem) 0;
+}
+.bg-pisition-y(@num,@height) {
+  background-position:0 unit(-@num*@height, rem);
+}
 //个人中心首页
 .panel{
   padding-top:6rem;
@@ -16,7 +25,7 @@
   .text{
     float:left;
     line-height:1rem;
-    color:#fff;
+    color:#ffffff;
     font-size:0.6rem;
     padding:0.33rem 0 0;
     p{
@@ -29,7 +38,7 @@
     float:right;
     margin-top:1rem;
     position:relative;
-    background:url("../img/icon/e-mail.png") no-repeat center center/contain;
+    background:url("../img/icon/Email.png") no-repeat center center/contain;
   }
   .letter.act{
     &:before{
@@ -47,34 +56,146 @@
 .welcome{
   line-height:1.58rem;
   font-size:0.6rem;
-  color:#fff;
-  background:rgba(0,0,0,0.6);
+  color:#ffffff;
+  background:rgba(0, 0, 0, 0.6);
   text-align:center;
 }
 .my-list{
-  color:#333;
+  color:#333333;
   text-align:center;
   font-size:0.5rem;
+  background:#ffffff;
+  border-bottom:1px solid #cccccc;
   li{
     float:left;
     width:4.5rem;
     height:4.5rem;
-    border:1px ;
     box-sizing:border-box;
+    border-top:1px solid #cccccc;
+    border-right:1px solid #cccccc;
     .bg{
       height:1.57rem;
       width:2rem;
-      margin:1.15rem auto 0.37rem;
+      margin:1.1rem auto 0.37rem;
       background:url("../img/icon/personList.png") no-repeat;
       background-size:auto 1.57rem;
     }
     &:nth-of-type(4n){
-
+      border-right:none;
+    }
+    &:nth-of-type(1){
+      .bg{
+        .bg-pisition-x(0);
+      }
+    }
+    &:nth-of-type(2){
+      .bg{
+        .bg-pisition-x(1);
+      }
+    }
+    &:nth-of-type(3){
+      .bg{
+        .bg-pisition-x(2);
+      }
+    }
+    &:nth-of-type(4){
+      .bg{
+        .bg-pisition-x(3);
+      }
+    }
+    &:nth-of-type(5){
+      .bg{
+        .bg-pisition-x(4);
+      }
+    }
+    &:nth-of-type(6){
+      .bg{
+        .bg-pisition-x(5);
+      }
+    }
+    &:nth-of-type(7){
+      .bg{
+        .bg-pisition-x(6);
+      }
+    }
+    &:nth-of-type(8){
+      .bg{
+        .bg-pisition-x(7);
+      }
     }
   }
 }
 .footer{
-  position:fixed;
+  position:absolute;
+  left:0;
   bottom:0;
+  color:#b3b3b3;
+  background:#f8f8f8;
+  border-top:1px solid #cccccc;
+  li{
+    float:left;
+    width:3.6rem;
+    height:2.6rem;
+    text-align:center;
+    font-size:0.47rem;
+    .bg{
+      height:1.1rem;
+      width:1.5rem;
+      margin:0.4rem auto 0.2rem;
+      background:url("../img/icon/personBottom.png") no-repeat;
+      background-size:auto 1.1rem;
+    }
+    &.act,&.active{color:#cc0000}
+    &:nth-of-type(1){
+      .bg{
+        .bg-pisition-x(0,1.5);
+      }
+    }
+    &.act:nth-of-type(1){
+      .bg{
+        .bg-pisition-x(1,1.5);
+      }
+    }
+    &:nth-of-type(2){
+      .bg{
+        .bg-pisition-x(2,1.5);
+      }
+    }
+    &.act:nth-of-type(2){
+      .bg{
+        .bg-pisition-x(3,1.5);
+      }
+    }
+    &:nth-of-type(3){
+      .bg{
+        .bg-pisition-x(4,1.5);
+      }
+    }
+    &.act:nth-of-type(3){
+      .bg{
+        .bg-pisition-x(5,1.5);
+      }
+    }
+    &:nth-of-type(4){
+      .bg{
+        .bg-pisition-x(6,1.5);
+      }
+    }
+    &.act:nth-of-type(4){
+      .bg{
+        .bg-pisition-x(7,1.5);
+      }
+    }
+    &:nth-of-type(5){
+      .bg{
+        .bg-pisition-x(8,1.5);
+      }
+    }
+    &.act:nth-of-type(5){
+      .bg{
+        .bg-pisition-x(9,1.5);
+      }
+    }
+  }
 }
 //个人中心首页

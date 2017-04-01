@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>提交订单</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+  <!-- 是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。 -->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!-- 这个主要是根据实际的页面设计的主体色为搭配来进行设置。 -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+  <meta name="format-detection" content="telephone=no, email=no"/>
+  <!-- 启用360浏览器的极速模式(webkit) -->
+  <meta name="renderer" content="webkit"/>
+  <!-- 避免IE使用兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+  <meta name="HandheldFriendly" content="true">
+  <!-- 微软的老式浏览器 -->
+  <meta name="MobileOptimized" content="320">
+  <!-- windows phone 点击无高光 -->
+  <!--<meta name="msapplication-tap-highlight" content="no">-->
+  <link rel="stylesheet" href="../css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="../css/order.css" type="text/css"/>
+  <script type="text/javascript" src="../js/viewport_rem.js"></script>
+  <script type="text/javascript" src="../js/fastclick.js"></script>
+  <script type="text/javascript" src="../js/vue.min.js"></script>
+  <script type="text/javascript" src="../js/vue-resource.min.js"></script>
+</head>
+<body>
+<div id="app" class="order">
+  <p class="title">感谢您的无私支持</p>
+  <div class="location">
+    <div class="bg-local"></div>
+    <p>收货人：苏云金
+      <span class="fr">18012345678</span>
+    </p>
+    <p>收货地址：北京市海淀区西三旗悦秀路99号通厦公园九十九</p>
+    <div class="bg-right"></div>
+  </div>
+  <ul class="con-list">
+    <li class="clearfix">
+      <span class="list-tit">支持金额</span>
+      <div class="fr">￥48</div>
+    </li>
+    <li class="clearfix">
+      <span class="list-tit">份数</span>
+      <div class="amount fr">
+        <span>+</span>
+        <input type="text">
+        <span>-</span>
+      </div>
+    </li>
+    <li class="clearfix">
+      <span class="list-tit">支持总额</span>
+      <div class="fr color-red">￥48</div>
+    </li>
+    <li class="clearfix">
+      <span class="list-tit">备注</span>
+      <input class="remark" type="text">
+    </li>
+    <li class="clearfix">
+      <div class="radio clearfix">
+        <span class="list-tit">发票</span>
+        <div class="radio-wrap clearfix">
+          <label><input type="radio" name="retype" value="3" v-model="item.type">
+            <span class="outCircle"><span class="innerCircle"></span></span>普通发票
+          </label>
+          <label><input type="radio" name="retype" value="4" v-model="item.type">
+            <span class="outCircle"><span class="innerCircle"></span></span>增值税发票
+          </label>
+        </div>
+      </div>
+      <div>
+        <span class="list-tit-small">发票抬头</span>
+        <input type="text">
+      </div>
+      <div>
+        <span class="list-tit-small">纳税人识别码</span>
+        <input type="text">
+      </div>
+      <div>
+        <span class="list-tit-small">注册地址</span>
+        <input type="text">
+      </div>
+      <div>
+        <span class="list-tit-small">注册电话</span>
+        <input type="text">
+      </div>
+      <div>
+        <span class="list-tit-small">开户银行</span>
+        <input type="text">
+      </div>
+      <div>
+        <span class="list-tit-small">发票抬头</span>
+        <input type="text">
+      </div>
+      <div>
+        <span class="list-tit-small">银行账户</span>
+        <input type="text">
+      </div>
+    </li>
+  </ul>
+  <div class="btn">
+    <a href="#">立即支持</a>
+  </div>
+</div>
+<!--<script type="text/javascript" src="../js/order.js"></script>-->
+</body>
+</html>
