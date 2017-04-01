@@ -16,6 +16,7 @@ var app = new Vue({
     openId: "",
     state: true,
     placeholder: "",
+    buttonText: "",
     commentText: "",
     commentId: "",
     commentIndex: "",
@@ -51,24 +52,30 @@ var app = new Vue({
       });
     },
     comment: function () {
-      if(!this.commentText){
-        alert("请输入评论内容");
+      if (!this.commentText) {
+        alert("请输入将要发表的内容");
         return false;
       }
       this.$http.get("http://192.168.8.144:8081/raise/pinglun.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&context=" + this.commentText).then(function (response) {
-        console.log(response.data);
-        app.starter.unshift(response.data);
+        if (!response.data.permission) {
+          alert("请先支持一下吧~~");
+        } else {
+          app.starter.unshift(response.data);
+        }
         app.commentText = "";
       })
     },
     repaly: function () {
-      if(!this.replyText){
-        alert("请输入回复内容");
+      if (!this.replyText) {
+        alert("请输入评论内容");
         return false;
       }
       this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&replyName=" + this.replyName).then(function (response) {
-        console.log(response.data);
-        app.starter[this.commentIndex].discuss.push(response.data);
+        if (!response.data.permission) {
+          alert("请先支持一下吧~~");
+        } else {
+          app.starter[this.commentIndex].discuss.push(response.data);
+        }
         app.replyText = "";
         app.commentId = "";
         app.replyName = "";
@@ -84,7 +91,8 @@ var app = new Vue({
       this.state = false;
       this.commentId = item.commentId;
       this.commentIndex = index;
-      this.placeholder = "回复";
+      this.placeholder = "评论";
+      this.buttonText = "评论";
     },
     repalyrepaly: function (event, list, indexDiscuss, item, index) {
       if (list.proactive == this.userName) {
@@ -95,6 +103,7 @@ var app = new Vue({
         this.repalycomment(event, item, index);
         this.replyName = list.proactive;
         this.placeholder = "@" + list.proactive;
+        this.buttonText = "回复";
       }
     },
     delComment: function (item, index) {

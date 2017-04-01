@@ -30,25 +30,28 @@
 </head>
 <body>
 <div id="app">
-  <ul class="comment" v-if="starter.length" v-on:click="changestate">
+  <ul class="comment" v-if="starter.length" @click="changestate">
     <li class="clearfix" v-for="(item,index) in starter">
-      <img class="headerPic" v-bind:src="item.headPic" alt="pic"/>
+      <!--<img class="headerPic" :src="item.headPic" alt="pic"/>-->
+      <img class="headerPic" src="../img/pic/header.png" alt="pic"/>
       <div class="infobox">
         <p class="title">{{item.commentName}}
-          <span class="del" v-on:click="delComment(item,index)" v-if="( userName == item.commentName )"></span>
+          <span class="del" @click="delComment(item,index)" v-if="( userName == item.commentName )"></span>
         </p>
-        <p class="info">{{item.comment}}</p>
+        <p class="info" v-html="item.comment"></p>
         <div class="Interaction">
           <span class="time">{{item.time}}</span>
-          <span class="commentBtn" v-on:click.stop="repalycomment(event,item,index)">回复</span>
-          <span class="zan" v-bind:class="{'act':item.zan}" v-on:click="zan(item)">赞({{item.zanNum | zanNum}})</span>
+          <span class="commentBtn" @click.stop="repalycomment(event,item,index)">评论</span>
+          <span class="zan" :class="{'act':item.zan}" @click="zan(item)">赞({{item.zanNum | zanNum}})</span>
         </div>
         <ul class="commentList">
-          <li v-for="(list,indexDiscuss) in item.discuss" v-on:click="repalyrepaly(event,list,indexDiscuss,item,index)">
+          <li v-for="(list,indexDiscuss) in item.discuss" @click.stop="repalyrepaly(event,list,indexDiscuss,item,index)">
             <span class="clBlue">{{list.proactive}}</span>
             <span v-if="list.passive">回复</span>
-            <span class="clBlue" v-if="list.passive">{{list.passive}}</span>
-            <span class="ml2">：{{list.content}}</span>
+            <span class="clBlue" v-if="list.passive">{{list.passive}}</span>：
+            <span class="ml2" v-html="list.content"></span>
+            <span class="clRed fr" v-if="list.proactive !=userName">回复</span>
+            <span class="clRed fr" v-if="list.proactive == userName">删除</span>
           </li>
         </ul>
       </div>
@@ -56,22 +59,22 @@
   </ul>
   <div class="nodata" v-if="!starter.length">还没有评论啊,快来抢沙发吧~~</div>
   <div class="commentText" v-if="state">
-    <input class="text" type="text" placeholder="评论" v-model="commentText" v-focus="state">
-    <input class="sure" type="button" value="评论" v-on:click="comment()">
+    <input class="text" type="text" placeholder="请您发表一下你的看法吧~~" v-model="commentText" v-focus="state">
+    <input class="sure" type="button" value="发表" @click="comment()">
   </div>
   <div class="commentText" v-if="!state">
-    <input id="replyText" class="text" type="text" v-bind:placeholder="placeholder" v-model="replyText" v-focus="!state">
-    <input class="sure" type="button" value="回复" v-on:click="repaly()">
+    <input id="replyText" class="text" type="text" :placeholder="placeholder" v-model="replyText" v-focus="!state">
+    <input class="sure" type="button" :value="buttonText" @click="repaly()">
   </div>
   <div class="mask" v-show="confirm">
     <div class="confirm">
       <div class="confirm-title">信息
-        <span class="confirm-close" v-on:click="closeMask"></span>
+        <span class="confirm-close" @click="closeMask"></span>
       </div>
       <div class="confirm-content">您确定要删除词条回复？</div>
       <div class="confirm-btnwrap">
-        <a class="confirm-btn" v-on:click="delRepaly">确定</a>
-        <a class="confirm-btn" v-on:click="closeMask">取消</a>
+        <a class="confirm-btn" @click="delRepaly">确定</a>
+        <a class="confirm-btn" @click="closeMask">取消</a>
       </div>
     </div>
   </div>

@@ -259,7 +259,7 @@
         <!--项目资料  E-->
 
         <!--项目信息  S-->
-        <li v-show="build.pageIndex == 1">
+        <li v-show="build.pageIndex == 0">
           <dl class="wrap_entity">
             <dt class="title">创建你的项目信息</dt>
             <dd class="file">
@@ -275,8 +275,8 @@
             </dd>
             <dd><span>项目标题：</span>
               <input type="text" placeholder="请输入项目名称（必填）" name="cfName" v-model="page2.cfName.value"
-                     @input="validate('unempty',page2.cfName)" @blur="validate('unempty',page2.cfName)">
-              <p class="errors" v-if="page2.cfName.invalid">{{validateMsg.unempty}}</p>
+                     @input="validate('length',page2.cfName)" @blur="validate('length',page2.cfName)">
+              <p class="errors" v-if="page2.cfName.invalid">{{validateMsg.length}}</p>
             </dd>
             <dd><span>筹款目的：</span>
               <textarea type="text" placeholder="请简单介绍一下项目（必填）" name="purpose" v-model="page2.purpose.value"
@@ -307,11 +307,11 @@
                      @input="validate('timelimit',page2.timelimit)" @blur="validate('timelimit',page2.timelimit)">
               <p class="errors" v-if="page2.timelimit.invalid">{{validateMsg.timelimit}}</p>
             </dd>
-            <dd><span>出资份额：</span>
+            <!--<dd><span>出资份额：</span>
               <input type="text" placeholder="输入你需要出资每份的价格" name="chuziShare" v-model="page2.chuziShare.value"
                      @input="validate('chuziShare',page2.chuziShare)" @blur="validate('chuziShare',page2.chuziShare)">
               <p class="errors" v-if="page2.chuziShare.invalid">{{validateMsg.chuziShare}}</p>
-            </dd>
+            </dd>-->
             <dd><span>设置标签：</span>
               <input type="text" placeholder="个性标签，标签之间用空格隔开" name="selfdom" v-model="selfdomValid.value"
                      @input="selfdomValidate">
@@ -406,7 +406,7 @@
         <!--详情描述  E-->
 
         <!--回报信息  S-->
-        <li v-show="build.pageIndex == 3">
+        <li v-show="build.pageIndex == 0">
           <div class="retuen" v-for="(item,indexParent) in build.returnInfo">
             <div class="title" v-if="!indexParent">设置你的回报信息</div>
             <div class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
@@ -415,10 +415,10 @@
               <dd class="radio ReturnType">
                 <span>回报类型：</span>
                 <div class="clearfix radio_wrap">
-                  <label><input type="radio" checked="checked" :name="'retype'+indexParent" value="1"
+                  <!--<label><input type="radio" checked="checked" :name="'retype'+indexParent" value="1"
                                 v-model="item.type">
                     <span class="outCircle"><span class="innerCircle"></span></span>无私回报
-                  </label>
+                  </label>-->
                   <label><input type="radio" :name="'retype'+indexParent" value="2" v-model="item.type">
                     <span class="outCircle"><span class="innerCircle"></span></span>抽奖支持
                   </label>
@@ -434,7 +434,7 @@
                 </div>
               </dd>
             </dl>
-            <dl class="wrap_entity" v-if="item.type != 1">
+            <dl class="wrap_entity">
               <dd><span>支持金额：</span>
                 <input type="text" placeholder="输入需要用户支持的金额" :name="'faMoney'+indexParent"
                        v-model="item.public.faMoney.value" @input="validate('faMoney',item.public.faMoney)"
@@ -487,7 +487,7 @@
                           @blur="validate('unempty',item.public.content)"></textarea>
                 <p class="errors" v-if="item.public.content.invalid">{{validateMsg.unempty}}</p>
               </dd>
-              <dd><span>人数上限：</span>
+              <dd v-if="item.type !=2 "><span>人数上限：</span>
                 <input type="text" placeholder="“0”为不限名额" :name="'faPeople'+indexParent"
                        v-model="item.public.faPeople.value" @input="validate('faPeople',item.public.faPeople)"
                        @blur="validate('faPeople',item.public.faPeople)">
@@ -516,7 +516,7 @@
                        @blur="validate('retime',item.public.retime)">
                 <p class="errors" v-if="item.public.retime.invalid">{{validateMsg.retime}}</p>
               </dd>
-              <dd class="img_box">
+              <dd class="img_box" v-if="item.type != 3">
                 <img v-for="(list,index) in item.picSrc" @click="item.picSrc.splice(index, 1)" :src="list.value"
                      v-if="list.value" alt="pic">
               </dd>
@@ -532,9 +532,9 @@
                        :value="list.value">
               </dd>
             </dl>
-            <div class="blankBoard" v-if="item.type == 1">
+            <!--<div class="blankBoard" v-if="item.type == 1">
               感谢您的无私支持~~
-            </div>
+            </div>-->
           </div>
           <div class="contine mb30" @click="addDescription(build.returnInfo,build.newReturn,10)">
             +继续添加新的回报

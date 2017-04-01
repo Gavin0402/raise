@@ -64,7 +64,7 @@ var app = new Vue({
       /*回报信息*/
       returnInfo: [
         {
-          type: 1,
+          type: 2,
           picSrc: [{value: ""}],
           freight: {invalid: "", value: ""},
           reTitlw: {invalid: "", value: ""},
@@ -86,7 +86,7 @@ var app = new Vue({
       ],
       /*添加回报*/
       newReturn: {
-        type: 1,
+        type: 2,
         picSrc: [{value: ""}],
         freight: {invalid: "", value: ""},
         reTitlw: {invalid: "", value: ""},
@@ -159,6 +159,7 @@ var app = new Vue({
       faPeople: "*回报人数上限只能为整数,最多为999个",
       freight: "*运费只能为整数,最多为99元",
       retime: "*回报时间只能为整数,最长为999天",
+      length: "*标题的长度不能超过13个字符",
     }
   },
   validators: { // `numeric` and `url` custom validator is local registration
@@ -200,6 +201,9 @@ var app = new Vue({
     },
     retime: function (val) {
       return /^(?:\d{1,3})$/.test(val);
+    },
+    length: function (val) {
+      return 0<val.length&&val.length<14;
     },
   },
   methods: {

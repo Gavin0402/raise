@@ -35,7 +35,7 @@
       <img class="fl" v-bind:src="info.headerPic" alt="pic">
     </div>
     <div class="text_info">
-      <p>{{info.title}}</p>
+      <p v-html="info.title"></p>
       <div>
         <span class="fl">发起人：<strong>{{info.userName}}</strong></span>
         <span class="fr concern" v-bind:class="{'active':info.concern}" v-on:click="concern">关注</span>

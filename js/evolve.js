@@ -8,6 +8,7 @@ var app = new Vue({
   el: "#app",
   data: {
     starter: {},
+    boff:true
   },
   methods: {
     getCustomers: function () {
@@ -15,6 +16,9 @@ var app = new Vue({
       this.$http.get(apiURL+"?"+parameter).then(function (response) {
         console.log(response)
         this.starter = response.data;
+        if(response.data.dynamic.length){
+          this.boff = false;
+        }
       })
     },
   },
