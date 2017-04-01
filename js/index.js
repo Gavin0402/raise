@@ -371,10 +371,10 @@ var app = new Vue({
       }
     },
     turnPage: function (item) {
-      window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.info.openId;
+      window.location.href = "preview.html?contentId=" + item.contentId + "&wxbdopenId=" + this.info.wxbdopenId;
     },
     turnPageHis: function (item) {
-      window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.info.openId + "&&&his=1";
+      window.location.href = "preview.html?contentId=" + item.contentId + "&wxbdopenId=" + this.info.wxbdopenId + "&&&his=1";
     }
   },
   mounted: function () {

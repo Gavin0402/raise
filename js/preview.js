@@ -16,7 +16,7 @@ var app = new Vue({
     info: {},
     his: "",
     contentId: "",
-    openId: "",
+    wxbdopenId: "",
     detialInfo: [
       {
         title: "查看图文详情",
@@ -41,7 +41,7 @@ var app = new Vue({
       var parameter = document.URL.split('?')[1];
       var arr = parameter.split('&');
       this.contentId = arr[0].split('=')[1];
-      this.openId = arr[1].split('=')[1];
+      this.wxbdopenId = arr[1].split('=')[1];
       var his = document.URL.split('&&&')[1];
       his && (this.his = his);
       this.$http.get(apiURL + "?" + parameter).then(function (response) {
@@ -50,10 +50,10 @@ var app = new Vue({
       })
     },
     turnPage: function (item) {
-      window.location.href = item.href + "?contentId=" + this.contentId + "&openId=" + this.openId;
+      window.location.href = item.href + "?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId;
     },
     concern: function () {
-      this.$http.get("http://192.168.8.144:8081/raise/concern.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&concern=" + !this.info.concern).then(function (response) {
+      this.$http.get("http://192.168.8.144:8081/raise/concern.jhtml?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId + "&concern=" + !this.info.concern).then(function (response) {
         this.info.concern = !this.info.concern;
       })
     }

@@ -16,7 +16,7 @@ var app = new Vue({
   el: "#app",
   data: {
     type: "",
-    openId: {},
+    wxbdopenId: {},
     tabIndex: {num: 999},//菜单索引
     searchType: [],
     starter: [],
@@ -28,7 +28,7 @@ var app = new Vue({
       var parameter = document.URL.split('?')[1];
       var arr = parameter.split('&');
       this.type = arr[0].split('=')[1];
-      this.openId = arr[1].split('=')[1];
+      this.wxbdopenId = arr[1].split('=')[1];
       this.$http.get(apiURL + "?type=" + this.type).then(function (response) {
         window.scrollTo(0,0);
         if (response.data.item.length) {
@@ -68,9 +68,9 @@ var app = new Vue({
     },
     turnPage: function (item) {
       if (this.type == "hot") {
-        window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.openId;
+        window.location.href = "preview.html?contentId=" + item.contentId + "&wxbdopenId=" + this.wxbdopenId;
       } else {
-        window.location.href = "preview.html?contentId=" + item.contentId + "&openId=" + this.info.openId + "&&&his=1";
+        window.location.href = "preview.html?contentId=" + item.contentId + "&wxbdopenId=" + this.info.wxbdopenId + "&&&his=1";
       }
     },
   },

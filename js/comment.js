@@ -13,7 +13,7 @@ var app = new Vue({
   el: "#app",
   data: {
     contentId: "",
-    openId: "",
+    wxbdopenId: "",
     state: true,
     placeholder: "",
     buttonText: "",
@@ -34,7 +34,7 @@ var app = new Vue({
       var parameter = document.URL.split('?')[1];
       var arr = parameter.split('&');
       this.contentId = arr[0].split('=')[1];
-      this.openId = arr[1].split('=')[1];
+      this.wxbdopenId = arr[1].split('=')[1];
       this.$http.get(apiURL + "?" + parameter).then(function (response) {
         console.log(response)
         this.starter = response.data.commentList.reverse();
@@ -42,7 +42,7 @@ var app = new Vue({
       })
     },
     zan: function (item) {
-      this.$http.get("http://192.168.8.144:8081/raise/likes.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + item.commentId + "&zan=" + !item.zan).then(function (response) {
+      this.$http.get("http://192.168.8.144:8081/raise/likes.jhtml?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId + "&commentId=" + item.commentId + "&zan=" + !item.zan).then(function (response) {
         item.zan = !item.zan;
         if (item.zan) {
           item.zanNum++;
@@ -56,7 +56,7 @@ var app = new Vue({
         alert("请输入将要发表的内容");
         return false;
       }
-      this.$http.get("http://192.168.8.144:8081/raise/pinglun.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&context=" + this.commentText).then(function (response) {
+      this.$http.get("http://192.168.8.144:8081/raise/pinglun.jhtml?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId + "&context=" + this.commentText).then(function (response) {
         if (!response.data.permission) {
           alert("请先支持一下吧~~");
         } else {
@@ -70,7 +70,7 @@ var app = new Vue({
         alert("请输入评论内容");
         return false;
       }
-      this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&replyName=" + this.replyName).then(function (response) {
+      this.$http.get("http://192.168.8.144:8081/raise/replyComment.jhtml?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId + "&replyContext=" + this.replyText + "&commentId=" + this.commentId + "&replyName=" + this.replyName).then(function (response) {
         if (!response.data.permission) {
           alert("请先支持一下吧~~");
         } else {
@@ -107,7 +107,7 @@ var app = new Vue({
       }
     },
     delComment: function (item, index) {
-      this.$http.get("http://192.168.8.144:8081/raise/delComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + item.commentId).then(function (response) {
+      this.$http.get("http://192.168.8.144:8081/raise/delComment.jhtml?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId + "&commentId=" + item.commentId).then(function (response) {
         console.log(response.data);
         this.starter.splice(index, 1);
       })
@@ -115,7 +115,7 @@ var app = new Vue({
     delRepaly: function () {
       var comment = this.starter[this.indexComment];
       var discuss = comment.discuss[this.indexDiscuss];
-      this.$http.get("http://192.168.8.144:8081/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&openId=" + this.openId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
+      this.$http.get("http://192.168.8.144:8081/raise/delReplyComment.jhtml?contentId=" + this.contentId + "&wxbdopenId=" + this.wxbdopenId + "&commentId=" + comment.commentId + "&discussId=" + discuss.discussId).then(function (response) {
         console.log(response.data);
         if (response.data.success) {
           this.confirm = false;
