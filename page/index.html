@@ -259,7 +259,7 @@
         <!--项目资料  E-->
 
         <!--项目信息  S-->
-        <li v-show="build.pageIndex == 0">
+        <li v-show="build.pageIndex == 1">
           <dl class="wrap_entity">
             <dt class="title">创建你的项目信息</dt>
             <dd class="file">
@@ -406,7 +406,7 @@
         <!--详情描述  E-->
 
         <!--回报信息  S-->
-        <li v-show="build.pageIndex == 0">
+        <li v-show="build.pageIndex == 3">
           <div class="retuen" v-for="(item,indexParent) in build.returnInfo">
             <div class="title" v-if="!indexParent">设置你的回报信息</div>
             <div class="raise_title" v-if="indexParent"><p>回报<span class="order">{{1+indexParent}}</span><a
